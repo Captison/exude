@@ -39,9 +39,31 @@ export default
             Internally, the library relies on the following names:
               - `skeletonLoad`: keyframes for skeleton loading animation
         */
-        keyframes: {}
+        keyframes: {},
+        /**
+            Enumerated CSS animation specifications.
+            
+            Specify CSS animation property names using camelCase without 
+            `animation` prefix.
+              
+            Define "aliases" using keys that point to other keys.                
+        */
+        named: {}
     },
-
+    
+    background:
+    {      
+        /**
+            Enumerated CSS background specifications.
+            
+            Specify CSS background property names using camelCase without 
+            `background` prefix.
+              
+            Define "aliases" using keys that point to other keys.                
+        */
+        named: {}
+    },
+    
     button:
     {
         /**
@@ -174,32 +196,6 @@ export default
         named: {}
     },
     
-    transition:
-    {
-        /**
-            CSS property lists for transition inclusion.
-        */
-        property: {},
-        /**
-            Name of the default property list enumeration to use for 
-            transitions.
-        */
-        // defaultProperty: null,
-        /**
-            CSS time values for property transitions.
-        */
-        time: {}
-        /**
-            Name of the default time enumeration to use for CSS transition 
-            duration.
-        */
-        // defaultTime: null,
-        /**
-            Default value for CSS transition timing function.
-        */
-        // defaultTimingFunction: 'ease',
-    },
-  
     shadow:
     {
         /**
@@ -213,26 +209,19 @@ export default
         named: {},
     },
   
-    /**
-        Standardized z-index enumerations.
-    */
-    zIndex:
+    transition:
     {
-        named:
-        {
-            head: 50,
-            chest: 40,
-            waist: 30,
-            knee: 20,
-            foot: 10,
+        /**
+            Enumerated CSS transition specifications.
             
-            floor: 0,
+            Specify CSS transition property names using camelCase without 
+            `transition` prefix.
+              
+            Define "aliases" using keys that point to other keys.
             
-            foot_: -10,
-            knee_: -20,
-            waist_: -30,
-            chest_: -40,
-            head_: -50
-        }
+            Internally, the library relies on the following names:
+              - `default`: default transition spec applied to everything
+        */
+        named: {}
     }
 }

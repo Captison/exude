@@ -11,8 +11,8 @@ import merge from 'deepmerge'
 import v from '_styles/vars'
 import { ifnum, uid } from '_lib/utils'
 import { context, margin, pad, styler, subCss } from '_source/mixins'
-import { border, colors, duration, extend, outline, property } from '_styles/loaders'
-import { radius, shadow, toPixels, transform, trbl, zIndex } from '_styles/loaders'
+import { border, boxe, colors, duration, extend, outline } from '_styles/loaders'
+import { radius, shadow, toPixels, transform, trbl } from '_styles/loaders'
 
 
 /**
@@ -25,8 +25,7 @@ export default
     mixins: 
     [
         styler, 
-        context('animation').provider,
-        context('background').provider,
+        context('extension').provider,
         margin, 
         pad, 
         subCss('colors', String, colors),
@@ -37,7 +36,7 @@ export default
         subCss('radius', String, radius),
         subCss('shadow', String, v => ({ boxShadow: shadow(v) })),
         subCss('trans', String, transform),
-        subCss('zIndex', [String, Number], v => ({ zIndex: zIndex(v) })),
+        subCss('zIndex', [String, Number], v => ({ zIndex: v })),
     ],
     
     props:
@@ -47,9 +46,21 @@ export default
         */
         align: String,
         /**
+            CSS animation enumeration(s) from the LCO.
+            
+            Use commas to specify multiple enumerations.
+        */
+        animation: String,
+        /**
             CSS grid-area value.
         */
         area: String,
+        /**
+            CSS background enumeration(s) from the LCO.
+            
+            Use commas to specify multiple enumerations.
+        */
+        background: String,
         /**
             Space-separated list of directional border values.
             
@@ -248,14 +259,11 @@ export default
         */
         transOrigin: String,
         /**
-            CSS transition values.
+            CSS transition enumeration(s) from the LCO.
             
-            This takes the form `duration:timing:property` where:
-              - `duration` is an enum or a CSS time value
-              - `timing` is a CSS timing-function value
-              - `property` is an enum or comma-delimited CSS properties.
+            Use commas to specify multiple enumerations.
         */
-        transition: String,
+        transition: { type: String, default: 'default' },
         /**
             Space-separated list of scale unit directional values.
 
@@ -281,7 +289,7 @@ export default
         */
         width: [ String, Number ],
         /**
-            Enumerated CSS z-index value.
+            CSS z-index value.
 
             - use `hZIndex` prop to specify hover z-index
             - use `fZIndex` prop to specify focus z-index
@@ -289,7 +297,7 @@ export default
         zIndex: [ String, Number ]
     },
     
-    data: () => ({ animations: {}, backgrounds: {} }),
+    data: () => ({ animations: {}, backgrounds: {}, transitions: {} }),
     
     created()
     {
@@ -309,7 +317,7 @@ export default
             // content effects            
             'align', 'opacity', 'perspective', 'space', 'transform',
             // animation
-            'animations', 'transition',
+            'animations', 'transition', 'transitions',
             // clipping features
             'overflow',
             // CSS flex and grid child item
@@ -332,10 +340,18 @@ export default
             return align; 
         },
         
-        animationsCss() { return this.descendantCss(this.animations); },
+        animationsCss()
+        {
+            let specs = [ ...boxe.animation(this.animation), ...Object.values(this.animations) ];            
+            return this.descendantCss(specs); 
+        },
 
-        backgroundsCss() { return this.descendantCss(this.backgrounds); },
-                        
+        backgroundsCss()
+        {
+            let specs = [ ...boxe.background(this.background), ...Object.values(this.backgrounds) ];            
+            return this.descendantCss(specs); 
+        },
+
         cursorCss() { return this.cursor && { cursor: this.cursor }; },
                 
         displayCss() { return this.display && { display: this.display } },
@@ -412,22 +428,10 @@ export default
             return transform;
         },
         
-        transitionCss() 
+        transitionsCss()
         {
-            let [ time, timing, list ] = (this.transition || '').split(/:/);
-            // get defaults for values not set
-            time = time || v.transition.defaultTime;
-            timing = timing || v.transition.defaultTimingFunction || 'ease';
-            list = list || v.transition.defaultProperty || 'all';
-            
-            if (time)
-            {
-                let transitionDuration = duration(time);
-                let transitionProperty = property(list);
-                let transitionTimingFunction = timing;
-                
-                return { transitionDuration, transitionProperty, transitionTimingFunction };
-            }
+            let specs = [ ...boxe.transition(this.transition), ...Object.values(this.transitions) ];            
+            return this.descendantCss(specs); 
         },
 
         trblCss() { return this.trbl && trbl(this.trbl); }        
@@ -438,8 +442,8 @@ export default
         descendantCss(specs)
         {          
             let base = [], hover = [], focus = [];
-            
-            Object.values(specs).forEach(spec => 
+                        
+            specs.forEach(spec => 
             {
                 let { isBase, isDisabled, isFocus, isHover, ...values } = spec;
                 
@@ -465,38 +469,22 @@ export default
             return extend(assemble, { _: base, hover, focus });
         },
       
-        provideAnimationContext()
-        {            
-            return spec =>
+        provideExtensionContext()
+        {
+            return (group, spec) =>
             {
-                let id = uid();
+                let id = 'ext' + uid();
                 
-                this.animations = { ...this.animations, [id]: spec };
+                this[group] = { ...this[group], [id]: spec };
                 
                 return () =>
                 {
-                    let { [id]: _, ...others } = this.animations;
-                    this.animations = others;
+                    let { [id]: _, ...others } = this[group];
+                    this[group] = others;
                 }
             }
         },
-        
-        provideBackgroundContext()
-        {            
-            return spec =>
-            {
-                let id = uid();
-                
-                this.backgrounds = { ...this.backgrounds, [id]: spec };
-                
-                return () =>
-                {
-                    let { [id]: _, ...others } = this.backgrounds;
-                    this.backgrounds = others;
-                }
-            }
-        },
-        
+
         resolveDims(height, width, prefix)
         {
             let dims = {};

@@ -13,7 +13,7 @@ export default
 {
     name: 'XAnimation',
     
-    mixins: [ context('animation').consumer ],
+    mixins: [ context('extension').consumer ],
     
     props:
     {
@@ -26,7 +26,7 @@ export default
 
             Unitless numbers are treated as scale time.
         */
-        delay: String,
+        delay: [ String, Number ],
         /**
             CSS animation-direction value.
         */
@@ -105,9 +105,9 @@ export default
         
     methods:
     {
-        changeAnimationContext()
+        changeExtensionContext()
         {
-            if (this.animation)
+            if (this.extension)
             {
                 let keys = 
                 [
@@ -131,7 +131,7 @@ export default
                     return obj;
                 }
                 
-                return this.animation(keys.reduce(reducer, {}));
+                return this.extension('animations', keys.reduce(reducer, {}));
             }
         }
     }

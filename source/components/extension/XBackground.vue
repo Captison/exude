@@ -13,7 +13,7 @@ export default
 {
     name: 'XBackground',
     
-    mixins: [ context('background').consumer ],
+    mixins: [ context('extension').consumer ],
     
     props:
     {
@@ -101,9 +101,9 @@ export default
         
     methods:
     {
-        changeBackgroundContext()
+        changeExtensionContext()
         {
-            if (this.background)
+            if (this.extension)
             {
                 let keys = 
                 [
@@ -126,7 +126,7 @@ export default
                     return obj;
                 }
                 
-                return this.background(keys.reduce(reducer, {}));
+                return this.extension('backgrounds', keys.reduce(reducer, {}));
             }
         }
     }

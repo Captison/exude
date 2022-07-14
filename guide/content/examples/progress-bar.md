@@ -2,26 +2,26 @@
 A progress bar of indefinite time:
 
 ```vue
-<s-keyframes name="one">
+<x-keyframes name="one">
   <frame at="0%" left="0%" right="100%" />
   <frame at="40%" left="30%" right="35%" />
   <frame at="65%" left="65%" right="0%" />
   <frame at="90%" left="100%" right="0%" />
-</s-keyframes>
+</x-keyframes>
 
-<s-keyframes name="two">
+<x-keyframes name="two">
   <frame at="0%" left="0%" right="100%" />
   <frame at="15%" left="0%" />
   <frame at="45%" right="0%" />
   <frame at="60%" left="100%" right="0%" />
-</s-keyframes>
+</x-keyframes>
 
-<s-box colors=":prime" border="a.5!prime" pos="relative" height="3" radius="a100" width="80%">
-  <s-box colors=":white" pos="absolute" height="100%" radius="ainherit">
-    <s-animation name="one" duration="2.4" timing="linear" repeat="infinite" />
-  </s-box>
-  <s-box colors=":white" pos="absolute" height="100%" radius="ainherit">
-    <s-animation name="two" delay="1.8" duration="2.4" timing="ease" repeat="infinite" />
-  </s-box>
-</s-box>
+<x-box colors=":prime" border="a.5!prime" pos="relative" height="3" radius="a100" width="80%">
+  <x-box colors=":white" pos="absolute" height="100%" radius="ainherit">
+    <x-animation name="one" duration="2.4" timing="linear" repeat="infinite" />
+  </x-box>
+  <x-box colors=":white" pos="absolute" height="100%" radius="ainherit">
+    <x-animation name="two" delay="1.8" duration="2.4" timing="ease" repeat="infinite" />
+  </x-box>
+</x-box>
 ```

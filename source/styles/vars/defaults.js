@@ -69,10 +69,9 @@ export default
 
     transition:
     {
-        defaultTime: '0.1875s',
-        
-        defaultTimingFunction: 'ease',
-        
-        defaultProperty: 'all'
+        named:
+        {
+            default: { property: 'all', duration: '0.15s', timingFunction: 'ease' }
+        }
     } 
 }
