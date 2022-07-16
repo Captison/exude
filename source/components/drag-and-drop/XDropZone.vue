@@ -136,12 +136,15 @@ export default
             render(h)
             {
                 let attrs = 
-                { 
+                {
+                    boxSizing: 'content-box',
                     placeSelf: 'stretch', 
                     pos: 'relative', 
+                    transition: parent.dragging ? undefined : 'none',
                     // control spacer accessibility via z-index
                     zIndex: parent.acceptive ? '1' : '-1' 
                 };
+                
                 let target = parent.context.target || {};
                 
                 if (parent.invert)
@@ -156,11 +159,8 @@ export default
                     attrs.pad = 'h' + parent.spacerOverlap;
                     attrs.margin = 'h-' + parent.spacerOverlap;
                 }
-              
-                let style = { boxSizing: 'content-box' };
-                if (!parent.dragging) style.transition = 'none';
-                
-                return h(XBox, { attrs, on: this.on, style });
+                              
+                return h(XBox, { attrs, on: this.on });
             },
             
             updated()

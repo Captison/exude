@@ -8,10 +8,9 @@
 
 <script>
 import merge from 'deepmerge'
-import v from '_styles/vars'
 import { ifnum, uid } from '_lib/utils'
 import { context, margin, pad, styler, subCss } from '_source/mixins'
-import { border, boxe, colors, duration, extend, outline } from '_styles/loaders'
+import { border, boxe, colors, extend, outline } from '_styles/loaders'
 import { radius, shadow, toPixels, transform, trbl } from '_styles/loaders'
 
 
@@ -87,6 +86,10 @@ export default
             - use `fBorder` prop to specify focus border
         */
         border: String,
+        /**
+            CSS box-sizing value.
+        */
+        boxSizing: { type: String, default: 'border-box' },
         /**
             Foreground and background colors (valid color names only).
             
@@ -182,7 +185,7 @@ export default
         /**
             CSS overscroll-behavior value.
         */
-        overscroll: { type: String, default: () => v.basis.defaultOverscroll },
+        overscroll: String,
         /**
             CSS perspective value.
 
@@ -303,7 +306,7 @@ export default
     {
         this.aliases =
         [
-            'base', 'display',
+            'boxSizing', 'display',
             // position and stacking
             'pos', 'trbl', 'zIndex',
             // sizing
@@ -352,6 +355,8 @@ export default
             return this.descendantCss(specs); 
         },
 
+        boxSizingCss() { return this.boxSizing && { boxSizing: this.boxSizing }; },
+        
         cursorCss() { return this.cursor && { cursor: this.cursor }; },
                 
         displayCss() { return this.display && { display: this.display } },
@@ -500,17 +505,6 @@ export default
             
             return dims;          
         }
-    },
-    
-    stylesheet()
-    {
-        let base =
-        {
-            boxSizing: 'border-box',
-            outline: 'none'
-        };
-
-        return { base };
     }
 }
 </script>

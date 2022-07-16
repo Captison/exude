@@ -2,22 +2,23 @@
 
 ## To Dos
 
+notes:
+- __Vue 2.7 bug__  
+There is currently a bug in Vue 2.7.x that prevents a "dragend" event from firing after a successful "drop".
+
 research:
 - look into parallax scrolling features
 - look into adding web3 wallet features
 - is it possible to make the library CSS tool (CSS-in-JS) agnostic?
 
 bugs:
-- fix drag-drop issues between dropzones
 
 tasks:
 - finish up work on form controls
-- split library into core and derivative components
-- separate bundles for core and derivative components
-- add unit-testing framework
 - write tests for all utils & loaders
-- revisit transition setup (due to animation updates)
 - investigate context disconnections from descendant side
+- add examples for components missing them
+- allow for free floating drag-and-drop
 
 
 ---

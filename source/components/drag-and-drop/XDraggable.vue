@@ -161,7 +161,7 @@ export default
     
     data: () => ({ dragging: false, droppable: false, handleCt: 0, init: false }),
     
-    created()
+    beforeCreate()
     {
         this.clone = undefined;
     },
@@ -169,7 +169,7 @@ export default
     beforeDestroy()
     {
         // for safety in case of unmounting during drag
-        if (this.dragging) this.endDrag();
+        if (this.clone) this.clone.detach();
     },
     
     computed:
@@ -178,13 +178,14 @@ export default
         
         baseProps()
         {
-            let props =
+            let props = { ...this.$attrs, draggable: this.init, transition: null };
+            
+            if (this.dragging)
             {
-                ...this.$attrs,
-                draggable: this.init, 
-                opacity: this.dragging ? 0 : 1,
-                pos: !this.dragging || this.noCollapse ? 'static' : 'absolute',
-            };
+                props.opacity = 0;
+                
+                if (!this.noCollapse) props.pos = 'absolute';
+            }
             
             if (this.handleCt <= 0) props.cursor = this.dragCursor;
             
@@ -242,14 +243,71 @@ export default
     },
     
     methods:
-    {
+    {      
         endDrag()
         {
             this.dragging = false;
-            this.init = false;
             this.context && this.context.endDrag();
+            this.init = false;
             
             if (this.clone) this.clone.detach();
+        },
+        
+        evtDrag(event)
+        {
+            this.dragging = this.init;
+            // note that when disabled, a clone will not have been created
+            if (this.clone) this.clone.update();
+
+            this.$emit('drag', event, this.clone);         
+        },
+        
+        evtDragEnd(event)
+        {
+            if (this.init)
+            {
+                if (this.clone) 
+                {
+                    if (this.syncAtEnd) this.clone.sync();
+
+                    if (!this.droppable) 
+                    {
+                        this.clone.reset();
+                        // allow return transition and then destroy clone
+                        this.clone.addEventListener('transitionend', () => this.endDrag(), { once: true });
+                    }
+                    else
+                    {
+                        this.endDrag();
+                    }
+                }
+                else
+                {
+                    this.endDrag();
+                }
+
+                this.$emit('dragend', event);
+            }
+        },
+        
+        evtDragStart(event)
+        {
+            if (this.init)
+            {
+                this.context && this.context.startDrag();
+                // for now all drag ops are 'move'
+                event.dataTransfer.dropEffect = 'move';
+                
+                if (!this.native)
+                {
+                    // use empty element for html drag (invisible)
+                    event.dataTransfer.setDragImage(this.$refs.empty, 0, 0);
+                    // prepare clone image for dragging
+                    this.setupClone();                    
+                }
+
+                this.$emit('dragstart', event);
+            }
         },
         
         getFencing()
@@ -291,62 +349,6 @@ export default
             return dragInfo;
         },
       
-        evtDrag(event)
-        {
-            this.dragging = this.init;
-            // note that when disabled, a clone will not have been created
-            if (this.clone) this.clone.update();
-
-            this.$emit('drag', event, this.clone);         
-        },
-        
-        evtDragEnd(event)
-        {
-            if (this.init)
-            {
-                if (this.clone) 
-                {
-                    if (this.syncAtEnd) this.syncClone();
-
-                    if (!this.droppable)
-                    {                        
-                        let { info, style } = this.clone;                      
-                        style.transition = null; // allow transition (if any) for drop
-                        style.left = info.offsetLeft - info.limits.left + 'px';
-                        style.top = info.offsetTop - info.limits.top + 'px';                
-                    }
-                    // timeout allows clone to return to origin on invalid drop
-                    setTimeout(() => this.endDrag(), 250);
-                }
-                else
-                {
-                    this.endDrag();
-                }
-
-                this.$emit('dragend', event);
-            }
-        },
-        
-        evtDragStart(event)
-        {
-            if (this.init)
-            {
-                this.context && this.context.startDrag();
-                // for now all drag ops are 'move'
-                event.dataTransfer.dropEffect = 'move';
-                
-                if (!this.native)
-                {
-                    // use empty element for html drag (invisible)
-                    event.dataTransfer.setDragImage(this.$refs.empty, 0, 0);
-                    // prepare clone image for dragging
-                    this.setupClone();                    
-                }
-
-                this.$emit('dragstart', event);
-            }
-        },
-        
         provideDraggableContext() 
         {
             let link = 
@@ -360,69 +362,74 @@ export default
             return () => (this.handleCt++, link)
         },
         
-        positionClone()
-        {
-            let { clone } = this, { info } = clone, { limits } = info;
-            // calculate clone position based on mouse position
-            let x = this.canMoveX ? binfo.pageX - info.pointerX : info.offsetLeft;
-            let y = this.canMoveY ? binfo.pageY - info.pointerY : info.offsetTop;
-            // fence in the clone horizontally
-            if (x < limits.left) 
-                x = limits.left;
-            else if (x + clone.offsetWidth > limits.right) 
-                x = limits.right - clone.offsetWidth;
-            // fence in the clone vertically
-            if (y < limits.top) 
-                y = limits.top;
-            else if (y + clone.offsetHeight > limits.bottom) 
-                y = limits.bottom - clone.offsetHeight;
-            // assign left and top, adjusting for local fence
-            clone.style.left = x - limits.left + 'px';
-            clone.style.top = y - limits.top + 'px';
-        },
-        
         setupClone()
         {
-            this.clone = this.$el.cloneNode(true);        
-            let { clone, fenceEl } = this;
-
-            this.syncClone();
+            let clone = this.$el.cloneNode(true);        
             // copy cascading attributes to maintain clone visual integrity
             cascadingAttrs.forEach(name => clone.style[name] = dom.computeStyle(this.$el, name));            
+            
             clone.style.position = 'absolute'; 
             clone.style.opacity = 0; // prevent flicker
+            clone.style.transition = 'none';
+            
+            let position = () =>
+            {
+                let { info } = clone, { limits } = info;
+                // calculate clone position based on mouse position
+                let x = this.canMoveX ? binfo.pageX - info.pointerX : info.offsetLeft;
+                let y = this.canMoveY ? binfo.pageY - info.pointerY : info.offsetTop;
+                // fence in the clone horizontally
+                if (x < limits.left) 
+                    x = limits.left;
+                else if (x + clone.offsetWidth > limits.right) 
+                    x = limits.right - clone.offsetWidth;
+                // fence in the clone vertically
+                if (y < limits.top) 
+                    y = limits.top;
+                else if (y + clone.offsetHeight > limits.bottom) 
+                    y = limits.bottom - clone.offsetHeight;
+                // assign left and top, adjusting for local fence
+                clone.style.left = x - limits.left + 'px';
+                clone.style.top = y - limits.top + 'px';              
+            }
             
             clone.detach = () => 
             { 
-                fenceEl.removeChild(clone);
+                this.fenceEl.removeChild(clone);
                 this.clone = undefined;
+            }
+            
+            clone.reset = () =>
+            {
+                clone.style.transition = 'all .25s ease';
+                clone.style.left = clone.info.offsetLeft - clone.info.limits.left + 'px';
+                clone.style.top = clone.info.offsetTop - clone.info.limits.top + 'px';
+            }
+            
+            clone.sync = () =>
+            {
+                let { offsetTop, offsetLeft } = dom.pageOffsets(this.$el);
+                            
+                clone.info = 
+                { 
+                    pointerX: binfo.pageX - offsetLeft, 
+                    pointerY: binfo.pageY - offsetTop, 
+                    offsetLeft, 
+                    offsetTop,
+                    limits: this.getFencing()
+                };                
             }
             
             clone.update = () =>
             {
-                clone.style.transition = 'none';
+                clone.sync();
                 clone.style.opacity = 1;
-                clone.update = () => this.positionClone();
+                clone.update = position;
                 clone.update();      
             }
-            
-            fenceEl.appendChild(clone);
-        },
-        
-        syncClone()
-        {
-            let { clone } = this;
-            let { offsetTop, offsetLeft } = dom.pageOffsets(this.$el);
                         
-            clone.info = 
-            { 
-                pointerX: binfo.pageX - offsetLeft, 
-                pointerY: binfo.pageY - offsetTop, 
-                offsetLeft, 
-                offsetTop,
-                limits: this.getFencing()
-            };
-        }                
+            this.fenceEl.appendChild(this.clone = clone);
+        }
     }    
 }
 </script>

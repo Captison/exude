@@ -10,8 +10,7 @@ export default
     {
         namespace: 'exude',
         stime: 1000,
-        sunit: 4,
-        defaultOverscroll: 'contain'
+        sunit: 4
     },
     
     animation:

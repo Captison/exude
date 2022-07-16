@@ -22,11 +22,7 @@ export default
         /**
             Scale unit value.
         */
-        // sunit: 4,
-        /**
-            Default overscroll behavior setting.
-        */
-        // defaultOverscroll: 'contain'
+        // sunit: 4
     },
     
     animation:
