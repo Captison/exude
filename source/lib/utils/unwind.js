@@ -3,6 +3,8 @@ let reItems = /\s*,\s*/;
 /**
     Returns the value at `key` in `object` following any aliased keys.
     
+    Circular aliasing will result in `undefined`.
+    
     @param { object } object
       Source object from which to get value.      
     @param { string } key
@@ -14,7 +16,10 @@ export default function unwind(object, key, seen = [])
 {
     let resolve = key =>
     {
-        if (!seen.includes(key) && object.hasOwnProperty(key))
+        // circular searches are unresolvable
+        if (seen.includes(key)) return undefined;
+        
+        if (object.hasOwnProperty(key))
         {
             seen.push(key);
             return resolve(object[key]);
@@ -26,21 +31,22 @@ export default function unwind(object, key, seen = [])
     return resolve(key);
 }
 
-unwind.list = (object, key, seen = []) =>
+unwind.list = (object, key) =>
 {
     let resolve = key =>
     {
+        if (!key) return [];
         // split the key if comma delimited
-        if (reItems.test(key)) key = (key || '').split(reItems);
+        if (typeof key === 'string' && reItems.test(key)) key = key.split(reItems);
         // try all elements of the array against this function
         if (Array.isArray(key)) return key.reduce((a, key) => ([ ...a, ...resolve(key) ]), []);
         
-        let value = unwind(object, key, seen);
+        let value = unwind(object, key);
         // if key and value different try unwinding value
         if (key !== value) return resolve(value);
         // no more resolution can occur as key and value are the same
         return [ value ];        
     }
     
-    return key ? resolve(key) : [];
+    return resolve(key);
 }

@@ -8,7 +8,8 @@
     "main": "dist/exude.js",
     "taskFiles": [
         "build/tasks.js",
-        "guide/tasks.js"
+        "guide/tasks.js",
+        "test/tasks.js"
     ],
     "scripts":
     {

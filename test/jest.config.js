@@ -3,8 +3,12 @@
     ---------------------------------------------------------------------------
     See: https://jestjs.io/docs/configuration
 */
-var paths = require('./paths');
+var paths = require('../paths');
+var webpackConfig = require('../build/webpack.config');
 
+
+var test = paths.sub(paths.test);
+var { resolve: { alias = {}, extensions = [] } } = webpackConfig();
 
 module.exports =
 {
@@ -17,11 +21,11 @@ module.exports =
     // directory of coverage output
     coverageDirectory: undefined,
     // array of regexp strings for files to ignore for coverage
-    coveragePathIgnorePatterns: [ "/node_modules/" ],
+    coveragePathIgnorePatterns: [ '/node_modules/' ],
     // code coverage instrumentation provider
     coverageProvider: 'babel',
     // array of reporter names (all istanbul names supported)
-    coverageReporters: [ "clover", "json", "lcov", "text" ],
+    coverageReporters: [ 'clover', 'json', 'lcov', 'text' ],
     // coverage enforcement minimum threshold
     coverageThreshold: undefined,
     // custom dependency extractor
@@ -33,7 +37,7 @@ module.exports =
     // specify additional files needed to run as ECMAScript Modules
     extensionsToTreatAsEsm: [],
     // reconfigure long app timers for shorter testing time
-    fakeTimers: {}.
+    fakeTimers: {},
     // force files into coverage (e.g., test files ignored by default)
     forceCoverageMatch: [''],
     // set of global variables available to every test.
@@ -51,11 +55,11 @@ module.exports =
     // number of worker-pool threads for testing
     // maxWorkers: undefined
     // array of module directory names to be searched
-    moduleDirectories: [ "node_modules" ],
+    moduleDirectories: [ 'node_modules' ],
     // list of extensions used by files under test
-    moduleFileExtensions: [ "js", "json", "vue" ],
+    moduleFileExtensions: extensions.map(e => e.slice(1)),
     // stubbed module mapping (for resources unavailable at test time)
-    moduleNameMapper: null,
+    moduleNameMapper: Object.keys(alias).reduce((o, a) => ({ ...o, [`^${a}(.*)$`]: alias[a] + '$1' }), {}),
     // array of regexp patterns for files to ignore (cannot `require()`)
     modulePathIgnorePatterns: [],
     // alternative to setting NODE_PATH env variable
@@ -107,7 +111,7 @@ module.exports =
     // system exit code for test failures
     testFailureExitCode: 1,
     // array of glob patterns identifying test files
-    testMatch: [ '/test/**/*.spec.(js|vue)' ],
+    testMatch: [ test('**', '*.spec.(js|vue)') ],
     // array of regexp pattern strings identifying test files to skip
     testPathIgnorePatterns: [ '/node_modules/' ],
     // pattern used to detect test files
@@ -121,13 +125,13 @@ module.exports =
     // default timeout of a test in milliseconds
     testTimeout: 5000,
     // regexp filename patterns mapped to code transpilers
-    transform: { '\\.[jt]sx?$': "babel-jest" },
+    transform: { '\\.[jt]sx?$': 'babel-jest' },
     // array of regexp file paths to ignore for file transpilations
     transformIgnorePatterns: [ '/node_modules/', '\\.pnp\\.[^\\\/]+$' ],
     // array of regexp file patterns to prevent automatic mocking for
     unmockedModulePathPatterns: [],
     // show info about each test being run
-    verbose: false,
+    verbose: true,
     // array of regexp patterns to ignore in watch mode
     watchPathIgnorePatterns: [],
     // specify custom watch plugins

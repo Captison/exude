@@ -12,7 +12,7 @@ let defaults = { configurable: false, enumerable: false, writable: false };
     @param { object } item
       Target object for metadata.
     @return { object }
-      Meata data for `item`.
+      Meta data for `item`.
 */
 export default function omeda(item)
 {
@@ -22,7 +22,6 @@ export default function omeda(item)
         {
             Object.defineProperty(meta, 'get', { ...defaults, value: path => op.get(meta, path) });        
             Object.defineProperty(meta, 'set', { ...defaults, value: (path, value) => op.set(meta, path, value) });      
-            Object.defineProperty(meta, 'copyTo', { ...defaults, value: obj => define(obj, { ...meta }) });      
 
             Object.defineProperty(object, omeda.key, { ...defaults, value: meta, configurable: true });
         }
@@ -35,4 +34,4 @@ export default function omeda(item)
     return item[omeda.key];                
 }
 
-omeda.key = '__ui_object_metadata__';
+omeda.key = '__exude_omeda__';
