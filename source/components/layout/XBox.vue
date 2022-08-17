@@ -1,5 +1,5 @@
 <template>
-  <component :is="el" v-bind="$attrs" :class="cn(aliases)" v-on="$hearers">
+  <component :is="el" v-bind="$attrs" :class="cn(aliases, true)" v-on="$hearers">
     <!-- @slot box child content -->
     <slot />
   </component>

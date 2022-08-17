@@ -184,14 +184,6 @@ export default
         // defaultSize: 6,
     },
     
-    image: 
-    {
-        /**
-            Enumerated CSS image definitions (urls/gradients/etc). 
-        */
-        named: {}
-    },
-    
     shadow:
     {
         /**

@@ -1,6 +1,6 @@
 <script>
 import { context } from '_source/mixins'
-import { image, toPixels } from '_styles/loaders'
+import { toPixels } from '_styles/loaders'
 
 
 /**

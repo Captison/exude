@@ -36,12 +36,7 @@ export default
         {
             black: '#000000',
             white: '#FFFFFF'
-        },
-        
-        image:
-        {
-            skeletonLoader: 'linear-gradient(90deg, transparent 30%, gray, transparent 70%)'
-        }
+        }        
     },
     
     font:

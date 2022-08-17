@@ -4,9 +4,6 @@ import { ns } from '_styles/loaders'
 
 /**
     Define CSS keyframes for animation.
-    
-    It is advised to use this component at application root for any frequently 
-    used keyframes. 
 */
 export default
 {

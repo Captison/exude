@@ -5,6 +5,18 @@ import * as icons from './icons/*.svg'
 
 export default
 {
+    background:
+    {
+        named:
+        {
+            bloodStain: { image: 'linear-gradient(to right, #870000, #190a05)' },
+            candyApple: { image: 'linear-gradient(to right, #fffbd5, #b20a2c)' },
+            dustyGrass: { image: 'linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%)' },
+            mangoShine: { image: 'radial-gradient(circle farthest-side, #fceabb, #f8b500)' },
+            sandyBeach: { image: 'linear-gradient(to right, #DECBA4, #3E5151)' }
+        }
+    },
+  
     color:
     {
         named:
@@ -61,12 +73,7 @@ export default
             // buttonHover: 'green',
             link: 'titanium40',
             linkHover: 'orange40'
-        },
-        
-        image:
-        {
-            wag: 'linear-gradient(#FC4D00, #AF80CF)'
-        }
+        }        
     },
     
     font:
