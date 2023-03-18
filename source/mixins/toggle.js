@@ -1,49 +1,63 @@
+import { ns } from '_styles/loaders'
+
 
 /**
     Mixin to handle a switchable boolean state.
-*/
-export default
-{
-    props:
-    {
-        /**
-            Open or show content?
-        */
-        open: Boolean
-    },
     
-    emits:
+    @param { string } name
+      Name of boolean property to generate.
+      Toggle event name will be `update:[name]`.
+    @param { string } timeo
+      Timeout (ms) before allowing next change of state.
+*/
+export default function(name = 'open', timeo = 0)
+{
+    let ready = ns('ready', name);
+    let emit = ns('emit', name);
+    let toggleEvt = `update:${name}`;
+      
+    let mixin =
     {
-        /**
-            On open/close request.
-            
-            @param { boolean } value
-              Is open being requested?
-        */
-        'update:open'(value) { return typeof value === 'boolean'; }
-    },
-
-    created()
-    {
-        // helps prevent immediate state reversal via contrary
-        // click detection (like a click to open a dropdown that
-        // is also detected as an outside click).
-        this.readyOpen = this.open;
-    },
-
-    watch:
-    {
-        open() { setTimeout(() => this.readyOpen = this.open, 0); }
-    },
-
-    methods:
-    {
-        emitOpen(bool) { (this.readyOpen === this.open) && this.$emit('update:open', bool); },
+        props:
+        {
+            /**
+                Open or show content?
+            */
+            [name]: Boolean
+        },
         
-        requestClose() { this.emitOpen(false); },
+        emits:
+        {
+            /**
+                On open/close request.
+                
+                @param { boolean } value
+                  Is open being requested?
+            */
+            [toggleEvt](value) { return typeof value === 'boolean'; }
+        },
 
-        requestOpen() { this.emitOpen(true); },
+        created()
+        {
+            this[ready] = this[name];
+        },
 
-        requestToggle() { this.emitOpen(!this.open); }
-    }
+        watch:
+        {
+            [name]() { setTimeout(() => this[ready] = this[name], timeo); }
+        },
+
+        methods:
+        {
+            [emit](bool) { (this[ready] === this[name]) && this.$emit(toggleEvt, bool); },
+            
+            [`${name}Off`]() { this[emit](false); },
+
+            [`${name}On`]() { this[emit](true); },
+
+            [`${name}Toggle`]() { this[emit](!this[name]); }
+        }
+    };
+    
+    return mixin;
 }

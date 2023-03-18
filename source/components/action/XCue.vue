@@ -1,5 +1,5 @@
 <template>
-  <x-flex v-bind="$attrs" el="button" cursor="pointer" :trans="angle" @click="requestToggle">
+  <x-flex v-bind="$attrs" el="button" cursor="pointer" :trans="angle" @click="openToggle">
     <x-icon :name="icon" :size="size" :title="title" />
   </x-flex>
 </template>
@@ -20,7 +20,7 @@ export default
 {
     name: 'XCue',
     
-    mixins: [ toggle ],
+    mixins: [ toggle() ],
     
     components: { XFlex, XIcon },
     

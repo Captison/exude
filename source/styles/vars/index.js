@@ -38,3 +38,6 @@ export function setStyles(...objects)
 export { default as defaults } from './defaults'
 
 export default vars;
+
+// ensure the required setup
+setStyles();

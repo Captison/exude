@@ -35,6 +35,7 @@ var base =
             _components: paths.components,
             _root: paths.root,
             _lib: source('lib'),
+            _mixins: source('mixins'),
             _source: paths.source,
             _styles: source('styles')
         },

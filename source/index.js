@@ -11,12 +11,12 @@ import * as loaders from '_styles/loaders'
 /**
     Library configuration.
     
-    @param { object } config
-      Library config object.
+    @param { array } configs
+      Library config object(s).
 */
-export function config(configObj)
+export function config(...configs)
 {
-    setStyles(configObj);
+    setStyles(...configs);
     // clear loader caches
     Object.values(loaders).forEach(val => val.clearCache && val.clearCache());
     
@@ -31,5 +31,5 @@ export function getDefaultConfig()
     return merge({}, defaults);
 }
 
-// export released components
-export * from './components/export.registry'
+// export released library artifacts
+export * from './exports/export.registry'

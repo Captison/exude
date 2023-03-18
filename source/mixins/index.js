@@ -1,5 +1,4 @@
 
-export { default as appear } from './appear'
 export { default as context } from './context'
 export { default as formAction } from './form-action'
 export { default as formField } from './form-field'

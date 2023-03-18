@@ -4,6 +4,11 @@
 */
 export default
 {
+    body:
+    {
+        minHeight: '100vh',
+    },
+  
     ':link,:visited':
     {
         textDecoration: 'none',
