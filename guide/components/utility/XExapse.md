@@ -6,11 +6,11 @@ let show = true;
 
 <x-button colors="white:primeDark" radius="a1" margin="b1" @click="show = !show"> toggle </x-button>
 
-<x-expanser :expand="show" breadth="120">
+<x-exapse :expand="show" breadth="120">
   <x-text>
     Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
   </x-text>
-</x-expanser>
+</x-exapse>
 ```
 
 Directional expand/collapse demo:
@@ -21,7 +21,7 @@ let show = true, horiz = false, lower = false;
 <x-button colors="white:primeDark" radius="a1" margin="b1" @click="show = !show"> toggle </x-button>
 
 <x-box pos="relative" colors=":primeLight" width="80" height="80">
-  <x-expanser 
+  <x-exapse 
     :expand="show" 
     pos="absolute" 
     :trbl="horiz ? 't0 ' + (lower ? 'r0' : 'l0') : 'l0 ' + (lower ? 'b0' : 't0')" 
@@ -36,7 +36,7 @@ let show = true, horiz = false, lower = false;
         width="48"
       />
     </x-flex>
-  </x-expanser>
+  </x-exapse>
 </x-box>
 
 <ctrls>

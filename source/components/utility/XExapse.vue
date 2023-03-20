@@ -1,6 +1,6 @@
 <template>
   <x-box v-bind="$attrs" :height="height" :width="width" :overflow="overflow" v-on="$hearers">
-    <x-flex v-observe-resize="handleResize" inverse :inline="horiz" aligns=":stretch" :margin="margin" :pad="pad">
+    <x-flex v-observe-resize="handleResize" invert :inline="horiz" :margin="margin" :pad="pad">
       <!-- @slot expandable/collapsible content -->
       <slot />
     </x-flex>
@@ -16,11 +16,11 @@ import XFlex from '_components/layout/XFlex'
 
 
 /**
-    Expands and collapses (exapses?) content.
+    Expands and collapses (exapses) content.
 */
 export default
 {
-    name: 'XExpanser',
+    name: 'XExapse',
     
     components: { XBox, XFlex },    
 
@@ -37,7 +37,7 @@ export default
         */
         expand: Boolean,
         /**
-            Maximum scale unit expansion length.
+            Scale unit expansion length.
         */
         extent: Number,
         /**
@@ -53,6 +53,10 @@ export default
             (`horiz = true`).
         */
         lower: Boolean,
+        /**
+            Maximum scale unit expansion length.            
+        */
+        maxExtent: Number,
         /**
             Prevent scrolling?
         */
@@ -70,13 +74,22 @@ export default
     {      
         current() { return this.expand ? this.limit : 0; },
         
-        height() { return this.horiz ? this.breadth || '100%' : this.current; },
+        height() { return this.horiz ? this.breadth || 'auto' : this.current; },
 
-        limit() { return typeof this.extent === 'number' ? this.extent : this.contentExtent; },
+        limit() 
+        {
+            if (typeof this.extent === 'number') 
+              return this.extent; 
+              
+            if (typeof this.maxExtent === 'number')
+              return Math.min(this.contentExtent, this.maxExtent);
+              
+            return this.contentExtent;
+        },
         
         margin()
         {
-            let { horiz, lower } = this;            
+            let { horiz, lower } = this;
             let dir = horiz === lower ? (horiz ? 'r' : 't') : (horiz ? 'l' : 'b');
 
             return dir + (this.current - this.limit);
@@ -84,7 +97,7 @@ export default
         
         overflow() { return this.noScroll ? 'hidden' : 'auto'; },
 
-        width() { return this.horiz ? this.current : this.breadth || '100%'; }
+        width() { return this.horiz ? this.current : this.breadth || 'auto'; }
     },
     
     methods:

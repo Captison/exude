@@ -65,7 +65,7 @@ export default
         /**
             Default button padding.
         */
-        // defaultPad: 'v1% h1.25%'
+        // defaultPad: 'v1em h1.25em'
     },
     
     color:

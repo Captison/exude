@@ -112,9 +112,14 @@ module.exports =
                 components: components('options', '*.vue')
             },
             {
+                name: 'Overlay',
+                description: 'Components that display over other content',
+                components: components('overlay', '*.vue')
+            },
+            {
                 name: 'Drag And Drop',
                 description: 'Components for dragging and dropping',
-                components: path.join(paths.components, 'drag-and-drop', '**', '*.vue')
+                components: components('drag-and-drop', '*.vue')
             },
             {
                 name: 'Utility',

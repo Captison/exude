@@ -9,7 +9,7 @@
     :disabled="disabled"
     v-on="buttonEvents"
   >
-    <x-flex aligns=":center" gap=":1">
+    <x-flex aligns=":center" :gap="gap">
       <x-icon v-if="icons.one" :name="icons.one" :size="iconSize" />
       <div>
         <!-- @slot button label (overrides `label` prop) -->
@@ -51,6 +51,11 @@ export default
             Effectively, this is the button size.
         */
         font: String,
+        /**
+            CSS row and column gap values as `column:row` (scale units).
+            @see `XFlex.gap` for details.
+        */
+        gap: { type: String, default: '1' },        
         /**
             Name of icon to display.
         */
