@@ -100,7 +100,7 @@ export default
         */
         named:
         {
-            transparent: 'transparent',
+            transparent: '#fff0',
             current: 'currentColor'
         },
     },
@@ -166,6 +166,7 @@ export default
               - `check`: a filled checkbox
               - `checkEmpty`: an empty checkbox
               - `checkInd`: an indeterminate checkbox
+              - `copy`: copy to clipboard
               - `radio`: a filled radio button
               - `radioEmpty`: an empty radio button
               - `test`: any icon used for testing
@@ -187,7 +188,7 @@ export default
     shadow:
     {
         /**
-            Enumerated box-shadow definitions.
+            Enumerated box|text-shadow definitions.
             
             Define "aliases" using keys that point to other keys.
 

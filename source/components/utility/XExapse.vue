@@ -1,5 +1,5 @@
 <template>
-  <x-box v-bind="$attrs" :height="height" :width="width" :overflow="overflow" v-on="$hearers">
+  <x-box v-bind="boxProps" :overflow="overflow" v-on="$hearers">
     <x-flex v-observe-resize="handleResize" invert :inline="horiz" :margin="margin" :pad="pad">
       <!-- @slot expandable/collapsible content -->
       <slot />
@@ -54,9 +54,17 @@ export default
         */
         lower: Boolean,
         /**
+            Maximum scale unit length for non-expanding dimension.
+        */
+        maxBreadth: [ String, Number ],
+        /**
             Maximum scale unit expansion length.            
         */
         maxExtent: Number,
+        /**
+            Minimum scale unit length for non-expanding dimension.
+        */
+        minBreadth: [ String, Number ],
         /**
             Prevent scrolling?
         */
@@ -65,17 +73,51 @@ export default
             Space-separated list of directional padding values for content box.
             @see `XBox.pad` for details.
         */
-        pad: String,
+        pad: String
+    },
+    
+    emits:
+    {
+        /**
+            On content resize.
+            
+            @param { object } value
+              Content container element.
+        */
+        'content-resize'(value) { /* nothing to check */ },      
     },
 
     data: () => ({ contentExtent: 0 }),
     
     computed:
-    {      
+    {   
+        boxProps()
+        {
+            let props = { ...this.$attrs };
+            let { breadth, current, maxBreadth, minBreadth } = this;
+          
+            if (this.horiz)
+            {
+                props.width = current;
+                
+                props.height = breadth || 'auto';
+                props.maxHeight = maxBreadth;
+                props.minHeight = minBreadth;
+            }
+            else
+            {
+                props.height = current;
+
+                props.width = breadth || 'auto';
+                props.maxWidth = maxBreadth;
+                props.minWidth = minBreadth;
+            }
+                      
+            return props;
+        },
+         
         current() { return this.expand ? this.limit : 0; },
         
-        height() { return this.horiz ? this.breadth || 'auto' : this.current; },
-
         limit() 
         {
             if (typeof this.extent === 'number') 
@@ -95,9 +137,7 @@ export default
             return dir + (this.current - this.limit);
         },
         
-        overflow() { return this.noScroll ? 'hidden' : 'auto'; },
-
-        width() { return this.horiz ? this.current : this.breadth || 'auto'; }
+        overflow() { return this.noScroll ? 'hidden' : 'auto'; }
     },
     
     methods:
@@ -106,6 +146,8 @@ export default
         {
             let { offsetHeight, offsetWidth } = entry.target;
             this.contentExtent = toSunits((this.horiz ? offsetWidth : offsetHeight) || 0);
+            
+            this.$emit('content-resize', entry.target);
         }      
     }
 }

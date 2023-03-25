@@ -29,6 +29,7 @@ export default
         pad, 
         subCss('colors', String, colors),
         subCss('border', String, border),
+        subCss('filter', String, v => ({ filter: v })),
         subCss('opacity', [String, Number], v => ({ opacity: v })),
         subCss('outline', String, outline),
         subCss('pers', [String, Number], v => ({ perspective: toPixels.str(v) })),
@@ -113,6 +114,13 @@ export default
             Unused attrivutes are applied to this element.
         */
         el: { type: String, default: 'div' },
+        /**
+            CSS filter value.
+
+            - use `hFilter` prop to specify hover filter
+            - use `fFilter` prop to specify focus filter
+        */
+        filter: String,
         /**
             CSS flex property.
         */
@@ -318,9 +326,9 @@ export default
             // framing
             'border', 'outline', 'radius', 'shadow',
             // content effects            
-            'align', 'opacity', 'perspective', 'space', 'transform',
+            'align', 'filter', 'opacity', 'perspective', 'space', 'transform',
             // animation
-            'animations', 'transition', 'transitions',
+            'animations', 'transitions',
             // clipping features
             'overflow',
             // CSS flex and grid child item

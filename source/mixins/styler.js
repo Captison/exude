@@ -50,6 +50,8 @@ export default
                                 
                 return typeof fn === 'function' ? fn() : '';
             });
+            // suppress element in CSS when using selector
+            if (use) names.unshift(css({ display: 'contents' }));        
             // exclude nonexistent elements (n => n) and join
             return names.filter(n => n).join(' ');
         }

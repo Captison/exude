@@ -53,7 +53,7 @@ export default
 
     data()
     {
-        let bounce = debounce(400, () => this.loading = true);
+        let bounce = debounce(() => this.loading = true, 400);
         
         let finalizer = () =>
         {

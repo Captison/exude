@@ -20,5 +20,6 @@ export default function toPixels(sunits)
     return 0;
 }
 
+toPixels.spaced = (value) => (value || '').split(/\s+/).map(toPixels).join(' ')
 toPixels.str = (value) => ifnum(value, v => toPixels(v) + 'px')
 toPixels.str.spaced = (value) => (value || '').split(/\s+/).map(toPixels.str).join(' ')

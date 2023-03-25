@@ -11,11 +11,9 @@
   >
     <x-flex aligns=":center" :gap="gap">
       <x-icon v-if="icons.one" :name="icons.one" :size="iconSize" />
-      <div>
-        <!-- @slot button label (overrides `label` prop) -->
-        <slot> {{ label }} </slot>
-      </div>
-      <x-icon v-if="icons.two" :name="icons.two" />
+      <!-- @slot button label (overrides `label` prop) -->
+      <slot> {{ label }} </slot>
+      <x-icon v-if="icons.two" :name="icons.two" :size="iconSize" />
     </x-flex>
   </x-text>
 </template>

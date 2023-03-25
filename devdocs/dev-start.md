@@ -161,6 +161,7 @@ eslint               | js linter                      | dev    | https://eslint.
 jest                 | test/assertion library         | dev    | https://jestjs.io
 node                 | development platform           | dev    | http://nodejs.org
 npm                  | dependency manager             | dev    | http://www.npmjs.com
+qrcode               | qr code generator              | app    | https://www.npmjs.com/package/qrcode-svg-ts
 stitches             | css-in-js styler               | app    | https://stitches.dev
 vue                  | ui component framework         | peer   | https://vuejs.org
 vue-styleguidist     | component documentation tool   | dev    | https://vue-styleguidist.github.io

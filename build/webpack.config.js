@@ -33,6 +33,7 @@ var base =
         {
             _assets: source('assets'),
             _components: paths.components,
+            _directives: source('directives'),
             _root: paths.root,
             _lib: source('lib'),
             _mixins: source('mixins'),

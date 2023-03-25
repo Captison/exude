@@ -14,7 +14,7 @@ import * as loaders from '_styles/loaders'
     @param { array } configs
       Library config object(s).
 */
-export function config(...configs)
+let config = (...configs) =>
 {
     setStyles(...configs);
     // clear loader caches
@@ -26,10 +26,9 @@ export function config(...configs)
 /**
     Returns a deep copy of the default config object.
 */
-export function getDefaultConfig()
-{ 
-    return merge({}, defaults);
-}
+config.getDefaultConfig = () => merge({}, defaults)
 
+
+export default config;
 // export released library artifacts
 export * from './exports/export.registry'

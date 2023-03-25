@@ -2,21 +2,21 @@
 /**
     Debouncer.
     
-    @param { number } wait
-      Milliseconds to timeout.
     @param { function } action
       Function to execute.
+    @param { number } wait
+      Milliseconds to timeout. If negative, `action` is never called.
 */
-export default function(wait, action)
+export default function(action, wait)
 {
     let id = undefined;
   
-    let timer = () =>
+    let timer = (time = wait) =>
     {
         timer.stop();
-        id = setTimeout(action, wait);
+        if (time >= 0) id = setTimeout(action, time);
     }
-        
+    
     timer.stop = () => clearTimeout(id)
     
     return timer;

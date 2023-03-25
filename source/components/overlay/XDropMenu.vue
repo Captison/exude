@@ -1,22 +1,28 @@
 <template>
-  <x-box v-listen-outside-click="showOff" v-observe-resize="doBaseResize" v-bind="baseProps" v-on="$hearers">
-    <!-- @slot menu target -->
+  <x-box v-listen-outside-click="showOff" v-observe-resize="doResize" v-bind="baseProps" v-on="$hearers">
+    <!-- 
+        @slot affected content
+        
+        If omitted, this component will not provide the positioned parent for 
+        the drop menu.
+    -->
     <slot name="target" />
     <x-exapse
       ref="box"
       pos="absolute"
       :expand="show"
       :trbl="trbl"
-      :breadth="breadth"
       :max-extent="maxExtent"
+      :min-breadth="minBreadth"
       :horiz="!vertOpen"
       :lower="side === 'top' || side === 'left'"
       :z-index="20"
       :hide="!visible"
+      @content-resize="doResize"
       @transitionstart="handleTransStart"
       @transitionend="handleTransEnd"
     >
-      <!-- @slot menu options -->
+      <!-- @slot drop menu content -->
       <slot />
     </x-exapse>
   </x-box>
@@ -48,26 +54,23 @@ export default
     props:
     {
         /**
-            Percentage offset from edge of target.
-
-            - origin is left edge when `side` is `top` or `bottom`
-            - origin is top edge when `side` is `left` or `right`
-
-            @values range from -1 to 1
+            Menu distance from target (scale units).
         */
-        edgeOffset: { type: Number, default: 0, validator: value => value >= -1 && value <= 1 },
+        gap: { type: Number, default: 0 },
         /**
-            Maximum scale unit height.
+            Maximum expansion length in scale units.            
         */
-        maxHeight: Number,
+        maxExtent: Number,
         /**
-            Maximum scale unit width.
+            Minimum length for non-expanding dimension.            
         */
-        maxWidth: Number,
+        minBreadth: [ Number, String ],
         /**
-            Menu scale unit distance from target.
+            Alignment of target with menu by percentage (0 to 1).
+            
+            This takes two values in form of `target:menu`.
         */
-        offset: { type: Number, default: 0 },
+        offsets: { type: String, default: '0:0' },
         /**
             CSS position value.
 
@@ -81,22 +84,14 @@ export default
             Side of target or positioned parent to display.
             @values top, right, bottom, left
         */
-        side: { type: String, default: 'bottom' },
-        /**
-            Switch offset origin to opposite edge of target?
-
-            if `true`, `edgeOffset` origin changes
-            - to right edge when `side` is `top` or `bottom`
-            - to bottom edge when `side` is `left` or `right`
-        */
-        swapEdge: Boolean
+        side: { type: String, default: 'bottom' }
     },
 
-    data: () => ({ targetHeight: 0, targetWidth: 0, visible: false }),
+    data: () => ({ menuHeight: 0, menuWidth: 0, targetHeight: 0, targetWidth: 0, visible: false }),
 
     mounted()
     {
-        this.doBaseResize();
+        this.doResize();
     },
     
     computed:
@@ -115,26 +110,20 @@ export default
             return props;
         },
       
-        breadth() { return this.vertOpen ? this.maxWidth : this.maxHeight; },
-
-        maxExtent() { return this.vertOpen ? this.maxHeight : this.maxWidth; },
-        
         trbl()
         {
-            let { swapEdge, targetHeight, targetWidth } = this;
-            let offset = toPixels(this.offset || 0);
-            let edgeOffset = this.edgeOffset * 100 + '%';
-
-            switch (this.side)
+            let { targetHeight, targetWidth } = this;
+            let [ t, c ] = this.offsets.split(/:/).map(parseFloat);
+            
+            if (this.vertOpen) // top or bottom
             {
-                case 'top': 
-                  return 'b' + (targetHeight + offset) + 'px ' + (swapEdge ? 'r' : 'l') + edgeOffset;
-                case 'right':
-                  return 'l' + (targetWidth + offset) + 'px ' + (swapEdge ? 'b' : 't') + edgeOffset;
-                case 'bottom':
-                  return 't' + (targetHeight + offset) + 'px ' + (swapEdge ? 'r' : 'l') + edgeOffset;
-                case 'left':
-                  return 'r' + (targetWidth + offset) + 'px ' + (swapEdge ? 'b' : 't') + edgeOffset;
+                return (this.side === 'top' ? 'b' : 't') + (toSunits(targetHeight) + this.gap) +
+                    ' l' + toSunits((t * targetWidth) - (c * this.menuWidth));
+            }
+            else // left or right
+            {
+                return (this.side === 'left' ? 'r' : 'l') + (toSunits(targetWidth) + this.gap) +
+                    ' t' + toSunits((t * targetHeight) - (c * this.menuHeight));
             }
         },
 
@@ -143,10 +132,13 @@ export default
     
     methods:
     {
-        doBaseResize()
+        doResize()
         {
-            let { offsetHeight, offsetWidth } = this.$refs.box.$el.offsetParent || {};
+            let { $el } = this.$refs.box;
+            let { offsetHeight, offsetWidth } = $el.offsetParent || {};
             
+            this.menuHeight = $el.offsetHeight || 0;
+            this.menuWidth = $el.offsetWidth || 0;
             this.targetHeight = offsetHeight || 0;
             this.targetWidth = offsetWidth || 0;
         },

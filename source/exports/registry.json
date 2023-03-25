@@ -6,6 +6,7 @@
     "XBox": { "path": "_components/layout/XBox", "released": true },
     "XButton": { "path": "_components/action/XButton", "released": true },
     "XCheckbox": { "path": "_components/form/XCheckbox", "released": true },
+    "XDropMenu": { "path": "_components/overlay/XDropMenu", "released": true },
     "XFlex": { "path": "_components/layout/XFlex", "released": true },
     "XForm": { "path": "_components/form/XForm", "released": true },
     "XGrid": { "path": "_components/layout/XGrid", "released": true },
@@ -19,11 +20,16 @@
     "XLink": { "path": "_components/action/XLink", "released": true },
     "XOption": { "path": "_components/options/XOption", "released": true },
     "XOptionGroup": { "path": "_components/options/XOptionGroup", "released": true },
+    "XQrCode": { "path": "_components/assets/XQrCode", "released": true },
     "XSlotter": { "path": "_components/utility/XSlotter", "released": false },
     "XText": { "path": "_components/typography/XText", "released": true },
     "XTextarea": { "path": "_components/form/XTextarea", "released": true },
     "XTransition": { "path": "_components/extension/XTransition", "released": true },
 
     
-    "m_toggle": { "path": "_mixins/toggle", "released": true }
+    "m_context": { "path": "_mixins/context", "released": true },
+    "m_toggle": { "path": "_mixins/toggle", "released": true },
+    
+    
+    "listenOutsideClick": { "path": "_directives/listen-outside-click", "released": true }
 }

@@ -1,12 +1,17 @@
 <template>
-  <svg :class="cn('base size color margin valign')" viewBox="0 0 24 24" role="img" v-html="content" />
+  <svg 
+    :class="cn('base size colors margin valign strokeWidth')" 
+    :viewBox="toPixels.spaced(viewBox)" 
+    role="img" 
+    v-html="content" 
+  />
 </template>
 
 
 <script>
 import v from '_styles/vars'
-import { styler, margin } from '_source/mixins'
-import { color, svgIcon, toPixels } from '_styles/loaders'
+import { styler, margin, subCss } from '_source/mixins'
+import { paints, svgIcon, toPixels } from '_styles/loaders'
 
 
 /**
@@ -16,20 +21,25 @@ export default
 {
     name: 'XIcon',
 
-    mixins: [ styler, margin ],
+    mixins: 
+    [ 
+        styler, 
+        margin, 
+        subCss('colors', String, paints),
+    ],
 
     props:
     {
         /**
             CSS vertical-align value.
         */
-        alignV: { type: String, default: null },
+        alignV: String,
         /**
             Stroke and fill colors (valid color names only).
             
             This takes the form `fill:stroke`.            
         */
-        colors: { type: String, default: null },
+        colors: String,
         /**
             Name of icon to display.
         */
@@ -39,39 +49,33 @@ export default
         */
         size: { type: [ String, Number ], default: () => v.icon.defaultSize },
         /**
+            Width of image stroke (scale units).
+        */
+        strokeWidth: [ String, Number ],
+        /**
             Label for icon.
         */
-        title: { type: String, default: null }
+        title: String,
+        /**
+            SVG viewBox value (scale units).
+        */
+        viewBox: { type: String, default: '0 0 6 6' }
     },
     
-    data: () => ({ content: '' }),
+    data: () => ({ content: '', toPixels }),
         
     computed:
     {
-        colorCss()
-        {
-            let colors = {};
-            let [ fill, stroke ] = (this.colors || '').split(/:/);
-            
-            if (fill) colors.fill = color(fill);
-            if (stroke) colors.stroke = color(stroke);
-            
-            return  colors;            
-        },
-        
         sizeCss()
         {          
             let size = toPixels.str(this.size || '24px');            
             return { height: size, width: size };
         },
         
+        strokeWidthCss() { return this.strokeWidth && { strokeWidth: this.strokeWidth }; },
+        
         valignCss() { return this.alignV && { verticalAlign: this.alignV }; }
     },
-    
-    // mounted()
-    // {
-    //     console.log(global.getComputedStyle(this.$el).getPropertyValue('line-height'));        
-    // },
     
     watch:
     {

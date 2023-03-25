@@ -76,19 +76,19 @@ export default
 
     computed:
     {
-        backgroundAttachment() { return this.attach || 'initial'; },
+        backgroundAttachment() { return this.attach; },
         
-        backgroundClip() { return this.clip || 'initial'; },
+        backgroundClip() { return this.clip; },
 
-        backgroundImage() { return this.image || 'initial'; },
+        backgroundImage() { return this.image; },
         
-        backgroundOrigin() { return this.origin || 'initial'; },
+        backgroundOrigin() { return this.origin; },
 
-        backgroundPosition() { return toPixels.str.spaced(this.pos) || 'initial'; },
+        backgroundPosition() { return toPixels.str.spaced(this.pos); },
 
-        backgroundRepeat() { return this.repeat || 'initial'; },
+        backgroundRepeat() { return this.repeat; },
         
-        backgroundSize() { return toPixels.str.spaced(this.size) || 'initial'; },
+        backgroundSize() { return toPixels.str.spaced(this.size); },
 
         isBase() { return this.base || false; },
 

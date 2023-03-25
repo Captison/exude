@@ -15,7 +15,7 @@
 <script>
 import { context } from '_source/mixins'
 import { dom } from '_lib/utils'
-import binfo from '_lib/browser-info'
+import { mouse } from '_lib/browser-info'
 import XBox from '_components/layout/XBox'
 
 
@@ -186,7 +186,7 @@ export default
                 
                 if (!this.noCollapse) props.pos = 'absolute';
             }
-            
+                        
             if (this.handleCt <= 0) props.cursor = this.dragCursor;
             
             return props;
@@ -343,7 +343,7 @@ export default
             Object.defineProperty(dragInfo, 'droppable', 
             { 
                 get: () => this.droppable, 
-                set: value => this.droppable = value 
+                set: value => this.droppable = value
             });
           
             return dragInfo;
@@ -376,8 +376,8 @@ export default
             {
                 let { info } = clone, { limits } = info;
                 // calculate clone position based on mouse position
-                let x = this.canMoveX ? binfo.pageX - info.pointerX : info.offsetLeft;
-                let y = this.canMoveY ? binfo.pageY - info.pointerY : info.offsetTop;
+                let x = this.canMoveX ? mouse.pageX - info.pointerX : info.offsetLeft;
+                let y = this.canMoveY ? mouse.pageY - info.pointerY : info.offsetTop;
                 // fence in the clone horizontally
                 if (x < limits.left) 
                     x = limits.left;
@@ -412,8 +412,8 @@ export default
                             
                 clone.info = 
                 { 
-                    pointerX: binfo.pageX - offsetLeft, 
-                    pointerY: binfo.pageY - offsetTop, 
+                    pointerX: mouse.pageX - offsetLeft, 
+                    pointerY: mouse.pageY - offsetTop, 
                     offsetLeft, 
                     offsetTop,
                     limits: this.getFencing()

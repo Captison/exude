@@ -39,11 +39,11 @@ export default
 
     created()
     {
-        this.dbClick = debounce(5, () =>
+        this.dbClick = debounce(() =>
         {
             this.$refs.input.focus();
             this.emitUpdate(!this.myValue);
-        });
+        }, 5);
     },
 
     computed:

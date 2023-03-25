@@ -1,7 +1,7 @@
 <template>
   <x-box 
     v-bind="$attrs" 
-    :class="cn('font fontWeight italic textShadow textTransform', true)" 
+    :class="cn('font fontWeight letter italic textShadow textTransform', true)" 
     :sel="sel" 
     :display="display" 
     v-on="$hearers"
@@ -15,7 +15,7 @@
 <script>
 import { styler, subCss } from '_source/mixins'
 import v from '_styles/vars'
-import { fontSize, fontWeight, shadow } from '_styles/loaders'
+import { fontSize, fontWeight, shadow, toPixels } from '_styles/loaders'
 import XBox from '_components/layout/XBox'
 
 
@@ -33,6 +33,7 @@ export default
         styler,
         subCss('bold', Boolean, fontWeight),
         subCss('italic', Boolean, v => v ? { fontStyle: 'italic' } : {}),
+        subCss('letter', [String, Number], v => ({ letterSpacing: toPixels.str(v) })),
         subCss('textShadow', String, v => ({ textShadow: shadow(v) })),
         subCss('textTransform', String, v => ({ textTransform: v })),
         subCss('weight', String, fontWeight)
@@ -65,6 +66,12 @@ export default
             - use `fItalic` prop to set focus italics
         */
         italic: Boolean,
+        /**
+            CSS letter-spacing value.
+
+            - raw numbers are assumed to be scale units
+        */
+        letter: [ String, Number ],
         /**
             Enumerated text shadow value(s).
 
@@ -103,7 +110,7 @@ export default
             return font;
         },
         
-        fontWeightCss() { return { ...this.boldCss, ...this.weightCss }; }     
+        fontWeightCss() { return { ...this.boldCss, ...this.weightCss }; }
     }    
 }
 </script>

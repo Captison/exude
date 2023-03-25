@@ -4,6 +4,10 @@ import shash from 'string-hash'
 let counter = 10000;
 /**
     Generates a unique string id suitable for use in html.
+    
+    Return value will be the same for the same input (including child values
+    in arrays/objects).  However, a unique value is generated when `value` is 
+    `undefined` or `null`.
 
     @param { any } value
       Key based on this value is returned.
