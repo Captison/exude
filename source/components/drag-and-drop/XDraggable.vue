@@ -88,11 +88,22 @@ export default
         /**
             Limit drag area to within nearest positioned parent?
             
-            Entire document body is used by default.
+            Entire document body is used by default, and `float = 'fixed'`
+            draggables are always fenced by the viewport.
             
-            Note that CSS flex containers do not work well as fences as they can break dragging.
+            Note that CSS flex containers do not work well as fences as they 
+            can break dragging.                        
         */
         fenced: Boolean,
+        /**
+            Allows free-floating dragging.
+            
+            This item will be ignored by drop zones if set.
+            
+            - specify 'fixed' for drag anchored to browser viewport
+            - specify 'absolute' for drag anchored at document level
+        */
+        float: { type: String, validator: v => ['absolute', 'fixed'].indexOf(v) >= 0 },
         /**
             Use only built-in HTML drag functionality? 
             
@@ -112,6 +123,8 @@ export default
         native: Boolean,
         /**
             Prevent collapse of vacated space while dragging?
+            
+            Ignored if `float` is set.
         */
         noCollapse: Boolean,
         /**
@@ -124,6 +137,8 @@ export default
             The cloned element will return to the original element's location on an invalid drop.
             
             Set this if the original element moved during the drag and you want the clone to return there.
+            
+            Ignored if `float` is set.
             @ignore
         */
         syncAtEnd: Boolean
@@ -174,7 +189,11 @@ export default
     
     computed:
     {
-        baseEvents() { return this.handleCt > 0 ? this.dragEvents : { ...this.dragEvents, ...this.initEvents }; },
+        baseEvents() 
+        {
+            let evts = { ...this.$hearers, ...this.dragEvents };
+            return this.handleCt > 0 ? evts : { ...evts, ...this.initEvents }; 
+        },
         
         baseProps()
         {
@@ -186,7 +205,9 @@ export default
                 
                 if (!this.noCollapse) props.pos = 'absolute';
             }
-                        
+            
+            if (this.float) props.pos = this.float;
+            
             if (this.handleCt <= 0) props.cursor = this.dragCursor;
             
             return props;
@@ -198,7 +219,7 @@ export default
         
         context() { return this.dropZone || this.dragDrop; },
 
-        dragCursor() { return this.init ? 'grabbing' : 'grab'; },
+        dragCursor() { return this.disabled ? 'default' : this.init ? 'grabbing' : 'grab'; },
         
         dragEvents()
         {
@@ -273,8 +294,11 @@ export default
                     if (!this.droppable) 
                     {
                         this.clone.reset();
-                        // allow return transition and then destroy clone
-                        this.clone.addEventListener('transitionend', () => this.endDrag(), { once: true });
+                        
+                        if (!this.float)
+                            this.clone.addEventListener('transitionend', () => this.endDrag(), { once: true });
+                        else
+                            this.endDrag();
                     }
                     else
                     {
@@ -312,23 +336,30 @@ export default
         
         getFencing()
         {
-            let { fenceEl } = this;
-            let { offsetHeight: height, offsetWidth: width } = fenceEl;
-            let { offsetTop: top, offsetLeft: left } = dom.pageOffsets(fenceEl);
-            let fencing = { top, left, bottom: top + height, right: left + width }
-            // adjustments for border box sizing
-            if (dom.computeStyle(fenceEl, 'box-sizing') === 'border-box')
+            if (this.float === 'fixed')
             {
-                let btw = parseInt(dom.computeStyle(fenceEl, 'border-top-width'));
-                let blw = parseInt(dom.computeStyle(fenceEl, 'border-left-width'));
-                let bbw = parseInt(dom.computeStyle(fenceEl, 'border-bottom-width'));
-                let brw = parseInt(dom.computeStyle(fenceEl, 'border-right-width'));
-                
-                fencing.bottom -= btw + bbw;
-                fencing.right -= blw + brw;
+                return { top: 0, left: 0, bottom: window.innerHeight, right: window.innerWidth };
             }
+            else
+            {
+                let { fenceEl } = this;
+                let { offsetHeight: height, offsetWidth: width } = fenceEl;
+                let { offsetTop: top, offsetLeft: left } = dom.pageOffsets(fenceEl);
+                let fencing = { top, left, bottom: top + height, right: left + width }
+                // adjustments for border box sizing
+                if (dom.computeStyle(fenceEl, 'box-sizing') === 'border-box')
+                {
+                    let btw = parseInt(dom.computeStyle(fenceEl, 'border-top-width'));
+                    let blw = parseInt(dom.computeStyle(fenceEl, 'border-left-width'));
+                    let bbw = parseInt(dom.computeStyle(fenceEl, 'border-bottom-width'));
+                    let brw = parseInt(dom.computeStyle(fenceEl, 'border-right-width'));
+                    
+                    fencing.bottom -= btw + bbw;
+                    fencing.right -= blw + brw;
+                }
 
-            return fencing;
+                return fencing;
+            }            
         },
         
         getDragInfo()
@@ -337,7 +368,7 @@ export default
             {
                 height: this.$el.offsetHeight,
                 width: this.$el.offsetWidth,
-                payload: this.payload                
+                payload: this.payload
             };
             // this lets us know when we are droppable
             Object.defineProperty(dragInfo, 'droppable', 
@@ -364,11 +395,11 @@ export default
         
         setupClone()
         {
-            let clone = this.$el.cloneNode(true);        
+            let clone = this.$el.cloneNode(true);
             // copy cascading attributes to maintain clone visual integrity
             cascadingAttrs.forEach(name => clone.style[name] = dom.computeStyle(this.$el, name));            
             
-            clone.style.position = 'absolute'; 
+            clone.style.position = this.float || 'absolute'; 
             clone.style.opacity = 0; // prevent flicker
             clone.style.transition = 'none';
             
@@ -394,16 +425,24 @@ export default
             }
             
             clone.detach = () => 
-            { 
+            {
                 this.fenceEl.removeChild(clone);
                 this.clone = undefined;
             }
             
             clone.reset = () =>
             {
-                clone.style.transition = 'all .25s ease';
-                clone.style.left = clone.info.offsetLeft - clone.info.limits.left + 'px';
-                clone.style.top = clone.info.offsetTop - clone.info.limits.top + 'px';
+                if (this.float)
+                {
+                    this.$el.style.left = clone.offsetLeft + 'px';
+                    this.$el.style.top = clone.offsetTop + 'px';
+                }
+                else
+                {
+                    clone.style.transition = 'all .25s ease';
+                    clone.style.left = clone.info.offsetLeft - clone.info.limits.left + 'px';
+                    clone.style.top = clone.info.offsetTop - clone.info.limits.top + 'px';
+                }
             }
             
             clone.sync = () =>
@@ -427,8 +466,8 @@ export default
                 clone.update = position;
                 clone.update();      
             }
-                        
-            this.fenceEl.appendChild(this.clone = clone);
+            // timeout stops immediate dragEnd firing due to DOM manipulation
+            setTimeout(() => this.fenceEl.appendChild(this.clone = clone), 5);
         }
     }    
 }
