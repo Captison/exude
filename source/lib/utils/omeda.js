@@ -28,7 +28,7 @@ export default function omeda(item)
         
         define(item);
         // set a default key
-        item[omeda.key].set('key', uid());
+        item[omeda.key].set('key', uid.next());
     }
     
     return item[omeda.key];                

@@ -25,6 +25,8 @@ import XText from '_components/typography/XText'
     Selectable elements. Generally used with a __XOptionGroup__ ancestor.
 
     Unused attributes are passed on to __XText__.
+    
+    @summary root:XText, delegates:XText, context:optionGroup
 */
 export default
 {

@@ -25,12 +25,12 @@ Non-collapsing draggable with drag handle:
 </x-draggable>
 ```
 
-Fenced draggable:
+Fenced floating draggable:
 
 ```
 <x-box height="60" width="100" colors=":secondDark" pos="relative" overflow="hidden">
   <x-flex aligns=":center:center" height="100%">
-    <x-draggable display="inline-block" colors=":secondLight" pad="a3" fenced>
+    <x-draggable display="inline-block" colors=":secondLight" pad="a3" fenced float="absolute">
       <x-text bold>Fenced box!</x-text>
     </x-draggable>
   </x-flex>

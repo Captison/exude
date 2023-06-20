@@ -62,16 +62,6 @@ export default
         return { defaultFormLink, formLink: defaultFormLink };
     },
     
-    created()
-    {
-        this.evts = 
-        {
-            blur: e => this.$emit('blur', e),
-            focus: e => this.$emit('focus', e),
-            input: e => this.emitUpdate(e.target.value),
-        };      
-    },
-
     mounted()
     {
         // update form on changes
@@ -143,9 +133,10 @@ export default
             }
         },
         
-        emitUpdate(value) 
-        { 
-            if (!this.isDisabled) this.$emit('update:value', value); 
+        handleInput(evt)
+        {
+            this.$emit('input', evt);
+            this.$emit('update:value', evt.target.value);
         }
     }
 }

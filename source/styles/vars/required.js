@@ -185,6 +185,16 @@ export default
         // defaultSize: 6,
     },
     
+    media:
+    {
+        /**
+            Enumerated CSS media queries.
+            
+            Define "aliases" using keys that point to other keys.                
+        */
+        named: {}
+    },
+    
     shadow:
     {
         /**

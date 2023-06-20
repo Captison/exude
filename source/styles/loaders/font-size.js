@@ -22,12 +22,9 @@ export default function(size)
     {
         let { fontSize = 'inherit', lineHeight = 'normal' } = spec;
         
-        if (typeof fontSize === 'number')
-            fontSize = toPixels(fontSize) + 'px';
-        
-        if (typeof lineHeight === 'number')
-            lineHeight = toPixels(lineHeight) + 'px';
+        fontSize = toPixels.str(fontSize);        
+        lineHeight = toPixels.str(lineHeight);
             
-        return { fontSize, lineHeight }
+        return { fontSize, lineHeight };
     }
 }

@@ -114,7 +114,7 @@ export default
           
             let field = (name, data) =>
             {
-                name = name || uid();
+                name = name || uid.next();
 
                 let link =
                 {
