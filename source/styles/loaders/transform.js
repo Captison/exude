@@ -1,5 +1,6 @@
 
-let reOp = /^[sktr][xyz]-?(\d*\.)?\d+$/;
+let reOp = /^[sktr][xyz]-?(\d*\.)?\d+/;
+let reNum = /^-?(\d*\.)?\d+$/;
 // CSS transform functions
 let oper =
 {
@@ -25,11 +26,12 @@ export default function(value)
         if (reOp.test(def))
         {
             let [ op, dim, ...arg ] = def.split('');
-            let { fn, unit } = oper[op];
-                        
-            return `${fn + dim.toUpperCase()}(${arg.join('')}${unit})`; 
+            let { fn, unit } = oper[op];            
+            let num = arg.join('');     
+            
+            return `${fn + dim.toUpperCase()}(${num}${reNum.test(num) ? unit : ''})`; 
         }
     });
-    
+        
     return { transform: list.filter(t => t).join(' ') };
 }

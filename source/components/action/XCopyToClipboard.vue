@@ -1,25 +1,20 @@
 <template>
-  <x-text 
-    v-bind="$attrs" 
-    :el="canCopy ? 'button' : 'span'" 
-    :cursor="canCopy ? 'pointer' : null" 
-    @click="copy"
-  >
-    <!-- @slot display content -->
-    <slot :copied="copied" />
-    <x-icon v-if="canCopy" name="copy" align-v="middle" />
-  </x-text>
+  <x-link v-if="canCopy" v-bind="$attrs" @click="copy">
+    <x-icon name="copy" :size="size" />
+  </x-link>
 </template>
 
 
 <script>
 import XIcon from '_components/assets/XIcon'
-import XText from '_components/typography/XText'
+import XLink from '_components/action/XLink'
 import { clipboard } from '_lib/browser-info'
 
 
 /**
     Copies specified data to clipboard when clicked.
+    
+    Nothing is rendered if browser does not support clipboard access.
     
     Unused attributes are passed to __XText__.
 */
@@ -27,7 +22,7 @@ export default
 {
     name: 'XCopyToClipboard',
     
-    components: { XIcon, XText },
+    components: { XIcon, XLink },
     
     props:
     {
@@ -36,12 +31,20 @@ export default
         */
         data: null,
         /**
-            Timeout after successful clipboard update (milliseconds).
+            Clipboard icon size.
         */
-        timeo: { type: Number, default: 2000 }
+        size: [ String, Number ]
     },
     
-    data: () => ({ canCopy: false, copied: false }),
+    emits:
+    {
+        /**
+            On successful copy to clipboard action.
+        */
+        copied() { /* do nothing */ }
+    },
+    
+    data: () => ({ canCopy: false }),
     
     mounted()
     {
@@ -51,17 +54,7 @@ export default
     
     methods:
     {
-        copy()
-        {
-            if (this.canCopy && !this.copied)
-            {
-                clipboard.copyTo(this.data).then(() => 
-                {
-                    this.copied = true;
-                    setTimeout(() => this.copied = false, this.timeo);
-                });
-            }
-        }
+        copy() { this.canCopy && clipboard.copyTo(this.data).then(() => this.$emit('copied')); }
     }
 }
 </script>

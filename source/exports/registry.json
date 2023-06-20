@@ -6,8 +6,12 @@
     "XBox": { "path": "_components/layout/XBox", "released": true },
     "XButton": { "path": "_components/action/XButton", "released": true },
     "XCheckbox": { "path": "_components/form/XCheckbox", "released": true },
+    "XContext": { "path": "_components/utility/XContext", "released": true },
+    "XCopyToClipboard": { "path": "_components/action/XCopyToClipboard", "released": true },
     "XDropMenu": { "path": "_components/overlay/XDropMenu", "released": true },
+    "XExapse": { "path": "_components/utility/XExapse", "released": true },
     "XFlex": { "path": "_components/layout/XFlex", "released": true },
+    "XFloater": { "path": "_components/overlay/XFloater", "released": true },
     "XForm": { "path": "_components/form/XForm", "released": true },
     "XGrid": { "path": "_components/layout/XGrid", "released": true },
     "XIcon": { "path": "_components/assets/XIcon", "released": true },
@@ -25,9 +29,11 @@
     "XText": { "path": "_components/typography/XText", "released": true },
     "XTextarea": { "path": "_components/form/XTextarea", "released": true },
     "XTransition": { "path": "_components/extension/XTransition", "released": true },
+    "XWhen": { "path": "_components/utility/XWhen", "released": true },
 
     
     "m_context": { "path": "_mixins/context", "released": true },
+    "m_media_query": { "path": "_mixins/media-query", "released": true },
     "m_toggle": { "path": "_mixins/toggle", "released": true },
     
     

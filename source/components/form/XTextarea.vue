@@ -1,5 +1,5 @@
 <template>
-  <x-text v-bind="baseProps" v-on="evts">{{ myValue }}</x-text>
+  <x-text v-bind="baseProps" v-on="$hearers">{{ myValue }}</x-text>
 </template>
 
 

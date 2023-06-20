@@ -338,6 +338,15 @@ export default
         ].join(' ');      
     },
     
+    mounted()
+    {
+        if (this.$hearers.hover)
+        {
+            this.$el.addEventListener('mouseenter', () => this.$emit('hover', true));
+            this.$el.addEventListener('mouseleave', () => this.$emit('hover', false));
+        }
+    },
+
     computed:
     {
         alignCss() 
@@ -486,7 +495,7 @@ export default
         {
             return (group, spec) =>
             {
-                let id = 'ext' + uid();
+                let id = 'ext' + uid.next();
                 
                 this[group] = { ...this[group], [id]: spec };
                 

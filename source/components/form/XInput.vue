@@ -1,5 +1,5 @@
 <template>
-  <x-text v-bind="baseProps" v-on="evts" />
+  <x-text v-bind="baseProps" v-on="$hearers" @input="handleInput" />
 </template>
 
 
