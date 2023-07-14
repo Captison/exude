@@ -1,9 +1,8 @@
-import { unwind } from '_lib/utils'
+import { cacher, unwind } from '_lib/utils'
 import clr from 'color'
 import vars from '../vars'
 
 
-let cache = {};
 let reOp = /^[bdfglnorsuw]-?\d*([.]\d+)?$/;
 let map =
 {
@@ -49,11 +48,9 @@ let map =
     @return { string }
       A valid CSS color value, or `undefined` if named color does not exist.
 */
-export default function color(name)
+export default cacher(name =>
 {
     let { named } = vars.color;
-    // return cached color if existing
-    if (cache[name]) return cache[name];
     // check for a transform extension
     let [ base, ...ext ] = (name || '').split(/_/);
     
@@ -64,11 +61,9 @@ export default function color(name)
         if (ext.length)
         {
             let reducer = (c, t) => reOp.test(t) ? c[map[t.slice(0, 1)]](parseFloat(t.slice(1))) : c                        
-            return cache[name] = ext.reduce(reducer, clr.rgb(value)).rgb().string();
+            return ext.reduce(reducer, clr.rgb(value)).rgb().string();
         }
         
         return value;      
     }
-}
-
-color.clearCache = () => cache = {}
+});

@@ -1,8 +1,8 @@
+import { cacher } from '_lib/utils'
 import { snakeCase } from 'change-case';
 import vars from '../vars'
 
 
-let cache = {};
 /**
     Prefixes a name with a namespace.
     
@@ -11,17 +11,4 @@ let cache = {};
     @return { string }
       Namespaced value.
 */
-export default function ns(...names)
-{
-    let name = names.join(' ');
-  
-    if (!cache[name])
-    {
-        let { namespace } = vars.basis;
-        cache[name] = snakeCase((namespace || 'xxx') + ' ' + name);      
-    }
-    
-    return cache[name];
-}
-
-ns.clearCache = () => cache = {}
+export default cacher((...names) => snakeCase((vars.basis.namespace || 'xxx') + ' ' + names.join(' ')));

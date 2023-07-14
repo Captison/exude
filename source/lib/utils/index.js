@@ -1,6 +1,7 @@
 
 export * as dom from './dom'
 
+export { default as cacher } from './cacher'
 export { default as counter } from './counter'
 export { default as debounce } from './debounce'
 export { default as exists } from './exists'

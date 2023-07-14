@@ -1,8 +1,7 @@
-import { unwind } from '_lib/utils'
+import { cacher, unwind } from '_lib/utils'
 import vars from '../vars';
 
 
-let cache = {};
 let reSvg = /<svg.*?>([^]*)<\/svg>/g;
 /**
     Loads the specified icon.
@@ -14,22 +13,16 @@ let reSvg = /<svg.*?>([^]*)<\/svg>/g;
     @return { promise }
       Resolves to SVG icon markup.
 */
-export default function icon(name)
+export default cacher(async name =>
+{    
+    return getIcon(name).then(svg => reSvg.test(svg) ? svg.replace(reSvg, '$1') : svg);
+});
+
+async function getIcon(name)
 {
-    // check for cached name first
-    if (cache[name]) return Promise.resolve(cache[name]);
-    
-    return new Promise(resolve => 
-    {
-        let { loader, named } = vars.icon, result = unwind(named, name);
+    let { loader, named } = vars.icon, result = unwind(named, name);
 
-        if (result !== name) resolve(result);
-        // try to load icon asynchronously if provider function given
-        else if (typeof loader === 'function') resolve(loader(name));
-        // not found
-        else resolve();
-
-    }).then(svg => cache[name] = reSvg.test(svg) ? svg.replace(reSvg, '$1') : svg);
+    if (result !== name) return result;
+    // try to load icon asynchronously if provider function given
+    if (typeof loader === 'function') return loader(name);
 }
-
-icon.clearCache = () => cache = {}
