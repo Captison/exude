@@ -1,5 +1,5 @@
 <template>
-  <div style="display:contents">
+  <div style="display:contents" :data-x-async="_uid">
     <!-- 
         @slot content to display data
 
@@ -33,7 +33,7 @@ export default
         */
         immediate: Boolean,
         /**
-            Data or async function to retrieve data.
+            Data, promise, or async function to retrieve data.
         */
         source: null
     },
@@ -41,37 +41,63 @@ export default
     emits:
     {
         /**
+            On failed data request.
+
+            @param { any } reason
+              Reason for failure.
+        */
+        failure(reason) { /* do nothing */ },
+        /**
             On loading state change.
 
             This event may not be emitted at all if data loads quickly.
 
-            @param { boolean }
+            @param { boolean } isLoading
               Is the data currently being loaded?
         */
-        loading(value) { return typeof value === 'boolean'; }
+        loading(isLoading) { return typeof isLoading === 'boolean'; },
+        /**
+            On successful data request.
+
+            @param { any } value
+              Loaded data.
+        */
+        success(value) { /* do nothing */ }
     },
 
-    data()
+    data: () => ({ data: null, loading: false }),
+    
+    created()
     {
         let bounce = debounce(() => this.loading = true, 400);
         
-        let finalizer = () =>
+        this.finalizer = () =>
         {
             bounce.stop();
             // wait a tick before undoing loading state
             this.$nextTick(() => this.loading = false);
         }
 
-        let handler = data => this.data = data
+        this.handler = data => 
+        {
+            this.data = data;
+            this.$emit('success', data);
+            return data;
+        };
 
-        let loader = resolve =>
+        this.loader = resolve =>
         {
             bounce();
             resolve(typeof this.source === 'function' ? this.source() : this.source);
         };
 
-        return { data: null, finalizer, handler, loader, loading: false };
-    },
+        this.failer = reason =>
+        {
+            this.data = null;
+            this.$emit('failure', reason);
+            return reason;
+        }
+    },   
 
     mounted()
     {
@@ -80,7 +106,7 @@ export default
 
     computed:
     {
-        array() { return exists(this.data) ? [].concat(this.data) : [] },
+        array() { return exists(this.data) ? [].concat(this.data) : []; }        
     },
 
     watch:
@@ -96,7 +122,12 @@ export default
             Execute data request.
             @public
         */
-        requestData() { return new Promise(this.loader).then(this.handler).finally(this.finalizer); }
+        requestData() 
+        { 
+            let { failer, finalizer, handler, loader } = this;
+            
+            return new Promise(loader).then(handler).catch(failer).finally(finalizer); 
+        }
     }
 }
 </script>

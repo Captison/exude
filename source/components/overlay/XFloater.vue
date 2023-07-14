@@ -45,7 +45,12 @@ export default
         */
         frame: [ String, Number ],
         /**
-            Time before floater close (ms).            
+            Time before floater close (ms).
+            
+            Note that:
+            - floater will not close automatically if negative.
+            - a mouseenter event will stop the timer
+            - a mouseleave event will reset the timer
         */
         timeo: { type: Number, default: -1 },
     },

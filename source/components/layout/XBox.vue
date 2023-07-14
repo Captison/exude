@@ -195,6 +195,10 @@ export default
         */
         overscroll: String,
         /**
+            CSS overflow-wrap value.
+        */
+        overWrap: String,
+        /**
             CSS perspective value.
 
             Scale units is assumed when number is given.
@@ -330,7 +334,7 @@ export default
             // animation
             'animations', 'transitions',
             // clipping features
-            'overflow',
+            'overflow', 'overWrap',
             // CSS flex and grid child item
             'flex', 'grid',
             // interaction control
@@ -426,6 +430,8 @@ export default
             
             return overs;
         },
+        
+        overWrapCss() { return this.overWrap && { overflowWrap: this.overWrap }; },
         
         perspectiveCss()
         {
