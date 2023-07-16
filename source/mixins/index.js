@@ -1,5 +1,6 @@
 
 export { default as context } from './context'
+export { default as dims } from './dims'
 export { default as formAction } from './form-action'
 export { default as formField } from './form-field'
 export { default as margin } from './margin'

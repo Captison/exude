@@ -6,6 +6,7 @@
     :native="false"
     @mouseenter="() => closeTimer.stop()"
     @mouseleave="() => closeTimer()"
+    v-on="$hearers"
   >
     <x-box :margin="frame" cursor="default" @mousedown.stop>
       <!-- @slot floater content -->
@@ -62,7 +63,9 @@ export default
     
     watch:
     {
-        show() { this.show ? this.closeTimer(this.timeo) : this.closeTimer.stop(); }
+        show() { this.show ? this.closeTimer() : this.closeTimer.stop(); },
+        
+        timeo() { this.closeTimer.wait(this.timeo); }
     }
 }
 </script>

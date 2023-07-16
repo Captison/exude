@@ -1,14 +1,13 @@
 <template>
-  <x-box v-bind="baseProps" @click="dbClick">
+  <x-box v-bind="baseProps" @click="handleInput">
     <x-icon :name="icon" :size="size" />
-    <input ref="input" :class="cn('input')" v-bind="fieldProps" type="checkbox" :checked="isTrue" />
+    <input ref="input" :class="cn('hideInput')" v-bind="fieldProps" type="checkbox" :checked="isTrue" />
   </x-box>
 </template>
 
 
 <script>
 import { formField, styler } from '_source/mixins'
-import { debounce } from '_lib/utils'
 import XBox from '_components/layout/XBox'
 import XIcon from '_components/assets/XIcon'
 
@@ -39,11 +38,7 @@ export default
 
     created()
     {
-        this.dbClick = debounce(() =>
-        {
-            this.$refs.input.focus();
-            this.emitUpdate(!this.myValue);
-        }, 5);
+        this.inputValue = () => !this.myValue
     },
 
     computed:
@@ -57,26 +52,17 @@ export default
                 ...this.$attrs,
                 el: 'span', 
                 display: 'inline-flex',
-                position: 'relative'
+                pos: 'relative'
             }
             
-            if (this.isDisabled) props.cursor = 'not-allowed';
+            if (this.isDisabled) 
+            {
+                props.cursor = 'not-allowed';
+                props.inactive = true;
+            }
             
             return props;
-        },
-    },
-
-    stylesheet()
-    {
-        let input =
-        {
-            height: 0,
-            opacity: 0,
-            position: 'absolute',
-            width: 0
         }
-
-        return { input };
     }
 }
 </script>

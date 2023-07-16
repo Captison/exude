@@ -7,16 +7,17 @@
     @param { number } wait
       Milliseconds to timeout. If negative, `action` is never called.
 */
-export default function(action, wait)
+export default function(action, wait = 0)
 {
-    let id = undefined;
+    let id = undefined, time = wait;
   
-    let timer = (time = wait) =>
+    let timer = function(...args)
     {
         timer.stop();
-        if (time >= 0) id = setTimeout(action, time);
+        if (time >= 0) id = setTimeout(() => action.call(this, ...args), time);
     }
     
+    timer.wait = (wait = 0) => time = wait;
     timer.stop = () => clearTimeout(id)
     
     return timer;

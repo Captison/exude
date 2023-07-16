@@ -5,7 +5,8 @@ let selector =
 {
     focus: '&:focus-within',
     hover: '&:hover',
-    hoverFocus: '&:hover, &:focus-within'
+    hoverFocus: '&:hover, &:focus-within',
+    inactive: '&[data-inactive]'
 };
 /**
     Extends a CSS values to pre-defined selectors.

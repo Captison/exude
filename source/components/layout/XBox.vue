@@ -1,5 +1,5 @@
 <template>
-  <component :is="el" v-bind="$attrs" :class="cn(aliases, true)" v-on="$hearers">
+  <component :is="el" v-bind="$attrs" :class="cn(aliases, true)" :data-inactive="inactive" v-on="$hearers">
     <!-- @slot box child content -->
     <slot />
   </component>
@@ -9,7 +9,7 @@
 <script>
 import merge from 'deepmerge'
 import { ifnum, uid } from '_lib/utils'
-import { context, margin, pad, styler, subCss } from '_source/mixins'
+import { context, dims, margin, pad, styler, subCss } from '_source/mixins'
 import { border, boxe, colors, extend, outline } from '_styles/loaders'
 import { radius, shadow, toPixels, transform, trbl } from '_styles/loaders'
 
@@ -25,9 +25,11 @@ export default
     [
         styler, 
         context('extension').provider,
+        dims,
         margin, 
         pad, 
         subCss('colors', String, colors),
+        subCss('cursor', String, v => ({ cursor: v })),
         subCss('border', String, border),
         subCss('filter', String, v => ({ filter: v })),
         subCss('opacity', [String, Number], v => ({ opacity: v })),
@@ -126,12 +128,6 @@ export default
         */
         flex: String,
         /**
-            Box height value.
-            
-            Scale units is assumed when number is given.
-        */
-        height: [ String, Number ],
-        /**
             Is this box hidden from view (CSS visibility)?
         */
         hide: Boolean,
@@ -140,29 +136,9 @@ export default
         */
         hideBack: Boolean,
         /**
-            Box maximum height value.
-
-            Scale units is assumed when number is given.
+            Sets a 'data-inactive' attribute.
         */
-        maxHeight: [ String, Number ],
-        /**
-            Box maximum width value.
-
-            Scale units is assumed when number is given.
-        */
-        maxWidth: [ String, Number ],
-        /**
-            Box minimum height value.
-
-            Scale units is assumed when number is given.
-        */
-        minHeight: [ String, Number ],
-        /**
-            Box minimum width value.
-
-            Scale units is assumed when number is given.
-        */
-        minWidth: [ String, Number ],
+        inactive: Boolean,
         /**
             CSS opacity value.
 
@@ -298,12 +274,6 @@ export default
         */
         trbl: String,
         /**
-            Box width value.
-
-            Scale units is assumed when number is given.
-        */
-        width: [ String, Number ],
-        /**
             CSS z-index value.
 
             - use `hZIndex` prop to specify hover z-index
@@ -372,18 +342,14 @@ export default
 
         backgroundsCss()
         {
-            let specs = [ ...boxe.background(this.background), ...Object.values(this.backgrounds) ];            
+            let specs = [ ...boxe.background(this.background), ...Object.values(this.backgrounds) ];
             return this.descendantCss(specs); 
         },
 
         boxSizingCss() { return this.boxSizing && { boxSizing: this.boxSizing }; },
         
-        cursorCss() { return this.cursor && { cursor: this.cursor }; },
-                
         displayCss() { return this.display && { display: this.display } },
-        
-        dimsCss() { return this.resolveDims(this.height, this.width); },
-        
+                
         flexCss() 
         { 
             let flex = {};
@@ -417,10 +383,6 @@ export default
 
         hideCss() { return this.hide && { visibility: 'hidden' }; },
 
-        maxDimsCss() { return this.resolveDims(this.maxHeight, this.maxWidth, 'max'); },
-
-        minDimsCss() { return this.resolveDims(this.minHeight, this.minWidth, 'min'); },
-        
         overflowCss() 
         {
             let overs = {};
@@ -511,22 +473,6 @@ export default
                     this[group] = others;
                 }
             }
-        },
-
-        resolveDims(height, width, prefix)
-        {
-            let dims = {};
-            
-            let heightProp = prefix ? prefix + 'Height' : 'height';
-            let widthProp = prefix ? prefix + 'Width' : 'width';
-            
-            if (height || height === 0)
-                dims[heightProp] = toPixels.str(height);
-                
-            if (width || width === 0)
-                dims[widthProp] = toPixels.str(width);
-            
-            return dims;          
         }
     }
 }

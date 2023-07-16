@@ -6,7 +6,7 @@ import { extend } from '_styles/loaders'
     Generates a mixin for allowing hover and focus styles of a specific prop.
     
     For a given `name` value of "color",
-      - props 'color', 'hColor', 'fColor', and 'hfColor' are added
+      - props 'color', 'hColor', 'fColor', 'hfColor', and 'iColor' are added
       - a 'colorCss' computed proprty is added for generating the CSS
     
     @param { string } name
@@ -25,7 +25,8 @@ export default function(name, type, resolve)
     let comp = name + 'Css',
         hprop = 'h' + pname,
         fprop = 'f' + pname,
-        hfprop = 'hf' + pname;
+        hfprop = 'hf' + pname,
+        iprop = 'i' + pname;
   
     let mixin =
     {
@@ -37,7 +38,9 @@ export default function(name, type, resolve)
             /* focus prop */
             [fprop]: type,
             /* hover and focus prop */
-            [hfprop]: type
+            [hfprop]: type,
+            /* inactive prop */
+            [iprop]: type
         },
         
         computed:
@@ -49,7 +52,8 @@ export default function(name, type, resolve)
                     _: this[name], 
                     hover: this[hprop], 
                     focus: this[fprop], 
-                    hoverFocus: this[hfprop] 
+                    hoverFocus: this[hfprop], 
+                    inactive: this[iprop]
                 }); 
             }
         }        

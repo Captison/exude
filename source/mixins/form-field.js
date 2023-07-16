@@ -1,4 +1,5 @@
 import context from './context'
+import { debounce } from '_lib/utils'
 
 
 /**
@@ -15,10 +16,6 @@ export default
         */
         disabled: Boolean,
         /**
-            Short help or error message.
-        */
-        help: String,
-        /**
             Does this field have an error?
         */
         invalid: Boolean,
@@ -33,7 +30,7 @@ export default
         /**
             Form field value.
         */
-        value: [String, Number]
+        value: [ String, Number ]
     },
 
     emits:
@@ -81,11 +78,13 @@ export default
                 id: this.myId, 
                 name: this.myName, 
                 disabled: this.isDisabled, 
-                // 'aria-describedby': this.myId + '_help'
+                // 'aria-describedby': this.myId
             }; 
             
             return props;
         },
+
+        hideInputCss() { return { height: 0, opacity: 0, position: 'absolute', width: 0 }; },
 
         isDisabled() { return this.disabled || this.formLink.status.disabled; },
 
@@ -93,8 +92,6 @@ export default
         
         isTrue() { return this.myValue === true; },
         
-        myHelp() { return this.help; },
-
         myId() { return this.$attrs.id || this.$htmlId; },
 
         myName() { return this.name; },
@@ -116,7 +113,6 @@ export default
                 let fields =
                 {
                     disabled: () => this.isDisabled,
-                    help: () => this.myHelp,
                     id: () => this.myId,
                     invalid: () => this.isInvalid,
                     name: () => this.myName,
@@ -133,10 +129,18 @@ export default
             }
         },
         
-        handleInput(evt)
+        handleInput: debounce(function(evt)
         {
-            this.$emit('input', evt);
-            this.$emit('update:value', evt.target.value);
-        }
+            if (!this.isDisabled)
+            {
+                this.$emit('input', evt);
+                this.$emit('update:value', this.inputValue(evt.target.value));
+            }
+        }, 5),
+        
+        /**
+            Override this method to manage value sent via `update:value` event.
+        */
+        inputValue(value) { return value; }
     }
 }
