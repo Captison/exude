@@ -10,6 +10,7 @@
     "XCopyToClipboard": { "path": "_components/action/XCopyToClipboard", "released": true },
     "XDropMenu": { "path": "_components/overlay/XDropMenu", "released": true },
     "XExapse": { "path": "_components/utility/XExapse", "released": true },
+    "XField": { "path": "_components/form/XField", "released": true },
     "XFlex": { "path": "_components/layout/XFlex", "released": true },
     "XFloater": { "path": "_components/overlay/XFloater", "released": true },
     "XForm": { "path": "_components/form/XForm", "released": true },

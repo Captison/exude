@@ -11,7 +11,7 @@ Example image:
 Bordered profile images:
 
 ```vue
-let img = "https://blog.1portrait.ie/wp-content/uploads/2020/08/1portrait-professional-businesx-headshotx-linkedin.jpg";
+let img = "https://edit.co.uk/uploads/2016/12/Image-1-Alternatives-to-stock-photography-Thinkstock.jpg";
 
 <x-image :src="img" border="a.5!prime" width="48" radius="a4" />
 <x-image :src="img" border="a.5!primeDark" width="48" radius="a50%" />

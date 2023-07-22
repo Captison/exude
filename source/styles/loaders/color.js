@@ -46,7 +46,8 @@ let map =
     @param { string } name
       Name of color to return.
     @return { string }
-      A valid CSS color value, or `undefined` if named color does not exist.
+      A valid CSS color value.  The `name` parameter (less any suffix) is
+      returned if color name cannot be resolved.
 */
 export default cacher(name =>
 {
@@ -56,14 +57,11 @@ export default cacher(name =>
     
     let value = unwind(named, base);
     
-    if (value !== base)
+    if (ext.length)
     {
-        if (ext.length)
-        {
-            let reducer = (c, t) => reOp.test(t) ? c[map[t.slice(0, 1)]](parseFloat(t.slice(1))) : c                        
-            return ext.reduce(reducer, clr.rgb(value)).rgb().string();
-        }
-        
-        return value;      
+        let reducer = (c, t) => reOp.test(t) ? c[map[t.slice(0, 1)]](parseFloat(t.slice(1))) : c                        
+        return ext.reduce(reducer, clr.rgb(value)).rgb().string();
     }
+    
+    return value;      
 });
