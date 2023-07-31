@@ -7,6 +7,7 @@
 import XBox from '_components/layout/XBox'
 
 
+let reProto = /^[a-z0-9]+?:\/\/.+$/i
 let reIpfs = /^(ipfs:(\/)+)+(ipfs\/)?/;
 /**
     Renders an HTML `<img>` tag.
@@ -25,27 +26,27 @@ export default
             Image source string.
             
             Array values are concatenated as strings.
+            
+            Assumed to be base64 encoded if no protocol is detected.
         */
         src: [ String, Array ],
         /**
-            Set the `src` type ('png', 'jpeg', etc).
+            Media type for `src` image ('image/png', 'image/jpeg', etc).
             
-            When set, image is assumed to be base64 data.
-            
-            Leave unset when `src` is a URL.
+            Ignored unless `src` is assumed to be base64 encoded.
         */
-        type: String
+        mediaType: String
     },    
     
     computed:
     {
         image()
         {
-            let { src, type } = this;
+            let { src, mediaType } = this;
             
             if (Array.isArray(src)) src = src.join('');
             
-            if (type) return `data:image/${type};base64,${src}`;
+            if (!reProto.test(src) && mediaType) return `data:${mediaType};base64,${src}`;
             // allow for IPFS image content
             if (reIpfs.test(src)) return src.replace(reIpfs, 'https://ipfs.io/ipfs/');
             

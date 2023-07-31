@@ -167,6 +167,7 @@ export default
               - `checkEmpty`: an empty checkbox
               - `checkInd`: an indeterminate checkbox
               - `copy`: copy to clipboard
+              - `fullscreen`: full screen mode indicator
               - `radio`: a filled radio button
               - `radioEmpty`: an empty radio button
               - `test`: any icon used for testing

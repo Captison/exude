@@ -14,6 +14,7 @@
     "XFlex": { "path": "_components/layout/XFlex", "released": true },
     "XFloater": { "path": "_components/overlay/XFloater", "released": true },
     "XForm": { "path": "_components/form/XForm", "released": true },
+    "XFullscreen": { "path": "_components/action/XFullscreen", "released": true },
     "XGrid": { "path": "_components/layout/XGrid", "released": true },
     "XIcon": { "path": "_components/assets/XIcon", "released": true },
     "XImage": { "path": "_components/assets/XImage", "released": true },
