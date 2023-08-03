@@ -3,7 +3,7 @@
     v-bind="$attrs" 
     :el="href ? 'a' : 'button'" 
     :colors="colors" 
-    :h-colors="hColors" 
+    :hf-colors="hfColors" 
     :cursor="cursor" 
     :href="href"
     v-on="$hearers"
@@ -45,11 +45,11 @@ export default
         */
         cursor: { type: String, default: 'pointer' },
         /**
-            Foreground and background hover colors (valid color names only).
+            Foreground and background hover and focus colors (valid color names only).
             
             This takes the form `foreground:background`.            
         */
-        hColors: { type: String, default: 'linkHover' },
+        hfColors: { type: String, default: 'linkHover' },
         /**
             HTML `href` value.
             
