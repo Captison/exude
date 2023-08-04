@@ -27,7 +27,7 @@ jobs:
           registry-url: https://npm.pkg.github.com/
       
       - name: Install dependencies
-        run: npm ci
+        run: npm i
 
       - name: Build
         run: node task build-prod
