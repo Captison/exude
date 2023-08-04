@@ -5,7 +5,7 @@
     load mock data, global variabls, etc. for the examples.
 */
 
-import Vue from 'vue'
+import Vue from 'vue/dist/vue'
 import { defaults, setStyles } from '_styles/vars'
 import lco from './LCO/config'
 

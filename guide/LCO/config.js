@@ -1,7 +1,10 @@
-import * as icons from './icons/*.svg'
 
+// https://medium.com/dailyjs/leveraging-webpack-power-to-import-all-files-from-one-folder-cddedd3201b3
+let files = require.context('./icons/', false, /\.svg$/);
+let reKey = /^(.+\/)*(.+)[.].+$/;
+let icons = files.keys().reduce((o, k) => ({ ...o, [k.replace(reKey, '$2')]: files(k).default }), {});
 
-// WAG Portal Library Config
+// Exude Styleguide Library Config
 
 export default
 {
