@@ -1,5 +1,7 @@
 var path = require('path');
 var { VueLoaderPlugin } = require('vue-loader');
+var CopyPlugin = require('copy-webpack-plugin');
+var GenerateJsonPlugin = require('generate-json-webpack-plugin');
 var paths = require('../paths');
 var packson = require('../package.json');
 
@@ -71,7 +73,9 @@ var base =
 
     plugins:
     [
-        new VueLoaderPlugin()
+        new VueLoaderPlugin(),
+        new GenerateJsonPlugin('package.json', require('./dist-package-json'), null, 4),
+        new CopyPlugin([ path.join(paths.root, '.npmrc') ])
     ]
 }
 
