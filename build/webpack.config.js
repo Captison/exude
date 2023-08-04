@@ -96,7 +96,7 @@ config.prod = other =>
     var config =
     {
         mode: 'production',
-        stats: { ...base.stats, modules: true, maxModules: 10000 }
+        stats: { ...base.stats, modules: true }
     }
 
     return { ...base, ...config, ...other };

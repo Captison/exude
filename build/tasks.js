@@ -26,12 +26,16 @@ module.exports =
     {
         name: 'build-prod',
         desc: `Bundle for production (${chalk.whiteBright(packson.main)}).`,
-        fn: ({ exit, run }) =>
+        fn: ({ exit, log }) =>
         {
-            var webpackCfgPath = path.join(paths.build, 'webpack.config.js');
-            var params = [ 'webpack', '--config', `"${webpackCfgPath}"`, '--env', 'prod' ];
-
-            run.npx(params, { NODE_ENV: 'production' }).on('close', exit);
+            var config = webpackConfig.prod();
+          
+            webpack(config, (error, stats) =>
+            {
+                if (error) throw error;
+                log(stats.toString(config.stats));
+                exit();
+            });
         }
     },
     {
