@@ -10,7 +10,7 @@
 
 
 <script>
-import { camelCase, paramCase } from 'change-case'
+import { camelCase } from 'change-case'
 import { context } from '_source/mixins'
 import { frag } from '_source/directives'
 

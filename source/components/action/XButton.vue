@@ -77,7 +77,7 @@ export default
             @param { object } event
               Native event object.
         */
-        click(event) { /* nothing to check */ }        
+        click(event) { return event instanceof DragEvent; }        
     },
     
     computed:

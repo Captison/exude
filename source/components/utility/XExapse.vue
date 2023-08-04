@@ -109,7 +109,7 @@ export default
             @param { object } value
               Content container element.
         */
-        'content-resize'(value) { /* nothing to check */ },      
+        'content-resize'(value) { return !!value; },      
     },
 
     data: () => ({ contentExtent: 0 }),

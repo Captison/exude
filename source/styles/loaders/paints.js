@@ -1,5 +1,4 @@
 import color from './color'
-import vars from '../vars'
 
 
 /**

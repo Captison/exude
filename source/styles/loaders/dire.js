@@ -45,7 +45,7 @@ export default function(value, settle)
     {
         let styles = [ "", "", "", "" ];
 
-        value.split(re.split).forEach((str, idx) =>
+        value.split(re.split).forEach(str =>
         {
             let dir = str.slice(0, 1), val = str.slice(1);
             // top, vert, all

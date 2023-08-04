@@ -41,7 +41,7 @@ export default
         /**
             On successful copy to clipboard action.
         */
-        copied() { /* do nothing */ }
+        copied() { return true; }
     },
     
     data: () => ({ canCopy: false }),

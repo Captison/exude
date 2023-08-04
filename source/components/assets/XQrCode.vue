@@ -1,4 +1,5 @@
 <template>
+  <!-- eslint-disable-next-line vue/no-v-html vue/no-v-text-v-html-on-component -->
   <x-box v-bind="$attrs" v-html="svg" />
 </template>
 

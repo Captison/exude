@@ -7,7 +7,6 @@
 
 
 <script>
-import { ifnum } from '_lib/utils'
 import { styler } from '_source/mixins'
 import { toPixels } from '_styles/loaders'
 import XBox from '_components/layout/XBox'

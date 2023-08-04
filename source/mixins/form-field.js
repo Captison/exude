@@ -40,8 +40,9 @@ export default
             
             @property { any } value
               Updated value.
-        */        
-        'update:value'(value) { /* nothing to check here */ }
+        */
+        // eslint-disable-next-line no-unused-vars
+        'update:value'(value) { return true; }
     },
     
     data()

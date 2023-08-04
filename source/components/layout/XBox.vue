@@ -7,8 +7,7 @@
 
 
 <script>
-import merge from 'deepmerge'
-import { ifnum, uid } from '_lib/utils'
+import { uid } from '_lib/utils'
 import { context, dims, margin, pad, styler, subCss } from '_source/mixins'
 import { border, boxe, colors, extend, outline } from '_styles/loaders'
 import { radius, shadow, toPixels, transform, trbl } from '_styles/loaders'
@@ -469,6 +468,7 @@ export default
                 
                 return () =>
                 {
+                    // eslint-disable-next-line no-unused-vars
                     let { [id]: _, ...others } = this[group];
                     this[group] = others;
                 }

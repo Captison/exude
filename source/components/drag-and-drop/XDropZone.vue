@@ -1,6 +1,5 @@
 <script>
 import { context } from '_source/mixins'
-import { color, toPixels } from '_styles/loaders'
 import { exists, objectSplitter, omeda } from '_lib/utils'
 import XFlex from '_components/layout/XFlex'
 import XBox from '_components/layout/XBox'
@@ -80,7 +79,7 @@ export default
             @param { object } info
               Details about the dragged item.
         */
-        dragend(info) { /* nothing to check here */ },
+        dragend(info) { return typeof info === 'object'; },
         /**
             On start of dragging an item.
             
@@ -93,14 +92,14 @@ export default
             @param { object } info
               Details about the dragged item.
         */
-        dragstart(info) { /* nothing to check here */ },
+        dragstart(info) { return typeof info === 'object'; },
         /**
             On change to items in drop zone.
             
             @param { array } items
               Payloads of current items in drop zone.
         */
-        'update:items'(items) { /* nothing to check here */ },
+        'update:items'(items) { return Array.isArray(items); },
     },
     
     data() 

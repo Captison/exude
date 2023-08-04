@@ -62,7 +62,7 @@ export default
             @param { object } fields
               All field data indexed by field name.
         */
-        action(name, fields) { /* nothing to check */ },
+        action(name, fields) { return typeof name === 'string' && typeof fields === 'object'; },
         /**
             On form submit.
 
@@ -73,7 +73,7 @@ export default
             @param { object } fields
               All field data indexed by field name.
         */
-        submit(name, fields) { /* nothing to check */ },
+        submit(name, fields) { return typeof name === 'string' && typeof fields === 'object'; },
         /**
             On change of validation state.
 

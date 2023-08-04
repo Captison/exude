@@ -18,7 +18,6 @@
     "XGrid": { "path": "_components/layout/XGrid", "released": true },
     "XIcon": { "path": "_components/assets/XIcon", "released": true },
     "XImage": { "path": "_components/assets/XImage", "released": true },
-    "XIngot": { "path": "_components/assets/XIngot", "released": true },
     "XInput": { "path": "_components/form/XInput", "released": true },
     "XKeyframes": { "path": "_components/extension/XKeyframes", "released": true },
     "XLayout": { "path": "_components/layout/XLayout", "released": true },

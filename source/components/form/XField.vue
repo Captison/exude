@@ -60,7 +60,7 @@ export default
 
                 if (this.form)
                 {
-                    let formlink = this.form.field(name, data);
+                    let formLink = this.form.field(name, data);
                     
                     let link = 
                     {

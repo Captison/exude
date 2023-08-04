@@ -24,7 +24,7 @@ export default function(fn)
     let exec = (...args) =>
     {
         let cid = uid(args);       
-        return cache[cid] = cache.hasOwnProperty(cid) ? cache[cid] : fn(...args);            
+        return cache[cid] = Object.hasOwn(cache, cid) ? cache[cid] : fn(...args);            
     }
     
     exec.clearCache = () => cache = {};

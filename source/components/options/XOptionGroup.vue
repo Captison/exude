@@ -62,6 +62,7 @@ export default
             @param { any } value
               Updated value ar array of values.
         */
+        // eslint-disable-next-line no-unused-vars
         'update:value'(value) { return true; }
     },
 

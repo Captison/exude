@@ -46,7 +46,7 @@ export default
             @param { any } reason
               Reason for failure.
         */
-        failure(reason) { /* do nothing */ },
+        failure(reason) { return typeof reason !== 'undefined'; },
         /**
             On loading state change.
 
@@ -62,7 +62,8 @@ export default
             @param { any } value
               Loaded data.
         */
-        success(value) { /* do nothing */ }
+        // eslint-disable-next-line no-unused-vars
+        success(value) { return true; }
     },
 
     data: () => ({ data: null, loading: false }),

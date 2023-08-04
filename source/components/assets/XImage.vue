@@ -6,7 +6,8 @@
 <script>
 import XBox from '_components/layout/XBox'
 
-let reProto = /^(https?)|(ipfs)|(data):/i
+
+let reProto = /^(https?)|(ipfs)|(data):/i;
 let reIpfs = /^(ipfs:(\/)+)+(ipfs\/)?/;
 /**
     Renders an HTML `<img>` tag.

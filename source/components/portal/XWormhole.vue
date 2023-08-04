@@ -1,6 +1,5 @@
 <script>
 import { context } from '_source/mixins'
-import { frag } from '_source/directives'
 
 
 /**

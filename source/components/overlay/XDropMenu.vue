@@ -31,7 +31,7 @@
 
 <script>
 import { toggle } from '_source/mixins'
-import { toPixels, toSunits } from '_styles/loaders'
+import { toSunits } from '_styles/loaders'
 import { listenOutsideClick, observeResize } from '_source/directives'
 import XBox from '_components/layout/XBox'
 import XExapse from '_components/utility/XExapse'

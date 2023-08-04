@@ -153,19 +153,19 @@ export default
             @param { element } clone
               Clone element in drag.
         */
-        drag(event, clone) { /* nothing to check here */  },
+        drag(event, clone) { return event instanceof DragEvent && clone instanceof Node; },
         /**
             On end of dragging.
             @param { object } event
               Native event object.
         */
-        dragend(event) { /* nothing to check here */  },
+        dragend(event) { return event instanceof DragEvent;  },
         /**
             On start of dragging.
             @param { object } event
               Native event object.
         */
-        dragstart(event) { /* nothing to check here */  },
+        dragstart(event) { return event instanceof DragEvent; },
         /**
             On enter or leave of legal droppable area.             
             @param { boolean } droppable
@@ -374,7 +374,7 @@ export default
             Object.defineProperty(dragInfo, 'droppable', 
             { 
                 get: () => this.droppable, 
-                set: value => this.droppable = value
+                set: value => { this.droppable = value }
             });
           
             return dragInfo;

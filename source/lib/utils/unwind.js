@@ -19,7 +19,7 @@ export default function unwind(object, key, seen = [])
         // circular searches are unresolvable
         if (seen.includes(key)) return undefined;
         
-        if (object.hasOwnProperty(key))
+        if (Object.hasOwn(object, key))
         {
             seen.push(key);
             return resolve(object[key]);

@@ -64,7 +64,7 @@ export default
             Object.defineProperty(link, 'target', 
             {
                 get: () => specs,
-                set: data => specs = data,
+                set: data => { specs = data; },
                 configurable: false
             });
             
