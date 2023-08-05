@@ -35,10 +35,11 @@ jobs:
       # TODO: tests to run here
 
       - name: Config npm for github registry
-        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> ~/dist/.npmrc      
-        
+        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> .npmrc      
+        working-directory: ./dist
+
       - name: Publish to github packages
-        run: npm publish --dry-run
+        run: npm publish
         working-directory: ./dist
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
