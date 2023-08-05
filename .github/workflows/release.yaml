@@ -39,7 +39,7 @@ jobs:
         working-directory: ./dist
 
       - name: Publish to github packages
-        run: npm publish --dry-run
+        run: npm publish
         working-directory: ./dist
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
