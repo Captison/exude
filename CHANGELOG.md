@@ -24,6 +24,11 @@ tasks:
 
 
 ---
+## v0.0.3
+
+- `XIcon` adds `minSize` and `maxSize` props.
+
+
 ## v0.0.1
 
 - initial release!

@@ -13,6 +13,31 @@ import { border, boxe, colors, extend, outline } from '_styles/loaders'
 import { radius, shadow, toPixels, transform, trbl } from '_styles/loaders'
 
 
+let aliases =
+[
+    'boxSizing', 'display',
+    // position and stacking
+    'pos', 'trbl', 'zIndex',
+    // sizing
+    'dims', 'maxDims', 'minDims',
+    // box model
+    'margin', 'pad',
+    // colors
+    'backgrounds', 'colors', 
+    // framing
+    'border', 'outline', 'radius', 'shadow',
+    // content effects            
+    'align', 'filter', 'opacity', 'perspective', 'space', 'transform',
+    // animation
+    'animations', 'transitions',
+    // clipping features
+    'overflow', 'overWrap',
+    // CSS flex and grid child item
+    'flex', 'grid',
+    // interaction control
+    'cursor', 'hide'
+].join(' ');      
+
 /**
     Base layout component.
 */
@@ -281,35 +306,7 @@ export default
         zIndex: [ String, Number ]
     },
     
-    data: () => ({ animations: {}, backgrounds: {}, transitions: {} }),
-    
-    created()
-    {
-        this.aliases =
-        [
-            'boxSizing', 'display',
-            // position and stacking
-            'pos', 'trbl', 'zIndex',
-            // sizing
-            'dims', 'maxDims', 'minDims',
-            // box model
-            'margin', 'pad',
-            // colors
-            'backgrounds', 'colors', 
-            // framing
-            'border', 'outline', 'radius', 'shadow',
-            // content effects            
-            'align', 'filter', 'opacity', 'perspective', 'space', 'transform',
-            // animation
-            'animations', 'transitions',
-            // clipping features
-            'overflow', 'overWrap',
-            // CSS flex and grid child item
-            'flex', 'grid',
-            // interaction control
-            'cursor', 'hide'
-        ].join(' ');      
-    },
+    data: () => ({ aliases, animations: {}, backgrounds: {}, transitions: {} }),
     
     mounted()
     {
