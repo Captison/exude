@@ -25,11 +25,6 @@ export default
         }
     },
     
-    button:
-    {
-        defaultPad: 'v1em h1.25em'
-    },
-
     color:
     {
         named:

@@ -1,6 +1,6 @@
 <script>
 import { context } from '_source/mixins'
-import { toPixels } from '_styles/loaders'
+import { length } from '_styles/loaders'
 
 
 /**
@@ -84,11 +84,11 @@ export default
         
         backgroundOrigin() { return this.origin; },
 
-        backgroundPosition() { return toPixels.str.spaced(this.pos); },
+        backgroundPosition() { return length.spaced(this.pos); },
 
         backgroundRepeat() { return this.repeat; },
         
-        backgroundSize() { return toPixels.str.spaced(this.size); },
+        backgroundSize() { return length.spaced(this.size); },
 
         isBase() { return this.base || false; },
 

@@ -1,5 +1,5 @@
 import color from './color'
-import toPixels from './to-pixels'
+import length from './length'
 
 
 /**
@@ -20,12 +20,7 @@ export default function(value)
 {
     let [ oWidth, oColor, oStyle, oSpace ] = value.split(/!/);
 
-    let spec = 
-    [
-        toPixels.str(oWidth),
-        color(oColor || 'transparent'),
-        oStyle || 'solid'
-    ];
+    let outline = `${length(oWidth)} ${color(oColor || 'transparent')} ${oStyle || 'solid'}`;
     
-    return { outline: spec.join(' '), outlineOffset: toPixels.str(oSpace) };
+    return { outline, outlineOffset: length(oSpace) };
 }

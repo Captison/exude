@@ -1,18 +1,25 @@
 <template>
-  <svg 
-    :class="cn('base size colors margin valign strokeWidth')" 
-    :viewBox="toPixels.spaced(viewBox)" 
-    role="img" 
-    v-html="content" 
-  />
+  <svg :class="cn(aliases)" :viewBox="toPixels.spaced(viewBox)" role="img" v-html="content" />
 </template>
 
 
 <script>
 import v from '_styles/vars'
 import { styler, margin, subCss } from '_source/mixins'
-import { paints, svgIcon, toPixels } from '_styles/loaders'
+import { length, paints, svgIcon, toPixels } from '_styles/loaders'
 
+
+let aliases = 
+[ 
+    'base', 
+    'size', 
+    'colors', 
+    'margin', 
+    'maxSize', 
+    'minSize', 
+    'valign', 
+    'strokeWidth'
+].join(' ');
 
 /**
     Renders an SVG icon.
@@ -41,6 +48,14 @@ export default
         */
         colors: String,
         /**
+            Maximum Icon size.
+        */
+        maxSize: [ String, Number ],
+        /**
+            Maximum Icon size.
+        */
+        minSize: [ String, Number ],
+        /**
             Name of icon to display.
         */
         name: { type: String, required: true },
@@ -62,15 +77,15 @@ export default
         viewBox: { type: String, default: '0 0 6 6' }
     },
     
-    data: () => ({ content: '', toPixels }),
+    data: () => ({ aliases, content: '', toPixels }),
         
     computed:
     {
-        sizeCss()
-        {          
-            let size = toPixels.str(this.size || '24px');            
-            return { height: size, width: size };
-        },
+        maxSizeCss() { return this.resolveSize(this.maxSize, 'max'); },
+        
+        minSizeCss() { return this.resolveSize(this.minSize, 'min'); },
+        
+        sizeCss() { return this.resolveSize(this.size); },
         
         strokeWidthCss() { return this.strokeWidth && { strokeWidth: this.strokeWidth }; },
         
@@ -99,6 +114,19 @@ export default
                 promise.catch(() => this.content = '');
             }
         }
+    },
+    
+    methods:
+    {
+        resolveSize(size, prefix)
+        {
+            let hprop = prefix ? prefix + 'Height' : 'height';
+            let wprop = prefix ? prefix + 'Width' : 'width';
+                        
+            let value = length(size);            
+            
+            return { [hprop]: value, [wprop]: value };
+        }      
     },
 
     stylesheet()

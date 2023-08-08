@@ -1,5 +1,5 @@
 /**
-    Required Configuration Object Structre
+    Library Configuration Object (LCO) Structre
     ---------------------------------------------------------------------------
     Config defined here will be in effect and cannot be overridden.
     
@@ -59,15 +59,7 @@ export default
         */
         named: {}
     },
-    
-    button:
-    {
-        /**
-            Default button padding.
-        */
-        // defaultPad: 'v1em h1.25em'
-    },
-    
+        
     color:
     {
         /**
@@ -184,6 +176,16 @@ export default
             Default icon size (scale units).
         */
         // defaultSize: 6,
+    },
+    
+    length:
+    {
+        /**
+            General purpose enumerated CSS length values.
+            
+            Define "aliases" using keys that point to other keys.                
+        */
+        named: {}
     },
     
     media:

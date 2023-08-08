@@ -21,9 +21,18 @@ tasks:
 - write tests for all utils & loaders
 - add examples for components missing them
 - document provide/inject context handling
+- base config file on CSS datatypes
 
 
 ---
+## v0.0.3
+
+- `XIcon` adds `minSize` and `maxSize` props.
+- added `length` style loader for general purpose enumerated lengths in LCO
+- several components, mixins, loaders updated to use `length`
+- 'button' section removed from LCO
+
+
 ## v0.0.1
 
 - initial release!

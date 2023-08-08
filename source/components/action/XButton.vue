@@ -20,7 +20,6 @@
 
 
 <script>
-import v from '_styles/vars'
 import { formAction } from '_source/mixins'
 import { fontSize } from '_styles/loaders'
 import XFlex from '_components/layout/XFlex'
@@ -66,7 +65,7 @@ export default
             Space-separated list of directional padding values.
             @see `XBox.pad` for details.
         */
-        pad: { type: String, default: () => v.button.defaultPad }
+        pad: { type: String, default: 'v0.75em h1.25em' }
     },
     
     emits:

@@ -8,7 +8,7 @@
 
 <script>
 import { styler } from '_source/mixins'
-import { toPixels } from '_styles/loaders'
+import { length } from '_styles/loaders'
 import XBox from '_components/layout/XBox'
 
 
@@ -87,8 +87,8 @@ export default
             let gap = {};
             let [ col, row ] = (this.gap || '').split(/:/);
             
-            if (col) gap.columnGap = toPixels.str(col);
-            if (row) gap.rowGap = toPixels.str(row);
+            if (col) gap.columnGap = length(col);
+            if (row) gap.rowGap = length(row);
             
             return gap;
         },

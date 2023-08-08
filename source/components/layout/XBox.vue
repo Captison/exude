@@ -10,8 +10,33 @@
 import { uid } from '_lib/utils'
 import { context, dims, margin, pad, styler, subCss } from '_source/mixins'
 import { border, boxe, colors, extend, outline } from '_styles/loaders'
-import { radius, shadow, toPixels, transform, trbl } from '_styles/loaders'
+import { length, radius, shadow, transform, trbl } from '_styles/loaders'
 
+
+let aliases =
+[
+    'boxSizing', 'display',
+    // position and stacking
+    'pos', 'trbl', 'zIndex',
+    // sizing
+    'dims', 'maxDims', 'minDims',
+    // box model
+    'margin', 'pad',
+    // colors
+    'backgrounds', 'colors', 
+    // framing
+    'border', 'outline', 'radius', 'shadow',
+    // content effects            
+    'align', 'filter', 'opacity', 'perspective', 'space', 'transform',
+    // animation
+    'animations', 'transitions',
+    // clipping features
+    'overflow', 'overWrap',
+    // CSS flex and grid child item
+    'flex', 'grid',
+    // interaction control
+    'cursor', 'hide'
+].join(' ');      
 
 /**
     Base layout component.
@@ -33,7 +58,7 @@ export default
         subCss('filter', String, v => ({ filter: v })),
         subCss('opacity', [String, Number], v => ({ opacity: v })),
         subCss('outline', String, outline),
-        subCss('pers', [String, Number], v => ({ perspective: toPixels.str(v) })),
+        subCss('pers', [String, Number], v => ({ perspective: length(v) })),
         subCss('radius', String, radius),
         subCss('shadow', String, v => ({ boxShadow: shadow(v) })),
         subCss('trans', String, transform),
@@ -281,35 +306,7 @@ export default
         zIndex: [ String, Number ]
     },
     
-    data: () => ({ animations: {}, backgrounds: {}, transitions: {} }),
-    
-    created()
-    {
-        this.aliases =
-        [
-            'boxSizing', 'display',
-            // position and stacking
-            'pos', 'trbl', 'zIndex',
-            // sizing
-            'dims', 'maxDims', 'minDims',
-            // box model
-            'margin', 'pad',
-            // colors
-            'backgrounds', 'colors', 
-            // framing
-            'border', 'outline', 'radius', 'shadow',
-            // content effects            
-            'align', 'filter', 'opacity', 'perspective', 'space', 'transform',
-            // animation
-            'animations', 'transitions',
-            // clipping features
-            'overflow', 'overWrap',
-            // CSS flex and grid child item
-            'flex', 'grid',
-            // interaction control
-            'cursor', 'hide'
-        ].join(' ');      
-    },
+    data: () => ({ aliases, animations: {}, backgrounds: {}, transitions: {} }),
     
     mounted()
     {
