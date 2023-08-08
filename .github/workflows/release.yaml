@@ -26,10 +26,6 @@ jobs:
           node-version: ${{ matrix.node-version }}
           registry-url: https://npm.pkg.github.com/
       
-      - name: Config npm for github registry
-        run: echo "//npm.pkg.github.com/Captison:_authToken=${{ secrets.GITHUB_TOKEN }}" >> .npmrc      
-        working-directory: ./dist
-
       - name: Install dependencies
         run: npm ci
 
@@ -37,6 +33,10 @@ jobs:
         run: node task build-prod
 
       # TODO: tests to run here
+
+      - name: Config npm for github registry
+        run: echo "//npm.pkg.github.com/Captison:_authToken=${{ secrets.GITHUB_TOKEN }}" >> .npmrc      
+        working-directory: ./dist
 
       - name: Publish to github packages
         run: npm publish
