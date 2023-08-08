@@ -14,6 +14,6 @@ import vars from '../vars'
 export default function length(name)
 {
     return toPixels.str(unwind(vars.length.named, name));    
-};
+}
 
 length.spaced = (value) => (value || '').split(/\s+/).map(length).join(' ')

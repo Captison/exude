@@ -20,7 +20,6 @@
 
 
 <script>
-import v from '_styles/vars'
 import { formAction } from '_source/mixins'
 import { fontSize } from '_styles/loaders'
 import XFlex from '_components/layout/XFlex'
