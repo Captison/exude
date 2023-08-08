@@ -10,7 +10,7 @@
 
 <script>
 import { styler } from '_source/mixins'
-import { toPixels } from '_styles/loaders'
+import { length } from '_styles/loaders'
 import XFlex from '_components/layout/XFlex'
 
 
@@ -97,7 +97,7 @@ export default
         
         // Dynamic CSS 
         
-        contentMaxWidthCss() { return this.maxContentWidth && { maxWidth: toPixels.str(this.maxContentWidth) }; },
+        contentMaxWidthCss() { return this.maxContentWidth && { maxWidth: length(this.maxContentWidth) }; },
 
         contentWidthCss() { return this.expanded && { width: '100%' }; },
 

@@ -1,4 +1,4 @@
-import { toPixels } from '_styles/loaders'
+import { length } from '_styles/loaders'
 
 
 
@@ -63,14 +63,14 @@ export default
         {
             let dims = {};
             
-            let heightProp = prefix ? prefix + 'Height' : 'height';
-            let widthProp = prefix ? prefix + 'Width' : 'width';
+            let hprop = prefix ? prefix + 'Height' : 'height';
+            let wprop = prefix ? prefix + 'Width' : 'width';
             
             if (height || height === 0)
-                dims[heightProp] = toPixels.str(height);
+                dims[hprop] = length(height);
                 
             if (width || width === 0)
-                dims[widthProp] = toPixels.str(width);
+                dims[wprop] = length(width);
             
             return dims;          
         }

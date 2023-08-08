@@ -15,7 +15,7 @@
 <script>
 import { styler, subCss } from '_source/mixins'
 import v from '_styles/vars'
-import { fontSize, fontWeight, shadow, toPixels } from '_styles/loaders'
+import { fontSize, fontWeight, length, shadow } from '_styles/loaders'
 import XBox from '_components/layout/XBox'
 
 
@@ -33,7 +33,7 @@ export default
         styler,
         subCss('bold', Boolean, fontWeight),
         subCss('italic', Boolean, v => v ? { fontStyle: 'italic' } : {}),
-        subCss('letter', [String, Number], v => ({ letterSpacing: toPixels.str(v) })),
+        subCss('letter', [String, Number], v => ({ letterSpacing: length(v) })),
         subCss('textShadow', String, v => ({ textShadow: shadow(v) })),
         subCss('textTransform', String, v => ({ textTransform: v })),
         subCss('weight', String, fontWeight)

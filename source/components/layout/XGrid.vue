@@ -8,7 +8,7 @@
 
 <script>
 import { styler } from '_source/mixins'
-import { toPixels } from '_styles/loaders'
+import { length } from '_styles/loaders'
 import XBox from '_components/layout/XBox'
 
 
@@ -83,7 +83,7 @@ export default
         gapCss() 
         { 
             let [ colGap, rowGap ] = (this.gap || '').split(/:/);
-            return { gridColumnGap: toPixels.str(colGap), gridRowGap: toPixels.str(rowGap) }; 
+            return { gridColumnGap: length(colGap), gridRowGap: length(rowGap) }; 
         },
         
         gridCss() { return { gridTemplateColumns: this.cols || 'auto', gridTemplateRows: this.rows || 'auto' }; }

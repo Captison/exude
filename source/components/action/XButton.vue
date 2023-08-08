@@ -66,7 +66,7 @@ export default
             Space-separated list of directional padding values.
             @see `XBox.pad` for details.
         */
-        pad: { type: String, default: () => v.button.defaultPad }
+        pad: { type: String, default: 'v0.75em h1.25em' }
     },
     
     emits:

@@ -1,6 +1,6 @@
 import dire from './dire'
 import color from './color'
-import toPixels from './to-pixels'
+import length from './length'
 
 
 let props =
@@ -31,7 +31,7 @@ export default function(value)
 
         let spec = 
         [
-            toPixels.str(bWidth),
+            length(bWidth),
             color(bColor || 'transparent'),
             bStyle || 'solid'
         ];

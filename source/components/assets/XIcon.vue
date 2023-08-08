@@ -6,7 +6,7 @@
 <script>
 import v from '_styles/vars'
 import { styler, margin, subCss } from '_source/mixins'
-import { paints, svgIcon, toPixels } from '_styles/loaders'
+import { length, paints, svgIcon, toPixels } from '_styles/loaders'
 
 
 let aliases = 
@@ -123,7 +123,7 @@ export default
             let hprop = prefix ? prefix + 'Height' : 'height';
             let wprop = prefix ? prefix + 'Width' : 'width';
                         
-            let value = toPixels.str(size);            
+            let value = length(size);            
             
             return { [hprop]: value, [wprop]: value };
         }      

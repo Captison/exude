@@ -1,8 +1,7 @@
 import dire from './dire'
-import toPixels from './to-pixels'
+import length from './length'
 
 
-let reNum = /^-?(\d*\.)?\d+$/;
 let caps = { t: 'Top', r: 'Right', b: 'Bottom', l: 'Left' };
 let lows = { t: 'top', r: 'right', b: 'bottom', l: 'left' };
 
@@ -19,6 +18,5 @@ let lows = { t: 'top', r: 'right', b: 'bottom', l: 'left' };
 */
 export default function(value, pre = '')
 {
-    return dire(value, (dir, val) => 
-        ({ [pre ? pre + caps[dir] : lows[dir]]: reNum.test(val) ? toPixels(val) + 'px' : val }));
+    return dire(value, (dir, val) => ({ [pre ? pre + caps[dir] : lows[dir]]: length(val) }));
 }

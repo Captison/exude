@@ -10,7 +10,7 @@
 import { uid } from '_lib/utils'
 import { context, dims, margin, pad, styler, subCss } from '_source/mixins'
 import { border, boxe, colors, extend, outline } from '_styles/loaders'
-import { radius, shadow, toPixels, transform, trbl } from '_styles/loaders'
+import { length, radius, shadow, transform, trbl } from '_styles/loaders'
 
 
 let aliases =
@@ -58,7 +58,7 @@ export default
         subCss('filter', String, v => ({ filter: v })),
         subCss('opacity', [String, Number], v => ({ opacity: v })),
         subCss('outline', String, outline),
-        subCss('pers', [String, Number], v => ({ perspective: toPixels.str(v) })),
+        subCss('pers', [String, Number], v => ({ perspective: length(v) })),
         subCss('radius', String, radius),
         subCss('shadow', String, v => ({ boxShadow: shadow(v) })),
         subCss('trans', String, transform),
