@@ -25,3 +25,16 @@ let double = false;
   <x-checkbox :value.sync="double" align=":bottom" /> {{ double ? 'Checked' : 'Unchecked' }}.
 </x-field>
 ```
+
+Checkbox custom state demo:
+
+```vue
+let on = false;
+
+<x-field el="label" hf-colors="primeDark">
+  <x-checkbox :value.sync="on" colors=":primeDark" pad="a1" radius="a.5"> 
+    <x-box :colors="`:${on ? 'primeLight' : 'transparent'}`" height="3" width="3" radius="a.5" />
+  </x-checkbox> 
+  {{ on ? 'Checked' : 'Unchecked' }}.
+</x-field>
+```

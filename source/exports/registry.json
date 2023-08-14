@@ -1,7 +1,7 @@
 {
     "XAnimation": { "path": "_components/extension/XAnimation", "released": true },
     "XApp": { "path": "_components/application/XApp", "released": true },
-    "XAsync": { "path": "_components/data/XAsync", "released": true },
+    "XAsync": { "path": "_components/data/XAsync", "released": false },
     "XBackground": { "path": "_components/extension/XBackground", "released": true },
     "XBox": { "path": "_components/layout/XBox", "released": true },
     "XButton": { "path": "_components/action/XButton", "released": true },
@@ -11,6 +11,9 @@
     "XDropMenu": { "path": "_components/overlay/XDropMenu", "released": true },
     "XExapse": { "path": "_components/utility/XExapse", "released": true },
     "XField": { "path": "_components/form/XField", "released": true },
+    "XFieldList": { "path": "_components/form/XFieldList", "released": true },
+    "XFieldset": { "path": "_components/form/XFieldset", "released": true },
+    "XFilter": { "path": "_components/data/XFilter", "released": true },
     "XFlex": { "path": "_components/layout/XFlex", "released": true },
     "XFloater": { "path": "_components/overlay/XFloater", "released": true },
     "XForm": { "path": "_components/form/XForm", "released": true },

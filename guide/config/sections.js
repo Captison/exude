@@ -122,6 +122,11 @@ module.exports =
                 components: components('drag-and-drop', '*.vue')
             },
             {
+                name: 'Data',
+                description: 'Components manage or manipulate data',
+                components: components('data', '*.vue')
+            },
+            {
                 name: 'Utility',
                 description: 'Components that are more functional and less pretty',
                 components: components('utility', '*.vue')

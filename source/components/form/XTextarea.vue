@@ -23,6 +23,12 @@ export default
     
     components: { XText },
     
+    updated()
+    {
+        // ensure value is set on control (vue bug?)
+        if (typeof this.myValue !== 'undefined') this.$el.value = this.myValue;
+    },
+    
     computed:
     {
         baseProps() 

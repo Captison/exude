@@ -22,7 +22,7 @@ export default
         /**
             Form field name.
         */
-        name: String,
+        name: [ String, Number ],
         /**
             Is this field required?
         */
@@ -30,13 +30,16 @@ export default
         /**
             Form field value.
         */
-        value: [ String, Number ]
+        value: null
     },
 
     emits:
     {
         /**
             On value change.
+            
+            Mote that this event does not fire if __XFieldset__ parent is 
+            present.
             
             @property { any } value
               Updated value.
@@ -53,21 +56,21 @@ export default
             status: { disabled: false, submitDisabled: false, valid: true },
             // to remove this field from the form
             remove: () => {},
-            // to update the form
-            update: () => {}
+            // to update the form status
+            update: () => {},
         };
 
         return { defaultFormLink, formLink: defaultFormLink };
     },
     
     mounted()
-    {
-        // update form on changes
-        let formMembers = ['isInvalid', 'myValue'];
-        let formAction = () => this.formLink.update()
-        formMembers.forEach(member => this.$watch(member, formAction));
-
-        formAction();
+    {        
+        let formUpdate = () => this.formLink.update()
+        
+        this.$watch('myValue', formUpdate);
+        this.$watch('isInvalid', formUpdate);
+        
+        formUpdate();
     },
 
     computed:
@@ -102,7 +105,7 @@ export default
 
     watch:
     {
-        myName() { this.resetFormContext(); },
+        myName() { this.resetFormContext(); }
     },
 
     methods:
@@ -130,12 +133,22 @@ export default
             }
         },
         
+        emitUpdate(value) 
+        { 
+            if (this.formLink.change)
+                this.formLink.change(value);
+            else
+                this.$emit('update:value', value) 
+        },
+      
         handleInput: debounce(function(evt)
         {
             if (!this.isDisabled)
             {
+                let value = this.inputValue(evt.target.value);
+
                 this.$emit('input', evt);
-                this.$emit('update:value', this.inputValue(evt.target.value));
+                this.emitUpdate(value);                  
             }
         }, 5),
         

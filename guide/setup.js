@@ -59,6 +59,8 @@ Vue.component('Opt',
     Set global mockdata
 */
 import vars from '_styles/vars'
+import { requireContextMap } from '_lib/utils'
+
 
 let random = (max, min = 0) => Math.floor(Math.random() * (max - min)) + min
 let colors = Object.keys(vars.color.named);
@@ -68,5 +70,7 @@ global.mock =
 {
     color: () => colors[random(colors.length)],
     
-    icon: () => icons[random(icons.length)]
+    icon: () => icons[random(icons.length)],
+    
+    data: requireContextMap(require.context('./data', false, /\.json$/))
 }

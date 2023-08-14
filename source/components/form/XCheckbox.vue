@@ -1,6 +1,13 @@
 <template>
   <x-box v-bind="baseProps" @click="handleInput">
-    <x-icon :name="icon" :size="size" />
+    <!-- 
+        @slot checkbox content 
+        @binding { boolean } checked
+          Is checkebox checked?
+    -->
+    <slot :checked="value">
+      <x-icon :name="icon" :size="size" />
+    </slot>
     <input ref="input" :class="cn('hideInput')" v-bind="fieldProps" type="checkbox" :checked="isTrue" />
   </x-box>
 </template>
@@ -26,6 +33,10 @@ export default
     props:
     {
         /**
+            Icon names for checkbox state (`on:off`).
+        */
+        icons: { type: String, default: 'check:checkEmpty' },
+        /**
             Checkbox size.
             @see `XIcon.size` for details.
         */
@@ -43,7 +54,11 @@ export default
 
     computed:
     {
-        icon() { return this.isTrue ? 'check' : 'checkEmpty'; },
+        icon() 
+        {
+            let [ on, off ] = this.icons.split(':');
+            return this.isTrue ? on : off; 
+        },
         
         baseProps()
         {
