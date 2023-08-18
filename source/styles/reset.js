@@ -34,6 +34,7 @@ export default
     {
         background: 'none',
         border: 'none',
+        color: 'inherit',
         font: 'inherit',
         outline: 'none',
     },

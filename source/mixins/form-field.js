@@ -12,6 +12,11 @@ export default
     props:
     {
         /**
+            Milliseconds to wait before sending `update:value` event.
+            @ignore
+        */
+        debounce: { type: Number, default: 5 },
+        /**
             Is this field inaccessible?
         */
         disabled: Boolean,
@@ -38,8 +43,10 @@ export default
         /**
             On value change.
             
-            Mote that this event does not fire if __XFieldset__ parent is 
-            present.
+            Mote that this event does not fire if one of the following
+            components is an ancestor.            
+            - __XFieldset__
+            - __XFieldList__
             
             @property { any } value
               Updated value.
@@ -100,12 +107,29 @@ export default
 
         myName() { return this.name; },
 
-        myValue() { return this.value; },
+        myValue() { return this.formLink.change ? this.formLink.value() : this.value; },
     },
 
     watch:
     {
-        myName() { this.resetFormContext(); }
+        debounce:
+        {
+            handler()
+            {
+                let emitUpdate = value => 
+                {
+                    if (this.formLink.change)
+                        this.formLink.change(value);
+                    else
+                        this.$emit('update:value', value)                   
+                }
+              
+                this.emitUpdate = debounce(emitUpdate, this.debounce);
+            },
+            immediate: true
+        },
+      
+        myName() { this.resetFormContext(); },
     },
 
     methods:
@@ -133,15 +157,7 @@ export default
             }
         },
         
-        emitUpdate(value) 
-        { 
-            if (this.formLink.change)
-                this.formLink.change(value);
-            else
-                this.$emit('update:value', value) 
-        },
-      
-        handleInput: debounce(function(evt)
+        handleInput(evt)
         {
             if (!this.isDisabled)
             {
@@ -150,7 +166,7 @@ export default
                 this.$emit('input', evt);
                 this.emitUpdate(value);                  
             }
-        }, 5),
+        },
         
         /**
             Override this method to manage value sent via `update:value` event.

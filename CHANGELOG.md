@@ -27,13 +27,19 @@ tasks:
 
 - added `XFieldset` for grouping form controls (object)
 - added `XFieldList` for listing form controls (array)
-- added `XFilter` for filtering array data
+- added `XLister` for listing/filtering array data
+- added `XChoose` form control wrapper for `XOptionGroup`
+- `XBackground` now interpolates `image` attribute
 - `form-field` mixin updates to accomodate new form controls
 - `XCheckbox` allows for custom icons
 - fix field update failure bug in `XInput`, `XTextara` 
+- `XDropMenu` simplified
 - added `filter` and `require-context-map` utilities
+- debounce timeout added to `form-field` mixin
+- `inject` interpolation style loader added
 - new icons and mock data added for styleguide
 - css reset adds fieldset styles
+- css reset forces form controls to inherit color
 
 
 ## v0.0.3

@@ -69,7 +69,8 @@ export default
                     status,
                     update: () => this.valid = !Object.keys(fields).find(name => fields[name].invalid),
                     change: value => this.emitUpdate({ ...this.myValue, [name]: value }),
-                    remove: () => { delete fields[name]; link.update(); }
+                    remove: () => { delete fields[name]; link.update(); },
+                    value: () => (this.myValue || [])[name]
                 };
 
                 fields[name] = data;

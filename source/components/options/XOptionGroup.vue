@@ -104,7 +104,7 @@ export default
             @return { object }
               Details object for the given option or undefined if not found.
         */
-        getOption(value) { this.map.get(this.getOptionKey(value)); },
+        getOption(value) { return this.map.get(this.getOptionKey(value)); },
 
         provideOptionGroupContext()
         {
@@ -137,7 +137,6 @@ export default
         toggleOption(value, bool)
         {
             let index = this.indexOf(value);
-            let limit = typeof this.limit === 'number' ? this.limit : Infinity;
             let isBool = typeof bool === 'boolean';
 
             if (index >= 0 && (!isBool || !bool))
@@ -145,7 +144,7 @@ export default
                 if (this.multi)
                     this.$emit('update:value', this.values.slice(0, index).concat(this.values.slice(index + 1)));
             }
-            else if (index < 0 && (!isBool || bool) && this.values.length < limit)
+            else if (index < 0 && (!isBool || bool) && this.values.length < this.limit)
             {
                 this.$emit('update:value', this.multi ? [ ...this.values, value ] : value);
             }

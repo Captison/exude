@@ -22,14 +22,14 @@ import op from '_lib/deps/object-path'
     The configuration for a sub-criteria object may include:
       - `$test` (any): The `criteria` to test against (recursive).
       - `$and` (boolean): Are tests ANDed (instead of ORed) for child criteria?
-      - `$path` (string): Path in target objects to test value(s) against.
+      - `$path` (string/array): Path(s) in target objects to test value(s) against.
       - `$negate` (boolean): Flip the boolean result of the test?
       
     To clarify, the `$test` parameter is a `criteria` definition, allowing for
     for the recursiveness of the filtration tree.
 
-    The returned function, when passed a value, will return true/false for pass/fail
-    of filtration tests, respectively, and is suitable for use like so:
+    The returned function, when passed a value, will return true/false for 
+    pass/fail of filtration tests, respectively, and is suitable for use like so:
       `
         let array = [ ... ];
         let filterFn = filter( CRITERIA_GOES_HERE );
@@ -48,32 +48,66 @@ export default function unit(criteria)
     if (typeof criteria !== 'object' || !Object.hasOwn(criteria, '$test')) 
         criteria = { $test: criteria };
   
-    let { $and = false, $negate = false, $path, $test } = criteria;      
-    let all = [].concat($test);
+    let { $and = false, $negate = false, $path, $test } = criteria;    
     
-    return value => 
+    return value =>
     {
-        let useValue = value;
+        let values = toValues(value, $path);      
 
-        if ($path && typeof value === 'object' && value !== null)
-            useValue = op.get(value, $path);
-        
-        return (!$and == !!all.find(test => !$and == toFunc(test)(useValue))) == !$negate
-    }
+        let tester = test =>
+        {
+            // `test` is already a function
+            if (typeof test === 'function') return test(value);       
+            // test for a regular expression match    
+            if (test instanceof RegExp) return values.findIndex(v => test.test(v)) >= 0;
+            // at least one criteria must pass when `test` is an array
+            if (Array.isArray(test)) return test.findIndex(t => tester(t)) >= 0;
+            // new group/unit or test against the values of an object
+            if (typeof test === 'object' && test !== null)
+            {
+                if (Object.hasOwn(test, '$test')) return unit(test)(value);
+                // test against keys and values
+                return tester(Object.values(test));
+            }
+            // default to an equality test
+            return values.findIndex(v => v === test) >= 0;
+        }
+        // properly AND, OR, and NEGATE results
+        return (!$and == ([].concat($test).findIndex(test => !$and == tester(test)) >= 0)) == !$negate;
+    }    
 }
 
 
-function toFunc(test)
+function toValues(value, paths)
 {
-    // `test` is already a function
-    if (typeof test === 'function') return test;
-    // test for a regular expression match    
-    if (test instanceof RegExp) return value => test.test(value)
-    // at least one criteria must pass when `test` is an array
-    if (Array.isArray(test)) return value => !!test.find(t => toFunc(t)(value))
-    // new group/unit or test against the values of an object
-    if (typeof test === 'object' && test !== null) 
-        return Object.hasOwn(test, '$test') ? unit(test) : toFunc(Object.values(test));
-    // default to an equality test
-    return value => value === test      
+    if (paths && typeof value === 'object' && value !== null)
+    {
+        let reducer = (array, string) =>
+        {
+            let [ path, hint ] = (string || '').split(/\//);
+            return path ? [ ...array, ...toArray(op.get(value, path), hint) ] : array;
+        }
+        
+        return [].concat(paths).reduce(reducer, []);
+    }     
+
+    return toArray(value);
+}
+        
+
+function toArray(value, hint)
+{
+    if (Array.isArray(value)) return value;
+    // target value is `key::value` for objects
+    if (typeof value === 'object' && value !== null)
+    {
+        // target values are all the keys of the object
+        if (hint === 'keys') return Object.keys(value);
+        // target values are all the keys of the object
+        if (hint === 'keyvals') return Object.entries(value).map(e => e.join('/'));
+        // target values are all the values of the object
+        return Object.values(value);
+    }
+    
+    return [ value ];
 }

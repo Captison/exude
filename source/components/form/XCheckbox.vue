@@ -5,7 +5,7 @@
         @binding { boolean } checked
           Is checkebox checked?
     -->
-    <slot :checked="value">
+    <slot :checked="isTrue">
       <x-icon :name="icon" :size="size" />
     </slot>
     <input ref="input" :class="cn('hideInput')" v-bind="fieldProps" type="checkbox" :checked="isTrue" />

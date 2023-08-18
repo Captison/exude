@@ -1,80 +1,32 @@
 <template>
-  <x-flex v-bind="$attrs">
+  <div v-frag>
     <!-- 
-        @slot default content                
+        @slot default content
+        
+        Descendant form controls should use an existing index from `list` as 
+        their `name` for proper integration with this list control.
+        
+        __XLister__ compatible.
         
         @binding { function } append
           Adds new value to end of list (`append(value)`).
-          Pass `[]` or `{}` to add a new array or object.
         @binding { function } change
           Change an existing value in the list (`change(index, value)`).
-        @binding { number } level
-          Current field list nesting level.
+        @binding { boolean } disabled
+          Is this list currently disabled?
+        @binding { array } list
+          Current data in this list.
+        @binding { function } remove
+          Remove an existing value in the list (`remove(index)`).
     -->
-    <slot :append="append" :change="change" :level="level" />
-    <template v-if="myValue.length">
-      <div v-for="(val, idx, slot = slotType(val)) in myValue" :key="idx" :style="{ display: 'contents' }">
-        <template v-if="slot == 'single'">
-          <!-- 
-              @slot single value repeateable content
-              
-              No more than one form element should be rendered for this slot,
-              and that element should use `index` as its 'name' and `vallue` for
-              its data.
-              
-              @binding { number } index
-                Index of the content in this field list.
-              @binding { number } value
-                Value for the content in this field list.
-              @binding { function } remove
-                A function to remove this item.
-              @binding { number } level
-                Current field list nesting level.
-          -->
-          <slot 
-            name="single" 
-            :index="idx" 
-            :value="val" 
-            :remove="() => remove(idx)" 
-            :level="level" 
-            :disabled="isDisabled"
-          />
-        </template>
-        <x-fieldset v-if="slot == 'object'" #default="values" :name="idx" :value="val" :disabled="isDisabled">
-          <!-- 
-              @slot object value repeatable content
-              
-              This slot is wrapped by __XFieldset__ container to allow for form
-              control value capture into an object.
-              
-              @binding { function } remove
-                A function to remove this item.
-              @binding { number } level
-                Current field list nesting level.
-          -->
-          <slot name="object" v-bind="values" :remove="() => remove(idx)" :level="level" />
-        </x-fieldset>
-        <x-field-list v-if="slot == 'array'" v-bind="$attrs" :name="idx" :value="val" :level="level--">
-          <template #default="slotprops">
-            <slot v-bind="slotprops" :remove="() => remove(idx)" />         
-          </template>
-          <template #single="slotprops">
-            <slot name="single" v-bind="slotprops" />
-          </template>
-          <template #object="slotprops">
-            <slot name="object" v-bind="slotprops" />
-          </template>
-        </x-field-list>
-      </div>
-    </template>
-  </x-flex>
+    <slot :list="(myValue || [])" :append="append" :change="change" :remove="remove" :disabled="isDisabled" />
+  </div>
 </template>
 
 
 <script>
 import { context, formField } from '_source/mixins'
-import XFieldset from '_components/form/XFieldset'
-import XFlex from '_components/layout/XFlex'
+import { frag } from '_source/directives'
 
 
 /**
@@ -83,23 +35,17 @@ import XFlex from '_components/layout/XFlex'
     Features:
     - submits array data to ancestor __XForm__.
     - disable all descendant form controls and buttons at once
-
-    Unused attributes are passed to __XFlex__.
 */
 export default
 {
     name: 'XFieldList',
 
-    mixins: [ context('form').provider, formField ],
+    mixins: [ context('form').provider, context('lister').provider, formField ],
     
-    components: { XFieldset, XFlex },
+    directives: { frag },
 
     props:
     {
-        /**
-            Max filed list nesting level.                        
-        */
-        level: { type: Number, default: Infinity },
         /**
             Field list value(s).
         */
@@ -131,19 +77,8 @@ export default
             let values = [ ...this.myValue.slice(0, index), ...this.myValue.slice(index + 1) ];            
             this.emitUpdate(values);
         }      
-        
-        let slotType = (value) =>
-        {
-            if (value !== null)
-            {
-                if (Array.isArray(value) && this.level > 0) return 'array';
-                if (typeof value === 'object') return 'object';
-            }
-                      
-            return 'single';
-        }
 
-        return { append, change, fields: [], valid: true, remove, slotType };
+        return { append, change, fields: [], valid: true, remove };
     },
     
     computed:
@@ -173,16 +108,19 @@ export default
                     { 
                         this.fields.splice(index, 1); 
                         link.update(); 
-                    }
+                    },
+                    value: () => (this.myValue || [])[index]
                 };
-                
+                                
                 fields[index] = data;
 
                 return link;
             }
 
             return { ...this.form, field };
-        }        
-    }
+        },
+        
+        provideListerContext() { return { array: () => this.myValue }; }
+    }    
 }
 </script>

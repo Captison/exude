@@ -9,14 +9,12 @@
     <slot name="target" />
     <x-exapse
       ref="box"
+      v-bind="$attrs"
       pos="absolute"
       :expand="show"
       :trbl="trbl"
-      :max-extent="maxExtent"
-      :min-breadth="minBreadth"
       :horiz="!vertOpen"
       :lower="side === 'top' || side === 'left'"
-      :z-index="20"
       :hide="!visible"
       @content-resize="doResize"
       @transitionstart="handleTransStart"
@@ -40,6 +38,9 @@ import XExapse from '_components/utility/XExapse'
 /**
     An overlay for menu items.
 
+    Requires a positioned parent within which to anchor itself.
+    
+    Unused attributes are passed to __XExapse__.
 */
 export default
 {
@@ -58,28 +59,11 @@ export default
         */
         gap: { type: Number, default: 0 },
         /**
-            Maximum expansion length in scale units.            
-        */
-        maxExtent: Number,
-        /**
-            Minimum length for non-expanding dimension.            
-        */
-        minBreadth: [ Number, String ],
-        /**
             Alignment of target with menu by percentage (0 to 1).
             
             This takes two values in form of `target:menu`.
         */
         offsets: { type: String, default: '0:0' },
-        /**
-            CSS position value.
-
-            The default setting forces the root element to serve as the 
-            positioned parent for the drop menu.
-            
-            @see `XBox.pos` for details.
-        */
-        pos: { type: String, default: 'relative' },
         /**
             Side of target or positioned parent to display.
             @values top, right, bottom, left
@@ -96,19 +80,7 @@ export default
     
     computed:
     {
-        baseProps()
-        {
-            let props =
-            {
-                // relative position default if target
-                pos: this.$slots.target ? 'relative' : null,
-                // inline display default if target
-                display: this.$slots.target ? 'inline-block' : null,
-                ...this.$attrs
-            };
-            
-            return props;
-        },
+        baseProps() { return this.$slots.target ? { pos: 'relative', display: 'inline-block' } : {};  },
       
         trbl()
         {
