@@ -20,6 +20,7 @@ tasks:
 - add examples for components missing them
 - add documentation for provide/inject context handling
 - allow change of CSS reset
+- remove styleguide dependency on 'dark' and 'light' colors
 
 
 ---
