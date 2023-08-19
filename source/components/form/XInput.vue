@@ -21,6 +21,12 @@ export default
     
     components: { XText },
     
+    updated()
+    {
+        // ensure value is set on control (vue bug?)
+        if (typeof this.myValue !== 'undefined') this.$el.value = this.myValue;
+    },
+    
     computed:
     {
         baseProps() 
@@ -33,7 +39,7 @@ export default
                 el: 'input',
                 value: this.myValue
             };
-
+            
             if (this.isDisabled) props.cursor = 'not-allowed';
             
             return props; 

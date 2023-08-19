@@ -12,6 +12,11 @@ export default
     props:
     {
         /**
+            Milliseconds to wait before sending `update:value` event.
+            @ignore
+        */
+        debounce: { type: Number, default: 5 },
+        /**
             Is this field inaccessible?
         */
         disabled: Boolean,
@@ -22,7 +27,7 @@ export default
         /**
             Form field name.
         */
-        name: String,
+        name: [ String, Number ],
         /**
             Is this field required?
         */
@@ -30,13 +35,18 @@ export default
         /**
             Form field value.
         */
-        value: [ String, Number ]
+        value: null
     },
 
     emits:
     {
         /**
             On value change.
+            
+            Mote that this event does not fire if one of the following
+            components is an ancestor.            
+            - __XFieldset__
+            - __XFieldList__
             
             @property { any } value
               Updated value.
@@ -53,21 +63,21 @@ export default
             status: { disabled: false, submitDisabled: false, valid: true },
             // to remove this field from the form
             remove: () => {},
-            // to update the form
-            update: () => {}
+            // to update the form status
+            update: () => {},
         };
 
         return { defaultFormLink, formLink: defaultFormLink };
     },
     
     mounted()
-    {
-        // update form on changes
-        let formMembers = ['isInvalid', 'myValue'];
-        let formAction = () => this.formLink.update()
-        formMembers.forEach(member => this.$watch(member, formAction));
-
-        formAction();
+    {        
+        let formUpdate = () => this.formLink.update()
+        
+        this.$watch('myValue', formUpdate);
+        this.$watch('isInvalid', formUpdate);
+        
+        formUpdate();
     },
 
     computed:
@@ -97,11 +107,28 @@ export default
 
         myName() { return this.name; },
 
-        myValue() { return this.value; },
+        myValue() { return this.formLink.change ? this.formLink.value() : this.value; },
     },
 
     watch:
     {
+        debounce:
+        {
+            handler()
+            {
+                let emitUpdate = value => 
+                {
+                    if (this.formLink.change)
+                        this.formLink.change(value);
+                    else
+                        this.$emit('update:value', value)                   
+                }
+              
+                this.emitUpdate = debounce(emitUpdate, this.debounce);
+            },
+            immediate: true
+        },
+      
         myName() { this.resetFormContext(); },
     },
 
@@ -130,14 +157,16 @@ export default
             }
         },
         
-        handleInput: debounce(function(evt)
+        handleInput(evt)
         {
             if (!this.isDisabled)
             {
+                let value = this.inputValue(evt.target.value);
+
                 this.$emit('input', evt);
-                this.$emit('update:value', this.inputValue(evt.target.value));
+                this.emitUpdate(value);                  
             }
-        }, 5),
+        },
         
         /**
             Override this method to manage value sent via `update:value` event.

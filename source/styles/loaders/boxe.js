@@ -8,7 +8,7 @@ let reducer = (object, type) =>
     /**
         Translates enumerations from the LCO into CSS.
         
-        Use commas to specify multiple enumerations in `enum`.
+        Use commas to specify multiple enumerations in `names`.
 
         @param { string } names
           Enumeration name(s) of the CSS to get.

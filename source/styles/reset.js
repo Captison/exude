@@ -19,12 +19,12 @@ export default
         listStyle: 'none',
     },
 
-    'h1,h2,h3,h4,h5,h6,pre,code,p':
+    'code,h1,h2,h3,h4,h5,h6,p,pre':
     {
         fontSize: '1em',
     },
 
-    'ul,ol,dl,li,dt,dd,td,th,h1,h2,h3,h4,h5,h6,hr,pre,form,body,html,p,blockquote,fieldset,input,button':
+    'blockquote,body,button,dd,dl,dt,fieldset,form,h1,h2,h3,h4,h5,h6,hr,html,input,legend,li,ol,p,pre,td,th,ul':
     {
         padding: 0,
         margin: 0,
@@ -34,11 +34,12 @@ export default
     {
         background: 'none',
         border: 'none',
+        color: 'inherit',
         font: 'inherit',
         outline: 'none',
     },
         
-    'a img,:link img,:visited img':
+    'a img,:link img,:visited img, fieldset':
     {
         border: 'none',
     },

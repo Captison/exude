@@ -1,6 +1,6 @@
 <script>
 import { context } from '_source/mixins'
-import { length } from '_styles/loaders'
+import { inject, length } from '_styles/loaders'
 
 
 /**
@@ -80,7 +80,7 @@ export default
         
         backgroundClip() { return this.clip; },
 
-        backgroundImage() { return this.image; },
+        backgroundImage() { return inject(this.image, this.$attrs); },
         
         backgroundOrigin() { return this.origin; },
 

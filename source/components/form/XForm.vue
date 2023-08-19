@@ -1,7 +1,7 @@
 <template>
   <x-box v-bind="$attrs" el="form" @submit.prevent>
     <!-- 
-        @slor form content 
+        @slot form content 
         
         @binding { boolean } valid
           Is the form currently valid?

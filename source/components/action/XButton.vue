@@ -6,7 +6,8 @@
     :font="font" 
     :cursor="cursor" 
     :pad="pad"
-    :disabled="disabled"
+    :disabled="isDisabled"
+    :inactive="isDisabled"
     v-on="buttonEvents"
   >
     <x-flex aligns=":center" :gap="gap">
