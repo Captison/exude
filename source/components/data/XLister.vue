@@ -8,20 +8,18 @@
     -->
     <slot :array="filteredList" />
     <template v-if="filteredList.length">
-      <x-box v-for="(value, index) in filteredList" v-bind="$attrs" :key="index">
+      <x-box v-for="(value, index) in iterableList" v-bind="$attrs" :key="index">
         <!-- 
             @slot iterate content 
             
             Each item has an __XBox__ parent.
             
-            @binding { array } array
-              The filtered list of items.
-            @binding { anny } index
+            @binding { number } index
               Current index in list.
-            @binding { anny } item
+            @binding { any } item
               Value in list at `index`.
         -->
-        <slot name="iter" :index="index" :item="value" :array="filteredList" />
+        <slot name="iter" :index="index" :item="value" />
       </x-box>
     </template>
     <!-- @slot content for empty list -->
@@ -32,12 +30,11 @@
 
 <script>
 import { context } from '_source/mixins'
-import { filter } from '_lib/utils'
+import { exists, filter } from '_lib/utils'
 import { frag } from '_source/directives'
 import XBox from '_components/layout/XBox'
 
 
-let listerCtx = context('lister');
 /**
     Array data list component.
     
@@ -49,7 +46,7 @@ export default
 {
     name: 'XLister',
     
-    mixins: [ listerCtx.provider, listerCtx.consumer ],
+    mixins: [ context('lister').provider ],
     
     components: { XBox },
 
@@ -83,41 +80,31 @@ export default
         list: [ Array, Number ]
     },
     
-    data()
-    {
-        let defaultListerLink =
-        {
-            array: () => null,            
-            filterSpec: () => null
-        }
-        
-        return { defaultListerLink, listerLink: defaultListerLink };
-    },
-    
     computed:
     {
         array() 
         {
-            let array = this.list || this.listerLink.array();
-            
+            let array = this.list;
+
+            if (!exists(array) && typeof this.lister === 'function')
+                array = this.lister();
+
             if (typeof array === 'number') 
-                return Array.apply(null, Array(array));
-                
+                array = Array.apply(null, Array(array));
+
             return array || []; 
         },
-      
-        filteredList() 
-        {
-            let spec = this.filterSpec || this.listerLink.filterSpec();
-            return spec ? this.array.filter(filter(spec)) : this.array; 
-        }
+        
+        filteredList() { return this.filterFn ? this.filterFn.list(this.array) : this.array; },    
+
+        filterFn() { return exists(this.filterSpec) ? filter(this.filterSpec) : null; },
+        
+        iterableList() { return this.filterFn ? this.filterFn.iterate(this.array) : this.array; }      
     },
     
     methods:
     {
-        provideListerContext() { return { array: () => this.filteredList }; },
-        
-        changeListerContext() { this.listerLink = { ...this.defaultListerLink, ...this.lister }; }
+        provideListerContext() { return () => this.filteredList }
     }
 }
 </script>

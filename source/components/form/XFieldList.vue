@@ -120,7 +120,7 @@ export default
             return { ...this.form, field };
         },
         
-        provideListerContext() { return { array: () => this.myValue }; }
+        provideListerContext() { return () => this.myValue }
     }    
 }
 </script>

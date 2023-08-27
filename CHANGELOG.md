@@ -24,6 +24,19 @@ tasks:
 
 
 ---
+## v0.0.5
+
+- `observe-intersection` dom util added
+- `observe-viewport-intersection` directive added
+- `XLister` simplified
+- input debounce for form controls updated
+- `form-field` mixin emits `update:value` even when group controlled
+- `equals` util added (object compare)
+- `filter` util adds `list` and `iterate` methods
+- `patches` file added (patches Object.hasOwn for old browsers)
+- `debounce` util adds immediate execution for negative wait time
+
+
 ## v0.0.4
 
 - added `XFieldset` for grouping form controls (object)

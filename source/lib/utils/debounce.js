@@ -5,7 +5,8 @@
     @param { function } action
       Function to execute.
     @param { number } wait
-      Milliseconds to timeout. If negative, `action` is never called.
+      Milliseconds to timeout. If negative, `action` is called immediately
+      and in the current thread.
 */
 export default function(action, wait = 0)
 {
@@ -14,7 +15,10 @@ export default function(action, wait = 0)
     let timer = function(...args)
     {
         timer.stop();
-        if (time >= 0) id = setTimeout(() => action.call(this, ...args), time);
+
+        let func = () => action.call(this, ...args);
+
+        id = time >= 0 ? setTimeout(func, time) : (func(), id);        
     }
     
     timer.wait = (wait = 0) => time = wait;
