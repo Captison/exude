@@ -15,7 +15,7 @@ export default
             Milliseconds to wait before sending `update:value` event.
             @ignore
         */
-        debounce: { type: Number, default: 5 },
+        debounce: { type: Number, default: -1 },
         /**
             Is this field inaccessible?
         */
@@ -120,8 +120,8 @@ export default
                 {
                     if (this.formLink.change)
                         this.formLink.change(value);
-                    else
-                        this.$emit('update:value', value)                   
+
+                    this.$emit('update:value', value);                 
                 }
               
                 this.emitUpdate = debounce(emitUpdate, this.debounce);

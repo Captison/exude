@@ -3,6 +3,7 @@
     Exude UI Library Entry Point
 -------------------------------------------------------------------------------
 */
+import '_lib/patches'
 import merge from 'deepmerge'
 import { defaults, setStyles } from '_styles/vars'
 import * as loaders from '_styles/loaders'

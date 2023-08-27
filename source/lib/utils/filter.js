@@ -22,14 +22,15 @@ import op from '_lib/deps/object-path'
     The configuration for a sub-criteria object may include:
       - `$test` (any): The `criteria` to test against (recursive).
       - `$and` (boolean): Are tests ANDed (instead of ORed) for child criteria?
-      - `$path` (string/array): Path(s) in target objects to test value(s) against.
+      - `$path` (string/array): Path(s) in target objects to test against.
       - `$negate` (boolean): Flip the boolean result of the test?
       
     To clarify, the `$test` parameter is a `criteria` definition, allowing for
     for the recursiveness of the filtration tree.
 
     The returned function, when passed a value, will return true/false for 
-    pass/fail of filtration tests, respectively, and is suitable for use like so:
+    pass/fail of filtration tests, respectively, and is suitable for use like 
+    so:
       `
         let array = [ ... ];
         let filterFn = filter( CRITERIA_GOES_HERE );
@@ -39,7 +40,7 @@ import op from '_lib/deps/object-path'
 
     @param { any } criteria
       Criteria for filtration.
-    @return { function }
+    @return { object }
       A filter function of the form `function(any) => boolean`.
 */
 export default function unit(criteria)
@@ -50,7 +51,7 @@ export default function unit(criteria)
   
     let { $and = false, $negate = false, $path, $test } = criteria;    
     
-    return value =>
+    let check = value =>
     {
         let values = toValues(value, $path);      
 
@@ -74,7 +75,41 @@ export default function unit(criteria)
         }
         // properly AND, OR, and NEGATE results
         return (!$and == ([].concat($test).findIndex(test => !$and == tester(test)) >= 0)) == !$negate;
-    }    
+    }
+    
+    
+    /**
+        Filter an array/iterable.
+        
+        @param { array } array
+          Data to be filtered.
+        @return { array }
+          The filtered data.
+    */
+    check.list = array => array.filter(check)
+        
+
+    /**
+        Creates an iterator for filtering iterables.
+        
+        @param { iterable } iterable
+          Iterable to be filtered.
+        @param { function } abort
+          Called for every element (`abort(element) => boolean`).  
+          If it returns a truthy value, the iterator will abort.
+        @return { iterator }
+          Filtering iterator
+    */
+    check.iterate = function*(iterable, abort = () => false)
+    {
+        for (var element of iterable) 
+        {
+            if (abort(element)) return;
+            if (check(element)) yield element;
+        }
+    }
+
+    return check;
 }
 
 

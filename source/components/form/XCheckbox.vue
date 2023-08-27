@@ -33,6 +33,11 @@ export default
     props:
     {
         /**
+            Milliseconds to wait before sending `update:value` event.
+            @ignore
+        */
+        debounce: { type: Number, default: 5 },
+        /**
             Icon names for checkbox state (`on:off`).
         */
         icons: { type: String, default: 'check:checkEmpty' },

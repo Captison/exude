@@ -46,5 +46,6 @@
     
     
     "listenOutsideClick": { "path": "_directives/listen-outside-click", "released": true },
-    "listenOutsideFocus": { "path": "_directives/listen-outside-focus", "released": true }
+    "listenOutsideFocus": { "path": "_directives/listen-outside-focus", "released": true },
+    "observeViewportIntersection": { "path": "_directives/observe-viewport-intersection", "released": true }
 }
