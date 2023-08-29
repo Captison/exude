@@ -1,5 +1,5 @@
 <template>
-  <x-box el="img" v-bind="$attrs" :src="image" v-on="$hearers" />
+  <x-box el="img" v-bind="$attrs" :src="image" v-on="$hearers" @load="handleLoad" @error="handleError" />
 </template>
 
 
@@ -36,7 +36,41 @@ export default
             Ignored unless `src` is assumed to be base64 encoded.
         */
         mediaType: String
-    },    
+    },
+    
+    emits:
+    {      
+        /**
+            On native image `error` event.
+            
+            @param { EventObject } event
+              Native event object.
+        */
+        error(event) { return event !== null; },
+        /**
+            On image load fail status change.
+            
+            @param { boolean } value
+              Is image currently loading?
+        */
+        failing(value) { return typeof value === 'boolean'; },
+        /**
+            On native image `load` event.
+            
+            @param { EventObject } event
+              Native event object.
+        */
+        load(event) { return event !== null; },
+        /**
+            On image loading.
+            
+            @param { boolean } value
+              Is image currently loading?
+        */
+        loading(value) { return typeof value === 'boolean'; }
+    },
+    
+    data: () => ({ failing: false, loading: false }),
     
     computed:
     {
@@ -51,6 +85,37 @@ export default
             if (reIpfs.test(src)) return src.replace(reIpfs, 'https://ipfs.io/ipfs/');
             
             return src;
+        }
+    },
+    
+    watch:
+    {
+        failing() { this.$emit('failing', this.failing); },
+        
+        loading() { this.$emit('loading', this.loading); },
+        
+        src: 
+        { 
+            handler() { this.failing = false; this.loading = true; },
+            immediate: true 
+        },
+    },
+    
+    methods:
+    {
+        handleError(event)
+        {
+            this.loading = false;
+            this.failing = true;
+            // propagate the event
+            this.$emit('error', event);
+        },
+        
+        handleLoad(event)
+        {
+            this.loading = false;
+            // propagate the event
+            this.$emit('load', event);
         }
     }
 }

@@ -9,6 +9,7 @@ export default
     basis:
     {
         namespace: 'exude',
+        sangle: 1,
         stime: 1000,
         sunit: 4
     },

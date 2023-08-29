@@ -1,41 +1,35 @@
 import { exists } from '_lib/utils'
 
 
-let selector =
-{
-    focus: '&:focus-within',
-    hover: '&:hover',
-    hoverFocus: '&:hover, &:focus-within',
-    inactive: '&[data-inactive]'
-};
 /**
-    Extends a CSS values to pre-defined selectors.
+    Extends a CSS values to given selectors.
 
     @param { function } adapter
       Function called to adapt raw `values` data.
     @param { object } values
       Data to be adapted.
     @return { object }
+      Complete CSS ruleset.
 */
 export default function(adapter, values)
 {
-    let reducer = (rules, key) =>
+    let reducer = (rules, sel) =>
     {
-        if (exists(values[key]) && values[key] !== '')
+        let styles = values[sel];
+      
+        if (exists(styles) && styles !== '')
         {
-            let adapted = adapter(values[key]) || {};
+            let adapted = adapter(styles) || {};
 
             if (Object.keys(adapted).length)
             {
-                let sel = selector[key];
-                
-                if (!sel) 
+                if (sel === '_') 
                   rules = { ...rules, ...adapted };
-                else
+                else if (sel)
                   rules[sel] = { ...rules[sel], ...adapted };
             }
         }
-        
+
         return rules;
     }
     
