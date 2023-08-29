@@ -16,6 +16,10 @@ export default
         */
         // namespace: 'exude',
         /**
+            Scale degrees value.
+        */
+        // sangle: 1,
+        /**
             Scale time value.
         */
         // stime: 100,

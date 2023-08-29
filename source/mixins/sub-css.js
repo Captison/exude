@@ -50,10 +50,10 @@ export default function(name, type, resolve)
                 return extend(resolve, 
                 { 
                     _: this[name], 
-                    hover: this[hprop], 
-                    focus: this[fprop], 
-                    hoverFocus: this[hfprop], 
-                    inactive: this[iprop]
+                    '&:hover': this[hprop], 
+                    '&:focus-within': this[fprop], 
+                    '&:hover, &:focus-within': this[hfprop], 
+                    '&[data-inactive]': this[iprop]
                 }); 
             }
         }        

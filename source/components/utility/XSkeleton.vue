@@ -2,19 +2,33 @@
   <div :class="cn('skeleton')">
     <!-- @slot default content -->
     <slot />
+    <x-keyframes :name="keyname">
+      <!-- 
+          @slot keyframes specifications 
+          
+          Only __XKeyframes__ `frame` elements allowed here. Any other content
+          will be ignored.
+      -->
+      <slot name="frames">
+        <frame at="0%" background-position="150% 150%" />  
+        <frame at="100%" background-position="-50% -50%" />
+      </slot>
+    </x-keyframes>
   </div>
 </template>
 
 
 <script>
 import { styler } from '_source/mixins'
-import { colors, keyframes } from '_styles/loaders'
+import { colors, toDegrees, toMillis } from '_styles/loaders'
+import { uid } from '_lib/utils'
+import XKeyframes from '_components/utility/XKeyframes'
 
 
 /**
     Applies a static or animated "skeletal" state to descendant elements.
 
-    Only affects descendants with a `data-s-[dataAttr]` attribute.
+    Only affects descendants with a `data-x-[dataAttr]` attribute.
 */
 export default
 {
@@ -22,18 +36,30 @@ export default
 
     mixins: [ styler ],
     
+    components: { XKeyframes },
+    
     props:
     {
+        /**
+            Linear gradient direction for zombie mode.
+        */
+        degrees: { type: [ String, Number ], default: 90 },
         /**
             Foreground and background colors (valid color names only).
             
             This takes the form `foreground:background`.        
         */
-        colors: { type: String, default: 'prime_l.8:white_d.05' },
+        colors: { type: String, default: 'white_d.15:white_d.05' },
         /**
             Data property name identifying elements to skeletize.
         */
         dataAttr: { type: String, default: 'bone' },
+        /**
+            CSS animation-duration value (for zombified skeleton).
+
+            Unitless numbers are treated as scale time.
+        */
+        duration: { type: [ String, Number ], default: 1.2 },
         /**
             Cover marked descendants?
         */
@@ -47,6 +73,8 @@ export default
     computed:
     {
         colorData() { return colors(this.colors); },
+        
+        keyname() { return 'skeleton_' + uid('zombie', this._uid); },
       
         skeleton()
         {
@@ -54,10 +82,10 @@ export default
             
             let ruleset =
             {
-                [`& [data-s-${dataAttr}]`]: skeleton.base,
-                [`& [data-s-${dataAttr}~=inline]`]: skeleton.inline,
-                [`& [data-s-${dataAttr}~=radius]`]: skeleton.radius,
-                [`& [data-s-${dataAttr}]::before`]: { ...cover, background: colorData.backgroundColor }
+                [`& [data-x-${dataAttr}]`]: skeleton.base,
+                [`& [data-x-${dataAttr}~=inline]`]: skeleton.inline,
+                [`& [data-x-${dataAttr}~=radius]`]: skeleton.radius,
+                [`& [data-x-${dataAttr}]::before`]: { ...cover, background: colorData.backgroundColor }
             };
             
             return ruleset;
@@ -65,17 +93,20 @@ export default
         
         zombie()
         {
-            let { colorData, dataAttr, statics: { cover } } = this;
-                        
+            let { colorData, dataAttr, keyname, statics: { cover } } = this;
+            
+            let time = toMillis.str(this.duration);
+            let degs = toDegrees.str(this.degrees);
+            
             let ruleset =
             {
                 ...this.skeleton,
 
-                [`& [data-s-${dataAttr}]::after`]:
+                [`& [data-x-${dataAttr}]::after`]:
                 {
                     ...cover,
-                    animation: keyframes('skeletonLoader') + ' 1.2s cubic-bezier(0.4, 0.0, 0.2, 1) infinite',
-                    background: `linear-gradient(90deg, transparent 30%, ${colorData.color}, transparent 70%)`,
+                    animation: `${keyname} ${time} cubic-bezier(0.4, 0.0, 0.2, 1) infinite`,
+                    background: `linear-gradient(${degs}, transparent 30%, ${colorData.color}, transparent 70%)`,
                     backgroundSize: '200% 200%'
                 }
             };

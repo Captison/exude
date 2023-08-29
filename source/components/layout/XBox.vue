@@ -28,6 +28,8 @@ let aliases =
     'border', 'outline', 'radius', 'shadow',
     // content effects            
     'align', 'filter', 'opacity', 'perspective', 'space', 'transform',
+    // content styling
+    'destylers',
     // animation
     'animations', 'transitions',
     // clipping features
@@ -306,7 +308,7 @@ export default
         zIndex: [ String, Number ]
     },
     
-    data: () => ({ aliases, animations: {}, backgrounds: {}, transitions: {} }),
+    data: () => ({ aliases, animations: {}, backgrounds: {}, destylers: {}, transitions: {} }),
     
     mounted()
     {
@@ -344,6 +346,12 @@ export default
 
         boxSizingCss() { return this.boxSizing && { boxSizing: this.boxSizing }; },
         
+        destylersCss()
+        {
+            let reducer = (obj, data) => data.isDisabled ? obj : { ...obj, [data.sel]: data.styles }
+            return extend(v => v, Object.values(this.destylers).reduce(reducer, {}));
+        },
+
         displayCss() { return this.display && { display: this.display } },
                 
         flexCss() 
@@ -452,7 +460,7 @@ export default
                 return defs.reduce(reducer, {});
             }
             
-            return extend(assemble, { _: base, hover, focus });
+            return extend(assemble, { _: base, '&:hover': hover, '&:focus-within':focus });
         },
       
         provideExtensionContext()
