@@ -14,6 +14,7 @@ features:
 - library CSS tool (CSS-in-JS) agnostic
 
 bugs:
+- styleguide custom elements not working
 
 tasks:
 - write tests for all utils & loaders
@@ -24,6 +25,16 @@ tasks:
 
 
 ---
+## v0.0.6
+
+- `XDestyler` added
+- `XSkeleton` uses internal `XKeyframes` for animation
+- `XImage` adds support for loading and failing states
+- `XKeyframes` moved to utilities
+- `extend` style loader now supports any CSS selector
+- `to-degrees` style loader added
+
+
 ## v0.0.5
 
 - `observe-intersection` dom util added
