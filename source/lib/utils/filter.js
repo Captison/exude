@@ -66,9 +66,10 @@ export default function unit(criteria)
             // new group/unit or test against the values of an object
             if (typeof test === 'object' && test !== null)
             {
-                if (Object.hasOwn(test, '$test')) return unit(test)(value);
-                // test against keys and values
-                return tester(Object.values(test));
+                if (Object.hasOwn(test, '$test')) 
+                    return unit(test)(value);
+                else
+                    return tester(Object.values(test));
             }
             // default to an equality test
             return values.findIndex(v => v === test) >= 0;

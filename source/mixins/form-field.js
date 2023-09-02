@@ -95,8 +95,6 @@ export default
             return props;
         },
 
-        hideInputCss() { return { height: 0, opacity: 0, position: 'absolute', width: 0 }; },
-
         isDisabled() { return this.disabled || this.formLink.status.disabled; },
 
         isInvalid() { return this.invalid; },
@@ -108,6 +106,10 @@ export default
         myName() { return this.name; },
 
         myValue() { return this.formLink.change ? this.formLink.value() : this.value; },
+        
+        // Dynamic CSS
+        
+        hideInputCss() { return { height: 0, opacity: 0, position: 'absolute', width: 0 }; }        
     },
 
     watch:

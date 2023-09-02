@@ -12,6 +12,7 @@ features:
 - parallax scrolling features
 - web3 wallet features
 - library CSS tool (CSS-in-JS) agnostic
+- library theme support
 
 bugs:
 - styleguide custom elements not working
@@ -25,6 +26,12 @@ tasks:
 
 
 ---
+## v0.0.7
+
+- `XCopyToClipboard` now handles notification timing internally
+- `XColor` color picker component added
+
+
 ## v0.0.6
 
 - `XDestyler` added

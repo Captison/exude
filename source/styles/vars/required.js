@@ -158,11 +158,10 @@ export default
             Define "aliases" using keys that point to other keys.
             
             Internally, the library relies on the following names:
-              - `caretDown`: downward pointing circumflex for cueing content
               - `check`: a filled checkbox
               - `checkEmpty`: an empty checkbox
-              - `checkInd`: an indeterminate checkbox
               - `copy`: copy to clipboard
+              - `done`: finished copying to clipboard
               - `fullscreen`: full screen mode indicator
               - `radio`: a filled radio button
               - `radioEmpty`: an empty radio button
