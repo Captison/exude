@@ -1,6 +1,6 @@
 <template>
   <x-link v-if="canCopy" v-bind="$attrs" @click="copy">
-    <x-icon name="copy" :size="size" />
+    <x-icon :name="icon" :size="size" />
   </x-link>
 </template>
 
@@ -8,6 +8,7 @@
 <script>
 import XIcon from '_components/assets/XIcon'
 import XLink from '_components/action/XLink'
+import { toMillis } from '_styles/loaders'
 import { clipboard } from '_lib/browser-info'
 
 
@@ -27,24 +28,38 @@ export default
     props:
     {
         /**
+            Names of icons to use (`copy:done`).
+        */
+        icons: { type: String, default: 'copy:done' },
+        /**
             The data to be copied to the clipboard.
         */
         data: null,
         /**
             Clipboard icon size.
         */
-        size: [ String, Number ]
+        size: [ String, Number ],
+        /**
+            Length of time to show copied status (in scale time).
+            @ignore
+        */
+        duration: { type: [ String, Number ], default: 2 }
     },
     
     emits:
     {
         /**
-            On successful copy to clipboard action.
+            On copy to clipboard action.
+            
+            Event fires a second time with `false` after `duration` has passed.
+            
+            @param { boolean } value
+              True on copy success.
         */
-        copied() { return true; }
+        copied(value) { return typeof value === 'boolean'; }
     },
     
-    data: () => ({ canCopy: false }),
+    data: () => ({ canCopy: false, copied: false }),
     
     mounted()
     {
@@ -52,9 +67,30 @@ export default
         clipboard.check().then(value => this.canCopy = value);
     },
     
+    computed:
+    {
+        icon() { return this.names[this.copied ? 1 : 0]; },
+
+        names() { let [ copy, done = copy ] = this.icons.split(/:/); return [ copy, done ]; }      
+    },
+    
+    watch:
+    {
+        copied() 
+        {
+            if (this.copied)
+            {
+                clearTimeout(this.tid);
+                this.tid = setTimeout(() => this.copied = false, toMillis(this.duration));
+            }
+
+            this.$emit('copied', this.copied);
+        }
+    },
+    
     methods:
     {
-        copy() { this.canCopy && clipboard.copyTo(this.data).then(() => this.$emit('copied')); }
+        copy() { this.canCopy && clipboard.copyTo(this.data).then(() => this.copied = true); },        
     }
 }
 </script>

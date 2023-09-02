@@ -7,6 +7,7 @@
     "XButton": { "path": "_components/action/XButton", "released": true },
     "XCheckbox": { "path": "_components/form/XCheckbox", "released": true },
     "XChoose": { "path": "_components/form/XChoose", "released": true },
+    "XColor": { "path": "_components/form/XColor", "released": true },
     "XContext": { "path": "_components/utility/XContext", "released": true },
     "XCopyToClipboard": { "path": "_components/action/XCopyToClipboard", "released": true },
     "XDestyler": { "path": "_components/extension/XDestyler", "released": true },
