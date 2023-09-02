@@ -2,7 +2,7 @@
   <x-text v-if="available" v-bind="baseProps" @click="handleClick">
     <!-- @slot color value display -->
     <slot> {{ myValue || '???' }} </slot>
-    <input ref="input" :class="cn('hideInput')" v-bind="fieldProps" :value="myValue"  />
+    <input ref="input" :class="cn('hideInput')" v-bind="fieldProps" :value="myValue" />
   </x-text>
 </template>
 
@@ -78,6 +78,7 @@ export default
         {
             if (!this.isDisabled)
             {
+                // eslint-disable-next-line no-undef
                 new EyeDropper().open()
                     .then(res => this.emitUpdate(res.sRGBHex))
                     .catch(error => console.log('eyedropper error', error))

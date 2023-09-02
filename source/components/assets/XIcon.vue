@@ -1,4 +1,5 @@
 <template>
+  <!-- eslint-disable-next-line vue/no-v-html -->
   <svg :class="cn(aliases)" :viewBox="toPixels.spaced(viewBox)" role="img" v-html="content" />
 </template>
 
