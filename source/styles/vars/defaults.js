@@ -8,6 +8,7 @@ export default
 {
     basis:
     {
+        htmlIdGen: true,
         namespace: 'exude',
         sangle: 1,
         stime: 1000,
@@ -61,7 +62,7 @@ export default
     {
         named:
         {
-            default: { property: 'all', duration: '0.15s', timingFunction: 'ease' }
+            default: { property: 'all', duration: '0.15s', timing: 'ease' }
         }
     } 
 }

@@ -1,5 +1,5 @@
 <template>
-  <x-text id="exude-app" block v-bind="$attrs" v-on="$hearers">
+  <x-text :id="$htmlId" block v-bind="$attrs" v-on="$hearers">
     <!-- @slot application -->
     <slot>
       ✰ ✰ ✰ ✰ ✰

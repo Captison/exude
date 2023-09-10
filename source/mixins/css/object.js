@@ -7,6 +7,8 @@ import { position } from '_styles/loaders'
 */
 export default
 {
+    aliases: [ 'object' ],
+  
     props:
     {
         /**

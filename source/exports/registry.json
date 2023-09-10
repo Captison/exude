@@ -1,8 +1,6 @@
 {
-    "XAnimation": { "path": "_components/extension/XAnimation", "released": true },
     "XApp": { "path": "_components/application/XApp", "released": true },
     "XAsync": { "path": "_components/data/XAsync", "released": false },
-    "XBackground": { "path": "_components/extension/XBackground", "released": true },
     "XBox": { "path": "_components/layout/XBox", "released": true },
     "XButton": { "path": "_components/action/XButton", "released": true },
     "XCheckbox": { "path": "_components/form/XCheckbox", "released": true },
@@ -10,7 +8,6 @@
     "XColor": { "path": "_components/form/XColor", "released": true },
     "XContext": { "path": "_components/utility/XContext", "released": true },
     "XCopyToClipboard": { "path": "_components/action/XCopyToClipboard", "released": true },
-    "XDestyler": { "path": "_components/extension/XDestyler", "released": true },
     "XDropMenu": { "path": "_components/overlay/XDropMenu", "released": true },
     "XExapse": { "path": "_components/utility/XExapse", "released": true },
     "XField": { "path": "_components/form/XField", "released": true },
@@ -32,15 +29,22 @@
     "XOption": { "path": "_components/options/XOption", "released": true },
     "XOptionGroup": { "path": "_components/options/XOptionGroup", "released": true },
     "XPortal": { "path": "_components/portal/XPortal", "released": true },
+    "XProgressBar": { "path": "_components/indicators/XProgressBar", "released": true },
     "XQrCode": { "path": "_components/assets/XQrCode", "released": true },
-    "XSkeleton": { "path": "_components/utility/XSkeleton", "released": true },
+    "XSkeleton": { "path": "_components/indicators/XSkeleton", "released": true },
     "XSlotter": { "path": "_components/utility/XSlotter", "released": false },
     "XText": { "path": "_components/typography/XText", "released": true },
     "XTextarea": { "path": "_components/form/XTextarea", "released": true },
     "XToggle": { "path": "_components/form/XToggle", "released": false },
-    "XTransition": { "path": "_components/extension/XTransition", "released": true },
     "XWhen": { "path": "_components/utility/XWhen", "released": true },
     "XWormhole": { "path": "_components/portal/XWormhole", "released": true },
+
+
+    "EAnimation": { "path": "_components/extension/EAnimation", "released": true },
+    "EBackground": { "path": "_components/extension/EBackground", "released": true },
+    "EExtension": { "path": "_components/extension/EExtension", "released": true },
+    "EStylesheet": { "path": "_components/extension/EStylesheet", "released": true },
+    "ETransition": { "path": "_components/extension/ETransition", "released": true },
 
     
     "m_context": { "path": "_mixins/context", "released": true },

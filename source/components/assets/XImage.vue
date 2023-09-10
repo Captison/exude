@@ -12,7 +12,7 @@
 
 
 <script>
-import { object, styler } from '_source/mixins'
+import { css, styler } from '_source/mixins'
 import XBox from '_components/layout/XBox'
 
 
@@ -27,7 +27,7 @@ export default
 {
     name: 'XImage',
     
-    mixins: [ styler, object ],
+    mixins: [ styler, css.object ],
     
     components: { XBox },
     

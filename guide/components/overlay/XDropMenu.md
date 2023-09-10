@@ -4,7 +4,7 @@ Static example with button:
 ```vue
 let show = false;
 
-<x-drop-menu :show.sync="show" :gap="1" space="nowrap">
+<x-drop-menu invert :show.sync="show" :gap="1" space="nowrap" z-index="1">
   <template #target>
     <x-button 
       colors="white:primeDark" 
@@ -34,7 +34,7 @@ let show = false;
 
 <div :style="{ position: 'relative', width: '480px' }">
   <x-link @click="show = !show">{{ show ? 'hide' : 'show' }} menu</x-link>
-  <x-drop-menu :show.sync="show">
+  <x-drop-menu :show.sync="show" z-index="1">
     <x-box colors=":white" border="a.25!prime" radius="a1">
       <x-text block pad="v3 h4">Menu Item One</x-text>
       <x-text block pad="v3 h4">Menu Item Two</x-text>
@@ -50,7 +50,7 @@ A side-opening "drop button" with dynamic label:
 let show = false;
 let value = null;
 
-<x-drop-menu :show.sync="show" :gap="1" side="right" offsets=".5:.5" space="nowrap">
+<x-drop-menu invert :show.sync="show" :gap="1" side="right" offsets=".5:.5" space="nowrap" z-index="1">
   <template #target>
     <x-button 
       bold

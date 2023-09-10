@@ -1,21 +1,10 @@
 <template>
-  <x-text 
-    v-bind="$attrs" 
-    block 
-    el="button" 
-    :font="font" 
-    :cursor="cursor" 
-    :pad="pad"
-    :disabled="isDisabled"
-    :inactive="isDisabled"
-    v-on="buttonEvents"
-  >
-    <x-flex aligns=":center" :gap="gap">
-      <x-icon v-if="icons.one" :name="icons.one" :size="iconSize" />
-      <!-- @slot button label (overrides `label` prop) -->
-      <slot> {{ label }} </slot>
-      <x-icon v-if="icons.two" :name="icons.two" :size="iconSize" />
-    </x-flex>
+  <x-text v-bind="$attrs" el="button" :font="font" :disabled="isDisabled" :inactive="isDisabled" v-on="buttonEvents">
+    <e-stylesheet flex pointer place=":center" :gap="gap" :pad="pad" />
+    <x-icon v-if="icons.one" :name="icons.one" :size="iconSize" />
+    <!-- @slot button label (overrides `label` prop) -->
+    <slot> {{ label }} </slot>
+    <x-icon v-if="icons.two" :name="icons.two" :size="iconSize" />
   </x-text>
 </template>
 
@@ -23,7 +12,7 @@
 <script>
 import { formAction } from '_source/mixins'
 import { fontSize } from '_styles/loaders'
-import XFlex from '_components/layout/XFlex'
+import EStylesheet from '_components/extension/EStylesheet'
 import XIcon from '_components/assets/XIcon'
 import XText from '_components/typography/XText'
 
@@ -39,7 +28,7 @@ export default
     
     mixins: [ formAction ],
 
-    components: { XFlex, XIcon, XText },
+    components: { EStylesheet, XIcon, XText },
     
     props:
     {
@@ -51,7 +40,6 @@ export default
         font: String,
         /**
             CSS row and column gap values as `column:row` (scale units).
-            @see `XFlex.gap` for details.
         */
         gap: { type: String, default: '1' },        
         /**
@@ -87,14 +75,12 @@ export default
             let events =
             {
                 ...this.$hearers,
-                click: e => this.evtClick(e)
+                click: e => this.heClick(e)
             }
             
             return events;
         },
       
-        cursor() { return this.disabled ? 'default' : 'pointer'; },
-        
         icons()
         {
             let [ one, two ] = (this.icon || '').split(/:/);
@@ -106,7 +92,7 @@ export default
     
     methods:
     {
-        evtClick(event)
+        heClick(event)
         {
             this.formAction();
             this.$emit('click', event);            

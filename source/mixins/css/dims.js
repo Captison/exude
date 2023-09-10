@@ -2,12 +2,17 @@ import { length } from '_styles/loaders'
 
 
 
-/*
+/**
     CSS width and height mixin.
+    
+    Classes: 'dims', `maxDims`, `minDims`
+    
     @requires styler
 */
 export default
 {
+    aliases: [ 'dims', 'maxDims', 'minDims' ],
+  
     props:
     {
         /**

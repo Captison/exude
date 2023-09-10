@@ -7,9 +7,9 @@
 */
 
 export { default as border } from './border'
-export { default as boxe } from './boxe'
 export { default as color } from './color'
 export { default as colors } from './colors'
+export { default as enumer } from './enumer'
 export { default as extend } from './extend'
 export { default as fontSize } from './font-size'
 export { default as fontWeight } from './font-weight'
@@ -22,6 +22,7 @@ export { default as outline } from './outline'
 export { default as paints } from './paints'
 export { default as position } from './position'
 export { default as radius } from './radius'
+export { default as selector } from './selector'
 export { default as shadow } from './shadow'
 export { default as svgIcon } from './svg-icon'
 export { default as toDegrees } from './to-degrees'

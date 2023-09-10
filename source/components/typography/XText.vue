@@ -1,116 +1,37 @@
 <template>
-  <x-box 
-    v-bind="$attrs" 
-    :class="cn('font fontWeight letter italic textShadow textTransform', true)" 
-    :sel="sel" 
-    :display="display" 
-    v-on="$hearers"
-  >
-    <!-- @slot default text content -->
+  <component :is="el" v-bind="$attrs" :id="$htmlId" :class="cn(aliases)" :data-inactive="inactive" v-on="$hearers">
+    <!-- @slot text child content -->
     <slot />
-  </x-box>
+  </component>
 </template>
 
 
 <script>
-import { styler, subCss } from '_source/mixins'
-import v from '_styles/vars'
-import { fontSize, fontWeight, length, shadow } from '_styles/loaders'
-import XBox from '_components/layout/XBox'
+import { box, css, styler } from '_source/mixins'
 
 
 /**
     Renders content in the proper text styles.
-    
-    Unused attributes are passed on to __XBox__.
 */
 export default
 {
     name: 'XText',
 
-    mixins: 
-    [ 
-        styler,
-        subCss('bold', Boolean, fontWeight),
-        subCss('italic', Boolean, v => v ? { fontStyle: 'italic' } : {}),
-        subCss('letter', [String, Number], v => ({ letterSpacing: length(v) })),
-        subCss('textShadow', String, v => ({ textShadow: shadow(v) })),
-        subCss('textTransform', String, v => ({ textTransform: v })),
-        subCss('weight', String, fontWeight)
-    ],
-
-    components: { XBox },
+    mixins: [ styler, box, css.text ],
     
+    aliases: [ 'display' ],
+
     props:
     {
         /**
             Display as block element?
         */
-        block: Boolean,
-        /**
-            Make text bold?
-        */
-        bold: Boolean, 
-        /**
-            Font size.
-        */
-        font: String,
-        /**
-            Font family name.
-        */
-        fontFace: { type: String, default: () => v.font.defaultFace },
-        /**
-            Make text italic?
-
-            - use `hItalic` prop to set hover italics
-            - use `fItalic` prop to set focus italics
-        */
-        italic: Boolean,
-        /**
-            CSS letter-spacing value.
-
-            - raw numbers are assumed to be scale units
-        */
-        letter: [ String, Number ],
-        /**
-            Enumerated text shadow value(s).
-
-            - use `hTextShadow` prop to specify hover box shadow
-            - use `fTextShadow` prop to specify focus box shadow
-        */
-        textShadow: String,
-        /**
-            CSS text-transform value.
-
-            - use `hTextTransform` prop to specify hover text shadow
-            - use `fTextTransform` prop to specify focus text shadow
-        */
-        textTransform: String,
-        /**
-            Font weight value 1-9 (for 100-900).  This overrides `bold` prop.
-
-            - use `hWeight` prop to specify hover font weight
-            - use `fWeight` prop to specify focus font weight
-        */
-        weight: String
+        block: Boolean      
     },
     
     computed:
     {
-        display() { return this.$attrs.display || (this.block ? 'block' : 'inline'); },
-      
-        // Dynamic CSS 
-        
-        fontCss() 
-        { 
-            let font = fontSize(this.font) || {};
-            
-            if (this.fontFace) font.fontFamily = this.fontFace;
-                                    
-            return font;
-        },
-        
-        fontWeightCss() { return { ...this.boldCss, ...this.weightCss }; }
+        displayCss() { return { display: this.block ? 'block' : 'inline' }; }
     }    
 }
 </script>

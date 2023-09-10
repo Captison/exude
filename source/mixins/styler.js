@@ -7,23 +7,13 @@ import { css } from '_lib/deps/stitches-core'
     This mixin allows styling of components via a css-in-js solution.
 */
 export default
-{
-    props:
-    {
-        /**
-            Descendant selector to apply all CSS to.
-            
-            No styling is applied to root element when specified.
-            @ignore
-        */
-        sel: String
-    },
-  
-    created()
+{  
+    beforeCreate()
     {
         this.statics = this.$options.stylesheet();
+        this.aliases = this.$options.aliases;
     },
-
+    
     methods:
     {
         /**
@@ -36,24 +26,32 @@ export default
         */
         cn(aliases, selector)
         {
-            let use = selector === true ? this.sel : selector;
-            let sel = ruleset => use ? { [use]: ruleset } : ruleset
+            let sel = rules => selector ? { [selector]: rules } : rules
           
-            let names = aliases.split(/\s+/).map(alias => 
+            let names = this.cs(aliases, value => css(sel(value))());
+
+            return names.join(' ');
+        },
+        
+        cs(aliases, process = v => v)
+        {
+            if (typeof aliases === 'string') aliases = aliases.split(/\s+/);
+
+            let reducer = (array, alias) =>
             {
-                let cssProp = alias + 'Css', fn = '';
+                let cssProp = alias + 'Css', value = null;;
                 
-                if (Object.keys(this[cssProp] || {}).length)
-                    fn = css(sel(this[cssProp]));
+                if (Array.isArray(this[cssProp]))
+                    value = this[cssProp].map(process);
+                else if (Object.keys(this[cssProp] || {}).length)
+                    value = process(this[cssProp]);
                 else if (this.statics[alias])
-                    fn = css(sel(this.statics[alias]));
-                                
-                return typeof fn === 'function' ? fn() : '';
-            });
-            // suppress element in CSS when using selector
-            if (use) names.unshift(css({ display: 'contents' }));        
-            // exclude nonexistent elements (n => n) and join
-            return names.filter(n => n).join(' ');
+                    value = process(this.statics[alias]);
+
+                return value ? [ ...array, ...[].concat(value) ] : array;
+            }
+          
+            return aliases.reduce(reducer, []);
         }
     },
 

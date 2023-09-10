@@ -25,13 +25,3 @@ Bold, italic text:
   Attention grabbing text. 
 </x-text>
 ```
-
-Some paragraph content:
-
-```vue
-<x-text block font="h4"> Remember! </x-text>
-<x-text block margin="l2">
-  <b>XText</b> is rooted on <b>XBox</b>, which means any attribute that <b>XBox</b> accepts can also be used. You can change <x-text colors="primeDark">foreground</x-text> and 
-  <x-text colors=":primeLight_l.75">background</x-text> colors, use margins or padding, position the element, etc.
-</x-text>
-```

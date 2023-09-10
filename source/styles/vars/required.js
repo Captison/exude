@@ -12,6 +12,15 @@ export default
     basis: 
     {
         /**
+            Automatic HTML id generation.
+            
+            Causes html-ids to be automatically generated for foundational
+            components (`XApp`, `XBox`, `XFlex`, `XGrid`, `XText`).  The
+            generated id will be based on the `id` attribute passed to the
+            component, if any.
+        */
+        // htmlIdGen: true,
+        /**
             String used to help prevent naming collisions.
         */
         // namespace: 'exude',
@@ -32,8 +41,11 @@ export default
     animation:
     {      
         /**
-            Enumerated CSS animation keyframe definitions.
+            Enumerated CSS animation specifications.
             
+            Props that can be used in the enumerations are the same as for
+            `EAnimation` component.
+              
             Define "aliases" using keys that point to other keys.
             
             Internally, the library relies on the following names:
@@ -56,10 +68,10 @@ export default
         /**
             Enumerated CSS background specifications.
             
-            Specify CSS background property names using camelCase without 
-            `background` prefix.
+            Props that can be used in the enumerations are the same as for
+            `EBackground` component.
               
-            Define "aliases" using keys that point to other keys.                
+            Define "aliases" using keys that point to other keys.
         */
         named: {}
     },
@@ -214,13 +226,44 @@ export default
         named: {},
     },
   
+    selector:
+    {
+        /**
+            Enumerated CSS selectors for extension components.
+            
+            Define "aliases" using keys that point to other keys.
+        */
+        named:
+        {
+            focus: '&:focus',
+            focusIn: '&:focus-within',
+            hover: '&:hover'
+        }
+    },
+  
+    stylesheet:
+    {
+        /**
+            Enumerated CSS stylesheet specifications.
+            
+            Props that can be used in the enumerations are the same as for
+            `EStylesheet` component.
+              
+            Define "aliases" using keys that point to other keys.
+            
+            Internally, the library relies on the following names:
+              - `default`: default transition spec applied to everything
+        */
+        named: {}
+    },
+
     transition:
     {
         /**
             Enumerated CSS transition specifications.
             
-            Specify CSS transition property names using camelCase without 
-            `transition` prefix.
+            Props that can be used in the enumerations are the same as for
+            `ETransition` component.
               
             Define "aliases" using keys that point to other keys.
             
