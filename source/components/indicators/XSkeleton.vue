@@ -20,7 +20,7 @@
 
 <script>
 import { styler } from '_source/mixins'
-import { colors, toDegrees, toMillis } from '_styles/loaders'
+import { colors, keyframes, toDegrees, toMillis } from '_styles/loaders'
 import { uid } from '_lib/utils'
 import XKeyframes from '_components/utility/XKeyframes'
 
@@ -105,7 +105,7 @@ export default
                 [`& [data-x-${dataAttr}]::after`]:
                 {
                     ...cover,
-                    animation: `${keyname} ${time} cubic-bezier(0.4, 0.0, 0.2, 1) infinite`,
+                    animation: `${keyframes(keyname)} ${time} cubic-bezier(0.4, 0.0, 0.2, 1) infinite`,
                     background: `linear-gradient(${degs}, transparent 30%, ${colorData.color}, transparent 70%)`,
                     backgroundSize: '200% 200%'
                 }

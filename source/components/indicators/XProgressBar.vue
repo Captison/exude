@@ -26,7 +26,7 @@
 
 <script>
 import { styler } from '_source/mixins'
-import { color } from '_styles/loaders'
+import { color, keyframes } from '_styles/loaders'
 import XBox from '_components/layout/XBox'
 import XKeyframes from '_components/utility/XKeyframes'
 
@@ -102,7 +102,7 @@ export default
             let css =
             {
                 animationDuration: '2.4s',
-                animationName: 'foreverOne',
+                animationName: keyframes('foreverOne'),
                 animationIterationCount: 'infinite',
                 animationTimingFunction: 'linear',
                 position: 'absolute',
@@ -117,7 +117,7 @@ export default
             {
                 animationDelay: '1.8s',
                 animationDuration: '2.4s',
-                animationName: 'foreverTwo',
+                animationName: keyframes('foreverTwo'),
                 animationIterationCount: 'infinite',
                 animationTimingFunction: 'ease',
                 position: 'absolute',

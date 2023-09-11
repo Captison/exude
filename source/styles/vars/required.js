@@ -15,9 +15,9 @@ export default
             Automatic HTML id generation.
             
             Causes html-ids to be automatically generated for foundational
-            components (`XApp`, `XBox`, `XFlex`, `XGrid`, `XText`).  The
-            generated id will be based on the `id` attribute passed to the
-            component, if any.
+            components (`XBox`, `XFlex`, `XGrid`, `XText`).  The generated id
+            will be based on the `id` attribute passed to the component, if 
+            any.
         */
         // htmlIdGen: true,
         /**
@@ -235,6 +235,8 @@ export default
         */
         named:
         {
+            after: '&::after',
+            before: '&::before',
             focus: '&:focus',
             focusIn: '&:focus-within',
             hover: '&:hover'

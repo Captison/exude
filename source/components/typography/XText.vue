@@ -17,21 +17,6 @@ export default
 {
     name: 'XText',
 
-    mixins: [ styler, box, css.text ],
-    
-    aliases: [ 'display' ],
-
-    props:
-    {
-        /**
-            Display as block element?
-        */
-        block: Boolean      
-    },
-    
-    computed:
-    {
-        displayCss() { return { display: this.block ? 'block' : 'inline' }; }
-    }    
+    mixins: [ styler, box, css.display, css.text ]    
 }
 </script>

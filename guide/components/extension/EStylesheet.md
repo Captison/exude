@@ -11,15 +11,6 @@ Adding content with pseudo-classes:
 </x-text>
 ```
 
-Adding color to a box:
-
-```vue
-<x-text display="inlin-block" pad="v1 h2">
-  <span> Some text. </span>
-  <e-colors colors="white:prime" />
-</x-text>
-```
-
 Some fun grid styling:
 
 ```vue

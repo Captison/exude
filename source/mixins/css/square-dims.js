@@ -48,12 +48,15 @@ export default
     {
         resolveSize(size, prefix)
         {
-            let hprop = prefix ? prefix + 'Height' : 'height';
-            let wprop = prefix ? prefix + 'Width' : 'width';
-                        
-            let value = length(size);            
-            
-            return { [hprop]: value, [wprop]: value };
+            if (size || size === 0)
+            {
+                let hprop = prefix ? prefix + 'Height' : 'height';
+                let wprop = prefix ? prefix + 'Width' : 'width';
+                            
+                let value = length(size);            
+                
+                return { [hprop]: value, [wprop]: value };
+            }
         }      
     }
 }

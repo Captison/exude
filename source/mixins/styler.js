@@ -36,16 +36,17 @@ export default
         cs(aliases, process = v => v)
         {
             if (typeof aliases === 'string') aliases = aliases.split(/\s+/);
+            let check = v => Object.keys(v || {}).length > 0
 
             let reducer = (array, alias) =>
             {
-                let cssProp = alias + 'Css', value = null;;
+                let cssProp = alias + 'Css', value = null, pval = this[cssProp];
                 
-                if (Array.isArray(this[cssProp]))
-                    value = this[cssProp].map(process);
-                else if (Object.keys(this[cssProp] || {}).length)
-                    value = process(this[cssProp]);
-                else if (this.statics[alias])
+                if (Array.isArray(pval))
+                    value = pval.reduce((a, v) => check(v) ? [ ...a, process(v) ] : a, []);
+                else if (check(pval))
+                    value = process(pval);
+                else if (check(this.statics[alias]))
                     value = process(this.statics[alias]);
 
                 return value ? [ ...array, ...[].concat(value) ] : array;

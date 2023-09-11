@@ -40,6 +40,12 @@ export default
         */
         duration: [ String, Number ],
         /**
+            Repeat animation forever?
+            
+            Ignored when `repeat` is set.
+        */
+        infinite: Boolean,
+        /**
             CSS animation-fill-mode value.
         */
         mode: String,
@@ -78,7 +84,7 @@ export default
                 animationDuration: toMillis.str(this.duration) || 'initial',                
                 animationFillMode: this.mode || 'initial',
                 animationName: keyframes(this.name) || 'initial',
-                animationIterationCount: this.repeat || 'initial',                
+                animationIterationCount: this.repeat || (this.infinite && 'infinite') || 'initial',                
                 animationPlayState: this.state || 'initial',
                 animationTimingFunction: this.timing || 'initial'              
             };
