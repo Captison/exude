@@ -1,26 +1,14 @@
 <template>
   <!-- eslint-disable-next-line vue/no-v-html -->
-  <svg :class="cn(aliases)" :viewBox="toPixels.spaced(viewBox)" role="img" v-html="content" />
+  <svg :class="cn(aliased)" :viewBox="boxed" role="img" v-html="content" />
 </template>
 
 
 <script>
 import v from '_styles/vars'
-import { styler, margin, subCss } from '_source/mixins'
-import { length, paints, svgIcon, toPixels } from '_styles/loaders'
+import { css, styler, subCss } from '_source/mixins'
+import { paints, svgIcon, toPixels } from '_styles/loaders'
 
-
-let aliases = 
-[ 
-    'base', 
-    'size', 
-    'colors', 
-    'margin', 
-    'maxSize', 
-    'minSize', 
-    'valign', 
-    'strokeWidth'
-].join(' ');
 
 /**
     Renders an SVG icon.
@@ -29,12 +17,7 @@ export default
 {
     name: 'XIcon',
 
-    mixins: 
-    [ 
-        styler, 
-        margin, 
-        subCss('colors', String, paints),
-    ],
+    mixins: [ styler, css.squareDims, css.margin, subCss('colors', String, paints) ],
 
     props:
     {
@@ -48,14 +31,6 @@ export default
             This takes the form `fill:stroke`.            
         */
         colors: String,
-        /**
-            Maximum Icon size.
-        */
-        maxSize: [ String, Number ],
-        /**
-            Maximum Icon size.
-        */
-        minSize: [ String, Number ],
         /**
             Name of icon to display.
         */
@@ -78,16 +53,19 @@ export default
         viewBox: { type: String, default: '0 0 6 6' }
     },
     
-    data: () => ({ aliases, content: '', toPixels }),
+    data: () => ({ content: '' }),
+    
+    created()
+    {
+        this.aliased = [ `base`, ...this.aliases, 'colors', 'valign', 'strokeWidth' ];
+    },
         
     computed:
     {
-        maxSizeCss() { return this.resolveSize(this.maxSize, 'max'); },
+        boxed() { return toPixels.spaced(this.viewBox); },
         
-        minSizeCss() { return this.resolveSize(this.minSize, 'min'); },
-        
-        sizeCss() { return this.resolveSize(this.size); },
-        
+        // Dynamic CSS
+      
         strokeWidthCss() { return this.strokeWidth && { strokeWidth: this.strokeWidth }; },
         
         valignCss() { return this.alignV && { verticalAlign: this.alignV }; }
@@ -117,19 +95,6 @@ export default
         }
     },
     
-    methods:
-    {
-        resolveSize(size, prefix)
-        {
-            let hprop = prefix ? prefix + 'Height' : 'height';
-            let wprop = prefix ? prefix + 'Width' : 'width';
-                        
-            let value = length(size);            
-            
-            return { [hprop]: value, [wprop]: value };
-        }      
-    },
-
     stylesheet()
     {
         let base =

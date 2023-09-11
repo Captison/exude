@@ -8,11 +8,15 @@ import { exists } from '_lib/utils'
       Function called to adapt raw `values` data.
     @param { object } values
       Data to be adapted.
+    @param { object } basis
+      Object to merge data with.
     @return { object }
       Complete CSS ruleset.
 */
-export default function(adapter, values)
+export default function(adapter, values, basis)
 {
+    adapter = adapter || (v => v);
+  
     let reducer = (rules, sel) =>
     {
         let styles = values[sel];
@@ -33,5 +37,5 @@ export default function(adapter, values)
         return rules;
     }
     
-    return Object.keys(values).reduce(reducer, {});
+    return Object.keys(values).reduce(reducer, basis || {});
 }

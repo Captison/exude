@@ -10,11 +10,17 @@ module.exports = content =>
 
           export default function({ exports, options })
           {
-              exports.mixins = options.mixins || [];
-              exports.mixins.unshift(baseline);
-              
               options.mixins = options.mixins || [];
               options.mixins.unshift(baseline);
+
+              options.aliases = [ ...aliases(options.mixins), ...(options.aliases || []) ];
+          }
+          
+          function aliases(mixins)
+          {
+              return (mixins || [])
+                  .reduce((a, m) => ([ ...a, ...(m.aliases || []), ...aliases(m.mixins) ]), [])
+                  .filter((e, i, a) => a.indexOf(e) === i );
           }
           </extend>
         `;

@@ -1,4 +1,6 @@
 import { uid } from '_lib/utils'
+import v from '_styles/vars'
+import { ns } from '_styles/loaders'
 
 
 /**
@@ -16,6 +18,12 @@ export default
     {
         $hearers() { return this.$listeners; },
         
-        $htmlId() { return this.$options.name.toLowerCase() + '_' + uid(this._uid); },
+        $htmlId() 
+        {
+            if (v.basis.htmlIdGen)
+                return ns(this.$options.name.toLowerCase(), this.$attrs.id || uid(this._uid));
+            
+            return this.$attrs.id;
+        }
     }
 }

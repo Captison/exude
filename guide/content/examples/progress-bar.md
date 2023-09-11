@@ -18,10 +18,10 @@ A progress bar of indefinite time:
 
 <x-box colors=":prime" border="a.5!prime" pos="relative" height="3" radius="a100" width="80%">
   <x-box colors=":white" pos="absolute" height="100%" radius="ainherit">
-    <x-animation name="one" duration="2.4" timing="linear" repeat="infinite" />
+    <e-animation name="one" duration="2.4" timing="linear" repeat="infinite" />
   </x-box>
   <x-box colors=":white" pos="absolute" height="100%" radius="ainherit">
-    <x-animation name="two" delay="1.8" duration="2.4" timing="ease" repeat="infinite" />
+    <e-animation name="two" delay="1.8" duration="2.4" timing="ease" repeat="infinite" />
   </x-box>
 </x-box>
 ```

@@ -16,6 +16,7 @@ features:
 
 bugs:
 - styleguide custom elements not working
+- XDropZone "extra-space' issue
 
 tasks:
 - write tests for all utils & loaders
@@ -23,9 +24,32 @@ tasks:
 - add documentation for provide/inject context handling
 - allow change of CSS reset
 - remove styleguide dependency on 'dark' and 'light' colors
+- object-fit/position for replaced elements (mixin)
 
 
 ---
+## v0.0.8
+
+- `XProgressBar` added
+- refactor of `XBox`, `XFlex`, `XGrid`, `XText` to mixins
+- `XBox`, `XFlex`, `XGrid`, `XText` lose ability to pull extensions from LOC
+- `XApp` uses id attribute from `baseline` mixin
+- `XIcon` uses new CSS mixins
+- `XExapse` sets a default transition (`XDropMenu` requires this to work properly)
+- `XButton` structure simplified
+- `XImage` supports CSS object fit and positioning
+- `object` mixin added to support object-fit/position CSS values
+- `position` style loader added to handle shorthand position values
+- `component-global-loader` collects CSS aliases for components
+- `$htmlId` in `baseline` mixin gets namespaced
+- `enumer`, `selector` style loaders added
+- `extend` style loader can extend existing object
+- `chooser` mixin deleted
+- `boxe` style loader deleted
+- fixed bug with keyframes name resolution
+- fixed potential issues with empty style classes
+
+
 ## v0.0.7
 
 - `XCopyToClipboard` now handles notification timing internally

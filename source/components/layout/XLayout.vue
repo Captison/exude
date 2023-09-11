@@ -48,8 +48,7 @@ export default
                 wrap: true,
                 // prevent changes to the attributes below
                 aligns: null,
-                margin: null, 
-                sel: null
+                margin: null
             }
             
             return attrs;

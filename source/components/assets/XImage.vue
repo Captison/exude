@@ -1,9 +1,18 @@
 <template>
-  <x-box el="img" v-bind="$attrs" :src="image" v-on="$hearers" @load="handleLoad" @error="handleError" />
+  <x-box 
+    el="img" 
+    v-bind="$attrs" 
+    :class="cn('object')" 
+    :src="image" 
+    v-on="$hearers" 
+    @load="handleLoad" 
+    @error="handleError" 
+  />
 </template>
 
 
 <script>
+import { css, styler } from '_source/mixins'
 import XBox from '_components/layout/XBox'
 
 
@@ -17,6 +26,8 @@ let reIpfs = /^(ipfs:(\/)+)+(ipfs\/)?/;
 export default
 {
     name: 'XImage',
+    
+    mixins: [ styler, css.object ],
     
     components: { XBox },
     

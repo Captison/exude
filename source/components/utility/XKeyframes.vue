@@ -1,4 +1,7 @@
 <script>
+import { ns } from '_styles/loaders'
+
+
 /**
     Define CSS keyframes for animation.
 */
@@ -38,7 +41,7 @@ export default
             }
         });
         
-        let content = `@keyframes ${this.name} { ${spec.filter(x => x).join(' ')} } `;
+        let content = `@keyframes ${ns(this.name)} { ${spec.filter(x => x).join(' ')} } `;
                 
         return h('style', { attrs: { id: this.$htmlId } }, content);
     }    

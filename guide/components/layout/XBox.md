@@ -1,20 +1,22 @@
 
-Basic box:
+Rectangle box:
 
 ```vue
-<x-box colors=":prime" width="30" height="30" />
+<x-box colors=":prime" width="50" height="30" />
 ```
 
 Box with border and radius:
 
 ```vue
-<x-box border="a.5!prime" radius="a3" width="30" height="30" />
+<x-box border="a.5!prime" radius="a3" size="30" />
 ```
+
+Note in the above how we can use `size` to make a square.
 
 Box positioning and rotation:
 
 ```vue
-<x-box colors=":primeLight" pos="relative" width="30" height="30" trans="rz45" margin="a4">
-  <x-box colors=":primeDark" pos="absolute" trbl="t10 l10" width="10" height="10" />
+<x-box relative colors=":primeLight" size="30" trans="rz45" margin="a4">
+  <x-box absolute colors=":primeDark" trbl="t10 l10" size="10" />
 </x-box>
 ```

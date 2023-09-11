@@ -7,6 +7,8 @@ import { trbl } from '_styles/loaders'
 */
 export default
 {
+    aliases: [ 'margin' ],
+  
     props:
     {
         /**

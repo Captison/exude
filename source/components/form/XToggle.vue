@@ -14,7 +14,7 @@
     i-cursor="not-allowed"
     @click="handleInput"
   >
-    <x-background clip="content-box" />
+    <e-background clip="content-box" />
     <x-flex 
       ref="knob" 
       aligns=":stretch"
@@ -24,7 +24,7 @@
       :trbl="knobPos" 
       radius="a50%"
     >
-      <x-transition property="left" duration=".25" timing="ease" />
+      <e-transition property="left" duration=".25" timing="ease" />
       <!-- 
           @slot knob content           
           Rendered inside a flex container.
@@ -43,10 +43,10 @@
 <script>
 import { formField, styler } from '_source/mixins'
 import { toSunits } from '_styles/loaders'
-import XBackground from '_components/extension/XBackground'
+import EBackground from '_components/extension/EBackground'
+import ETransition from '_components/extension/ETransition'
 import XBox from '_components/layout/XBox'
 import XFlex from '_components/layout/XFlex'
-import XTransition from '_components/extension/XTransition'
 
 
 /**
@@ -58,7 +58,7 @@ export default
 
     mixins: [ styler, formField ],
 
-    components: { XBackground, XBox, XFlex, XTransition },
+    components: { EBackground, ETransition, XBox, XFlex },
 
     props:
     {

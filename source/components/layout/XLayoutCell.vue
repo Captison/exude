@@ -89,8 +89,7 @@ export default
                 'max-height': null, 
                 'max-width': null, 
                 'min-width': null, 
-                sel: null,
-                width: null,
+                width: null
             }
             return attrs;
         },

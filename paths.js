@@ -14,6 +14,7 @@ var paths =
     docs: ['docs'],
     examples: ['guide', 'components'],
     guide: ['guide'],
+    mixins: ['source', 'mixins'],
     modules: ['node_modules'],
     source: ['source'],
     test: ['test']

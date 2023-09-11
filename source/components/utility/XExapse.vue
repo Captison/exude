@@ -1,6 +1,8 @@
 <template>
   <x-box v-bind="boxProps" :overflow="overflow" v-on="$hearers">
+    <e-transition property="height, width" :duration="duration" timing="ease" />
     <x-flex v-observe-resize="handleResize" v-bind="flexProps">
+      <e-transition property="margin" :duration="duration" timing="ease" />
       <!-- 
           @slot expandable/collapsible content 
       -->
@@ -14,6 +16,7 @@
 import { toggle } from '_source/mixins'
 import { observeResize } from '_source/directives'
 import { toSunits } from '_styles/loaders'
+import ETransition from '_components/extension/ETransition'
 import XBox from '_components/layout/XBox'
 import XFlex from '_components/layout/XFlex'
 
@@ -27,7 +30,7 @@ export default
     
     mixins: [ toggle('expand') ],
 
-    components: { XBox, XFlex },    
+    components: { ETransition, XBox, XFlex },    
 
     directives: { observeResize },
     
@@ -42,6 +45,12 @@ export default
             @see `XBox.colors` for details.
         */
         colors: String,
+        /**
+            Expand/Collapse transition time.
+
+            Unitless numbers are treated as scale time.
+        */
+        duration: { type: [ String, Number ], default: .15 },
         /**
             Expand content?
         */

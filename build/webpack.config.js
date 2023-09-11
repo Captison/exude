@@ -37,7 +37,7 @@ var base =
             _directives: source('directives'),
             _root: paths.root,
             _lib: source('lib'),
-            _mixins: source('mixins'),
+            _mixins: paths.mixins,
             _source: paths.source,
             _styles: source('styles')
         },
@@ -49,7 +49,7 @@ var base =
         alias:
         {
             'component-export-loader': require.resolve('./loaders/component-export-loader'),
-            'component-global-loader': require.resolve('./loaders/component-global-loader'),
+            'component-global-loader': require.resolve('./loaders/component-global-loader')
         }
     },
 
@@ -57,7 +57,6 @@ var base =
     {
         rules:
         [
-            // specialized json import
             {
                 type: 'javascript/auto',
                 test: /registry.json$/,
@@ -71,7 +70,7 @@ var base =
     },
 
     plugins:
-    [
+    [        
         new VueLoaderPlugin(),
         new GenerateJsonPlugin('package.json', require('./dist-package-json'), null, 4),
     ]

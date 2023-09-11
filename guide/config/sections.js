@@ -117,6 +117,11 @@ module.exports =
                 components: components('overlay', '*.vue')
             },
             {
+                name: 'Indicators',
+                description: 'Components that keep users informed',
+                components: path.join(paths.components, 'indicators', '**', '*.vue')
+            },            
+            {
                 name: 'Drag And Drop',
                 description: 'Components for dragging and dropping',
                 components: components('drag-and-drop', '*.vue')
