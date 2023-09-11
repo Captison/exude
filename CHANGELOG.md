@@ -46,6 +46,8 @@ tasks:
 - `extend` style loader can extend existing object
 - `chooser` mixin deleted
 - `boxe` style loader deleted
+- fixed bug with keyframes name resolution
+- fixed potential issues with empty style classes
 
 
 ## v0.0.7
