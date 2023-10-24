@@ -1,6 +1,6 @@
 <script>
 import { extension, styler } from '_source/mixins'
-import { inject, length } from '_styles/loaders'
+import { inject, toRaw } from '_css/value'
 
 
 /**
@@ -69,9 +69,9 @@ export default
                 backgroundClip: this.clip,
                 backgroundImage: inject(this.image, this.$attrs),                
                 backgroundOrigin: this.origin,
-                backgroundPosition: length.spaced(this.pos),
+                backgroundPosition: toRaw.extent.str.spaced(this.pos),
                 backgroundRepeat: this.repeat,                
-                backgroundSize: length.spaced(this.size)
+                backgroundSize: toRaw.extent.str.spaced(this.size)
             };
             
             return css;

@@ -1,3 +1,5 @@
+import cssm from '_css/mapper'
+
 
 /**
     Grid child CSS properties.
@@ -24,21 +26,8 @@ export default
     
     computed:
     {
-        areaCss() { return this.area && { gridArea: this.area }; },
+        areaCss() { return cssm.gridArea(this.area); },
 
-        placeSelfCss() 
-        { 
-            let grid = {};
-                            
-            if (this.placeSelf)
-            {
-                let [ alignSelf, justifySelf = alignSelf ] = this.placeSelf.split(/\s+/);
-                
-                if (alignSelf) grid.alignSelf = alignSelf;
-                if (justifySelf) grid.justifySelf = justifySelf;
-            }
-            
-            return grid;
-        }
+        placeSelfCss() { return cssm.placeSelf(this.placeSelf); }
     }
 }

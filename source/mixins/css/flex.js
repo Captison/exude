@@ -1,3 +1,5 @@
+import cssm from '_css/mapper'
+
 
 /**
     CSS Flex mixin.
@@ -41,17 +43,7 @@ export default
 
     computed:
     {
-        alignsCss()
-        {
-            let aligns = {};
-            let [ alignContent, alignItems, justifyContent ] = (this.aligns || '').split(/:/);
-            
-            if (alignContent) aligns.alignContent = alignContent;
-            if (alignItems) aligns.alignItems = alignItems;
-            if (justifyContent) aligns.justifyContent = justifyContent;
-            
-            return aligns;
-        },
+        alignsCss() { return cssm.layoutAlignment(this.aligns); },
         
         dirCss() { return { flexDirection: (this.invert ? 'column' : 'row') + (this.reverse ? '-reverse' : '') }; },
                 

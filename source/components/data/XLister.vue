@@ -7,8 +7,13 @@
           The filtered list of items.
     -->
     <slot :array="filteredList" />
-    <template v-if="filteredList.length">
-      <x-box v-for="(value, index) in iterableList" v-bind="$attrs" :key="index">
+    <template v-if="(customMode ? array : filteredList).length">
+      <x-box 
+        v-for="(value, index) in iterableList" 
+        v-show="!hideMode || filterFn(value)" 
+        v-bind="$attrs" 
+        :key="index"
+      >
         <!-- 
             @slot iterate content 
             
@@ -18,11 +23,19 @@
               Current index in list.
             @binding { any } item
               Value in list at `index`.
+            @binding { boolean } filter
+              When `excludes='custom'`, true/false for include/exclude item.
         -->
-        <slot name="iter" :index="index" :item="value" />
+        <slot name="iter" :index="index" :item="value" :filter="!customMode || filterFn(value)" />
       </x-box>
     </template>
-    <!-- @slot content for empty list -->
+    <!-- 
+        @slot empty list content
+        
+        Renders only when
+        - there are no items in the list
+        - all items in list have been excluded
+    -->
     <slot v-else name="empty" />
   </div>
 </template>
@@ -54,6 +67,17 @@ export default
         
     props:
     {
+        /**
+            Specifies how to handle excluded items.
+            
+            Possible values:
+            - `remove` - items are removed from the page (default)
+            - `hide` - items are hidden in page (display: none)
+            - `custom` - a `filter` boolean is passed to `iter` slot
+            
+            Ignored if no `filterSpec` is provided (obviously).
+        */
+        excludes: String,
         /**
             Criteria for data filtration.                        
             
@@ -95,11 +119,21 @@ export default
             return array || []; 
         },
         
-        filteredList() { return this.filterFn ? this.filterFn.list(this.array) : this.array; },    
+        customMode() { return this.excludes === 'custom'; }, 
 
-        filterFn() { return exists(this.filterSpec) ? filter(this.filterSpec) : null; },
+        filteredList() { return this.filterFn.list ? this.filterFn.list(this.array) : this.array; },    
+
+        filterFn() { return exists(this.filterSpec) ? filter(this.filterSpec) : v => true; },
         
-        iterableList() { return this.filterFn ? this.filterFn.iterate(this.array) : this.array; }      
+        hideMode() { return this.excludes === 'hide'; },
+        
+        iterableList() 
+        {
+            if (this.filterFn.iterate && (!this.excludes || this.excludes === 'remove'))
+                return this.filterFn.iterate(this.array);
+            
+            return this.array;
+        }      
     },
     
     methods:

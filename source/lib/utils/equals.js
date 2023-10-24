@@ -12,10 +12,12 @@ export default function equals(object1, object2)
     if (object1 === object2) return true;
     // not equal if one is null
     if (object1 === null || object2 === null) return false;
-    // equal if both are NaN
+    // equal if both are NaN (non-coercive)
     if (Number.isNaN(object1) && Number.isNaN(object2)) return true;
     // not equal if either one is not an object.
     if (typeof object1 !== 'object' || typeof object2 !== 'object') return false;
+    // not equal if array status does not coincide
+    if (Array.isArray(object1) !== Array.isArray(object2)) return false;
     
     let keys = Object.keys(object1);
     // not equal if key count different

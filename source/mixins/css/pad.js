@@ -1,4 +1,4 @@
-import { trbl } from '_styles/loaders'
+import cssm from '_css/mapper'
 
 
 /*
@@ -33,6 +33,6 @@ export default
 
     computed:
     {
-        padCss() { return this.pad && trbl(this.pad, 'padding'); }
+        padCss() { return cssm.pad(this.pad); }
     }
 }

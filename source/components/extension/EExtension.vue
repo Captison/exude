@@ -9,7 +9,7 @@
 
 
 <script>
-import { enumer } from '_styles/loaders'
+import { enumer } from '_lco/utils'
 import { frag } from '_source/directives'
 import EAnimation from '_components/extension/EAnimation'
 import EBackground from '_components/extension/EBackground'

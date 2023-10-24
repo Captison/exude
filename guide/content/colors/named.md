@@ -2,9 +2,9 @@
 Below are the currently configured colors for this styleguide.
 
 ```vue
-import vars from '_styles/vars';
+import lco from '_lco';
 
-let { named } = vars.color, content = '';
+let { named } = lco.color, content = '';
 let keys = Object.keys(named).filter((n, _, a) => n === 'transparent' || !a.includes(named[n]));
 
 keys.forEach(name =>

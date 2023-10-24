@@ -1,5 +1,4 @@
-import { length } from '_styles/loaders'
-
+import cssm from '_css/mapper'
 
 
 /**
@@ -55,29 +54,10 @@ export default
 
     computed:
     {
-        dimsCss() { return this.resolveDims(this.height, this.width); },
+        dimsCss() { return cssm.dims([this.height, this.width]); },
 
-        maxDimsCss() { return this.resolveDims(this.maxHeight, this.maxWidth, 'max'); },
+        maxDimsCss() { return cssm.maxDims([this.maxHeight, this.maxWidth]); },
 
-        minDimsCss() { return this.resolveDims(this.minHeight, this.minWidth, 'min'); },
-    },
-    
-    methods:
-    {
-        resolveDims(height, width, prefix)
-        {
-            let dims = {};
-            
-            let hprop = prefix ? prefix + 'Height' : 'height';
-            let wprop = prefix ? prefix + 'Width' : 'width';
-            
-            if (height || height === 0)
-                dims[hprop] = length(height);
-                
-            if (width || width === 0)
-                dims[wprop] = length(width);
-            
-            return dims;          
-        }
-    }
+        minDimsCss() { return cssm.minDims([this.minHeight, this.minWidth]); }
+    }    
 }

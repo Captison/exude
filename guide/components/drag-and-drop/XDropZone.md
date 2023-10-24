@@ -22,7 +22,7 @@ let items2 = [ 'Litecoin', 'VeChain', 'Tezos', 'Cosmos' ];
 let items3 = [ 'Cardano', 'Dash', 'Polkadot', 'Stellar' ];
 let items4 = [ 'Zilliqa', 'Monero', 'Algorand', 'VeChain' ];
 
-<x-drag-yard inline align="center" margin="a3" :min-width="40" :max-width="50" ind-outline=".5!prime!dashed!1">
+<x-drag-yard inline align="center" margin="a3" :min-width="40" :max-width="50" ind-outline=".5:prime:dashed:1">
 
     <x-drop-zone #default="{ payload }" invert :items.sync="items1">
       <x-text block font="h4" colors=":tertiLight" pad="a2">

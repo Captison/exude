@@ -5,10 +5,12 @@
 */
 import '_lib/patches'
 import merge from 'deepmerge'
-import { defaults, setStyles } from '_styles/vars'
-import * as loaders from '_styles/loaders'
+import { defaults, setStyles } from '_lco'
+import * as rule from '_css/rule'
+import * as value from '_css/value'
 
 
+let clear = x => x.clearCache && x.clearCache();
 /**
     Library configuration.
     
@@ -19,7 +21,8 @@ let config = (...configs) =>
 {
     setStyles(...configs);
     // clear loader caches
-    Object.values(loaders).forEach(val => val.clearCache && val.clearCache());
+    Object.values(rule).forEach(clear);
+    Object.values(value).forEach(clear);
     
     // TODO: Refresh root component.
 }

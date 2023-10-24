@@ -42,7 +42,7 @@
 
 <script>
 import { formField, styler } from '_source/mixins'
-import { toSunits } from '_styles/loaders'
+import { toScale } from '_css/value'
 import EBackground from '_components/extension/EBackground'
 import ETransition from '_components/extension/ETransition'
 import XBox from '_components/layout/XBox'
@@ -102,7 +102,7 @@ export default
         let action = () =>
         {
             let { $el = {}, myValue, $refs: { knob = {} } = {} } = this;          
-            this.knobPos = 'v0 l' + (myValue ? toSunits($el.offsetWidth - knob.$el.offsetWidth) : 0);            
+            this.knobPos = 'v0 l' + (myValue ? toScale($el.offsetWidth - knob.$el.offsetWidth) : 0);            
         }
         
         this.$watch('myValue', action);

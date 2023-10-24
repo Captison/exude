@@ -1,5 +1,5 @@
-import { trbl } from '_styles/loaders'
-import subCss from '../sub-css'
+import cssm from '_css/mapper'
+import { trbl } from '_css/rule'
 
 
 /**
@@ -12,11 +12,6 @@ import subCss from '../sub-css'
 export default
 {
     aliases: [ 'pos', 'trbl', 'zIndex' ],
-  
-    mixins:
-    [
-        subCss('zIndex', [String, Number], value => ({ zIndex: value })),
-    ],
   
     props:
     {
@@ -33,7 +28,9 @@ export default
         */
         fixed: Boolean,
         /**
-            CSS position value.
+            CSS position and direction values. 
+            
+            Takes the form `position:top:left:bottom:right`.
         */
         pos: String,
         /**
@@ -62,23 +59,16 @@ export default
         trbl: String,      
         /**
             CSS z-index value.
-
-            - use `hZIndex` prop to specify hover z-index
-            - use `fZIndex` prop to specify focus z-index
         */
         zIndex: [ String, Number ]
     },
     
     computed:
     {
-        posCss() 
-        { 
-            if (this.pos) return { position: this.pos }; 
-            if (this.relative) return { position: 'relative' }; 
-            if (this.absolute) return { position: 'absolute' }; 
-            if (this.fixed) return { position: 'fixed' }; 
-        },
+        posCss() { return cssm.position([ this.fixed, this.absolute, this.relative, this.pos ]); },
 
-        trblCss() { return this.trbl && trbl(this.trbl); },      
+        trblCss() { return cssm.trbl(this.trbl); },
+        
+        zIndexCss() { return cssm.zIndex(this.zIndex); }    
     }
 }

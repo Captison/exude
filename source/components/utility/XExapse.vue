@@ -15,7 +15,7 @@
 <script>
 import { toggle } from '_source/mixins'
 import { observeResize } from '_source/directives'
-import { toSunits } from '_styles/loaders'
+import { toScale } from '_css/value'
 import ETransition from '_components/extension/ETransition'
 import XBox from '_components/layout/XBox'
 import XFlex from '_components/layout/XFlex'
@@ -199,7 +199,7 @@ export default
         handleResize([ entry ])
         {
             let { offsetHeight, offsetWidth } = entry.target;
-            this.contentExtent = toSunits((this.horiz ? offsetWidth : offsetHeight) || 0);
+            this.contentExtent = toScale((this.horiz ? offsetWidth : offsetHeight) || 0);
             
             this.$emit('content-resize', entry.target);
         }      

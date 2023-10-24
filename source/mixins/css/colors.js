@@ -1,4 +1,4 @@
-import { colors } from '_styles/loaders'
+import cssm from '_css/mapper'
 import subCss from '../sub-css'
 
 
@@ -15,7 +15,7 @@ export default
   
     mixins:
     [
-        subCss('colors', String, colors)
+        subCss('colors', String, cssm.colors)
     ],
   
     props:

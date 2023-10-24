@@ -1,6 +1,7 @@
 <script>
 import { extension, styler } from '_source/mixins'
-import { keyframes, toMillis } from '_styles/loaders'
+import { keyframes } from '_lco/utils'
+import { toRaw } from '_css/value'
 
 
 /**
@@ -79,9 +80,9 @@ export default
         {
             let css =
             {
-                animationDelay: toMillis.str(this.delay) || 'initial',
+                animationDelay: toRaw.time.str(this.delay) || 'initial',
                 animationDirection: this.dir || 'initial',
-                animationDuration: toMillis.str(this.duration) || 'initial',                
+                animationDuration: toRaw.time.str(this.duration) || 'initial',                
                 animationFillMode: this.mode || 'initial',
                 animationName: keyframes(this.name) || 'initial',
                 animationIterationCount: this.repeat || (this.infinite && 'infinite') || 'initial',                

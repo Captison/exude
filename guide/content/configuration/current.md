@@ -2,9 +2,9 @@
 Raw configuration data for this instance of the styleguide.
 
 ```vue
-import vars from '_styles/vars'
+import lco from '_lco';
 
 <code>
-  <pre>{{ JSON.stringify(vars, null, 4) }}</pre>
+  <pre>{{ JSON.stringify(lco, null, 4) }}</pre>
 </code>
 ```

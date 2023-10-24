@@ -24,8 +24,7 @@ Note that __`g`__ and __`n`__ functions do not accept a parameter.
 Examples of manipulating `prime` color:
 
 ```vue
-import vars from '_styles/vars';
-import { color } from '_styles/loaders';
+import { color } from '_css/value';
 
 let defs = 
 {

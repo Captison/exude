@@ -1,4 +1,6 @@
-import { border, outline, radius, shadow } from '_styles/loaders'
+import cssm from '_css/mapper'
+import { border, radius } from '_css/rule'
+import { shadow } from '_css/value'
 import subCss from '../sub-css'
 
 
@@ -16,7 +18,6 @@ export default
     mixins:
     [
         subCss('border', String, border),
-        subCss('outline', String, outline),
         subCss('radius', String, radius),
         subCss('shadow', String, v => ({ boxShadow: shadow(v) }))
     ],
@@ -48,15 +49,12 @@ export default
         */
         border: String,
         /**
-            Outline specification of the form `width!color!style!space`.
+            Outline specification of the form `width:color:style:space`.
             
               - `width` is a scale unit number (or valid CSS length)
               - `color` is a valid LCO color name (or valid CSS color)
               - `style` is a CSS outline style
-              - `space` is a scale unit number for CSS outline-offset
-            
-            - use `hOutline` prop to specify hover outline
-            - use `fOutline` prop to specify focus outline
+              - `space` is a scale unit number for CSS outline-offset            
         */
         outline: String,
         /**
@@ -88,6 +86,11 @@ export default
             - use `hShadow` prop to specify hover box shadow
             - use `fShadow` prop to specify focus box shadow
         */
-        shadow: String,
-    }    
+        shadow: String
+    },
+    
+    computed:
+    {
+        outlineCss() { return cssm.outline(this.outline); }
+    }
 }

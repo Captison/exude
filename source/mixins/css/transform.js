@@ -1,4 +1,5 @@
-import { transform } from '_styles/loaders'
+import cssm from '_css/mapper'
+import { transform } from '_css/rule'
 import subCss from '../sub-css'
 
 
@@ -46,6 +47,6 @@ export default
     
     computed:
     {
-        transOriginCss() { return this.transOrigin && { transformOrigin: this.transOrigin }; }      
+        transOriginCss() { return cssm.transformOrigin(this.transOrigin); }      
     }
 }

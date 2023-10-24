@@ -1,4 +1,4 @@
-import { trbl } from '_styles/loaders'
+import cssm from '_css/mapper'
 
 
 /*
@@ -33,6 +33,6 @@ export default
 
     computed:
     {
-        marginCss() { return this.margin && trbl(this.margin, 'margin'); }
+        marginCss() { return cssm.margin(this.margin); }
     }
 }

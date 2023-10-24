@@ -20,7 +20,9 @@
 
 <script>
 import { styler } from '_source/mixins'
-import { colors, keyframes, toDegrees, toMillis } from '_styles/loaders'
+import { keyframes } from '_lco/utils'
+import cssm from '_css/mapper'
+import { toRaw } from '_css/value'
 import { uid } from '_lib/utils'
 import XKeyframes from '_components/utility/XKeyframes'
 
@@ -41,7 +43,7 @@ export default
     props:
     {
         /**
-            Linear gradient direction for zombie mode.
+            Linear gradient direction for zombie mode (scale angle).
         */
         degrees: { type: [ String, Number ], default: 90 },
         /**
@@ -72,7 +74,7 @@ export default
     
     computed:
     {
-        colorData() { return colors(this.colors); },
+        colorData() { return cssm.colors(this.colors); },
         
         keyname() { return 'skeleton_' + uid('zombie', this._uid); },
       
@@ -95,8 +97,8 @@ export default
         {
             let { colorData, dataAttr, keyname, statics: { cover } } = this;
             
-            let time = toMillis.str(this.duration);
-            let degs = toDegrees.str(this.degrees);
+            let time = toRaw.time.str(this.duration);
+            let degs = toRaw.angle.str(this.degrees);
             
             let ruleset =
             {

@@ -1,3 +1,5 @@
+import cssm from '_css/mapper'
+
 
 /**
     Cursor CSS property.
@@ -26,11 +28,6 @@ export default
     
     computed:
     {
-        cursorCss()
-        {
-            if (this.inactive) return { cursor: 'not-allowed' };
-            if (this.cursor) return { cursor: this.cursor };
-            if (this.pointer) return { cursor: 'pointer' };
-        }
+        cursorCss() { return cssm.cursor([ this.pointer, this.cursor, this.inactive ]); }
     }
 }

@@ -3,9 +3,9 @@ Here are the icon aliases configured for the styleguide.
 
 ```vue
 import { unwind } from '_lib/utils'
-import vars from '_styles/vars'
+import lco from '_lco';
 
-let { named } = vars.icon;
+let { named } = lco.icon;
 let content = '';
 let style = 'flex-basis:185px;padding:36px 0;text-align:center';
 let keys = Object.keys(named).filter((n, _, a) => a.includes(named[n]));

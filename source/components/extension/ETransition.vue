@@ -1,6 +1,6 @@
 <script>
 import { extension, styler } from '_source/mixins'
-import { toMillis } from '_styles/loaders'
+import { toRaw } from '_css/value'
 
 
 /**
@@ -53,8 +53,8 @@ export default
         {
             let css =
             {
-                transitionDelay: toMillis.str(this.delay) || 'initial',
-                transitionDuration: toMillis.str(this.duration) || 'initial',                
+                transitionDelay: toRaw.time.str(this.delay) || 'initial',
+                transitionDuration: toRaw.time.str(this.duration) || 'initial',                
                 transitionProperty: this.property || 'all',
                 transitionTimingFunction: this.timing || 'initial'              
             };

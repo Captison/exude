@@ -26,7 +26,8 @@
 
 <script>
 import { styler } from '_source/mixins'
-import { color, keyframes } from '_styles/loaders'
+import { keyframes } from '_lco/utils'
+import { color } from '_css/value'
 import XBox from '_components/layout/XBox'
 import XKeyframes from '_components/utility/XKeyframes'
 

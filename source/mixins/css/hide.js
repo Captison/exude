@@ -1,3 +1,5 @@
+import cssm from '_css/mapper'
+
 
 /**
     Visibility CSS property.
@@ -20,6 +22,6 @@ export default
     
     computed:
     {
-        hideCss() { return this.hide && { visibility: 'hidden' }; }      
+        hideCss() { return cssm.hide(this.hide); }      
     }
 }

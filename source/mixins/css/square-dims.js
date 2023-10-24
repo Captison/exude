@@ -1,4 +1,4 @@
-import { length } from '_styles/loaders'
+import cssm from '_css/mapper'
 
 
 
@@ -37,26 +37,10 @@ export default
 
     computed:
     {
-        maxSizeCss() { return this.resolveSize(this.maxSize, 'max'); },
+        maxSizeCss() { return cssm.maxDims([this.maxSize, this.maxSize]); },
         
-        minSizeCss() { return this.resolveSize(this.minSize, 'min'); },
+        minSizeCss() { return cssm.minDims([this.minSize, this.minSize]); },
         
-        sizeCss() { return this.resolveSize(this.size); }      
-    },
-    
-    methods:
-    {
-        resolveSize(size, prefix)
-        {
-            if (size || size === 0)
-            {
-                let hprop = prefix ? prefix + 'Height' : 'height';
-                let wprop = prefix ? prefix + 'Width' : 'width';
-                            
-                let value = length(size);            
-                
-                return { [hprop]: value, [wprop]: value };
-            }
-        }      
+        sizeCss() { return cssm.dims([this.size, this.size]); }      
     }
 }

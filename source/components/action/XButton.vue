@@ -1,5 +1,5 @@
 <template>
-  <x-text v-bind="$attrs" el="button" :font="font" :disabled="isDisabled" :inactive="isDisabled" v-on="buttonEvents">
+  <x-text v-bind="$attrs" el="button" :disabled="isDisabled" :inactive="isDisabled" v-on="buttonEvents">
     <e-stylesheet flex pointer place=":center" :gap="gap" :pad="pad" />
     <x-icon v-if="icons.one" :name="icons.one" :size="iconSize" />
     <!-- @slot button label (overrides `label` prop) -->
@@ -11,7 +11,6 @@
 
 <script>
 import { formAction } from '_source/mixins'
-import { fontSize } from '_styles/loaders'
 import EStylesheet from '_components/extension/EStylesheet'
 import XIcon from '_components/assets/XIcon'
 import XText from '_components/typography/XText'
@@ -33,12 +32,6 @@ export default
     props:
     {
         /**
-            Font size for button text.
-            
-            Effectively, this is the button size.
-        */
-        font: String,
-        /**
             CSS row and column gap values as `column:row` (scale units).
         */
         gap: { type: String, default: '1' },        
@@ -46,6 +39,10 @@ export default
             Name of icon to display.
         */
         icon: String,
+        /**
+            Icon size.
+        */
+        iconSize: [ String, Number ],
         /**
             Button label.
         */
@@ -85,9 +82,7 @@ export default
         {
             let [ one, two ] = (this.icon || '').split(/:/);
             return { one, two };
-        },
-        // icon-size depends on internals of XText
-        iconSize() { return (fontSize(this.font) || {}).lineHeight; }
+        }
     },
     
     methods:
