@@ -14,7 +14,7 @@ import subCss from '../sub-css'
 */
 export default
 {
-    aliases: [ 'display', 'font', 'fontWeight', 'italic', 'letter', 'text', 'textShadow' ],
+    aliases: [ 'display', 'font', 'fontFace', 'fontWeight', 'italic', 'letter', 'text', 'textShadow' ],
   
     mixins: 
     [ 
@@ -32,11 +32,15 @@ export default
         */
         bold: Boolean, 
         /**
-            CSS font values as `fontFamily:fontSize:lineHeight`.
+            CSS font values as `fontSize:lineHeight`.
             
             @enum from lco.font.named
         */
         font: String,
+        /**
+            CSS font-family value.
+        */
+        fontFace: String,
         /**
             Make text italic?
 
@@ -73,6 +77,8 @@ export default
     computed:
     {
         fontCss() { return cssm.font(this.font); },
+
+        fontFaceCss() { return cssm.fontFamily(this.fontFace); },
         
         fontWeightCss() { return { ...this.boldCss, ...this.weightCss }; },
         

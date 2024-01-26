@@ -28,7 +28,7 @@ export default function(name, query = name)
         
         created()
         {
-            this[unset] = mediaWatch(enumer.mediaQuery(query), bool => this[name] = bool);
+            this[unset] = mediaWatch(enumer.media(query), bool => this[name] = bool);
         },
         
         beforeDestroy()

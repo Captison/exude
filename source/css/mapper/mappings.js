@@ -1,5 +1,6 @@
+import { keyframes } from '_lco/utils'
 import { trbl } from '_css/rule'
-import { borderStyle, color, position, situation, toRaw } from '_css/value'
+import { borderStyle, boxing, color, position, situation, toRaw } from '_css/value'
 
 
 /**
@@ -27,6 +28,29 @@ export default
         { attr: 'verticalAlign' }
     ],
   
+    animation:
+    [
+        { attr: 'animationDelay', alias: 'delay', proc: toRaw.time.str, def: 'initial' }, 
+        { attr: 'animationDirection', alias: 'dir', def: 'initial' }, 
+        { attr: 'animationDuration', alias: 'duration', proc: toRaw.time.str, def: 'initial' }, 
+        { attr: 'animationFillMode', alias: 'mode', def: 'initial' }, 
+        { attr: 'animationName', alias: 'name', proc: keyframes, def: 'initial' }, 
+        { attr: 'animationIterationCount', alias: 'repeat', def: 'initial'}, 
+        { attr: 'animationPlayState', alias: 'state', def: 'initial' },
+        { attr: 'animationTimingFunction', alias: 'timing', def: 'initial' } 
+    ],
+    
+    background:
+    [
+        { attr: 'backgroundAttachment', alias: 'attach' },
+        { attr: 'backgroundClip', alias: 'clip', proc: boxing },
+        { attr: 'backgroundImage', alias: 'image' },
+        { attr: 'backgroundOrigin', alias: 'origin', proc: boxing },
+        { attr: 'backgroundPosition', alias: 'pos', proc: situation.spaced },
+        { attr: 'backgroundRepeat', alias: 'repeat' },
+        { attr: 'backgroundSize', alias: 'size', proc: toRaw.extent.str.spaced }      
+    ],
+  
     colors:
     [ 
         { attr: 'color', proc: color }, 
@@ -51,7 +75,6 @@ export default
         section: 'font',
         fields:
         [ 
-            { attr: 'fontFamily', alias: 'family' }, 
             { attr: 'fontSize', alias: 'size', proc: toRaw.extent.str }, 
             { attr: 'lineHeight', alias: 'height', proc: toRaw.extent.str } 
         ]
@@ -136,8 +159,8 @@ export default
     
     paints:
     [ 
-        { attr: 'stroke', proc: color }, 
-        { attr: 'fill', proc: color } 
+        { attr: 'fill', proc: color }, 
+        { attr: 'stroke', proc: color } 
     ],
     
     perspective:
@@ -158,6 +181,14 @@ export default
     [
         { attr: 'textTransform', alias: 'transform' }, 
         { attr: 'textDecoration', alias: 'decoration' } 
+    ],
+    
+    transition:
+    [
+        { attr: 'transitionDelay', alias: 'delay', proc: toRaw.time.str, def: 'initial' }, 
+        { attr: 'transitionDuration', alias: 'duration', proc: toRaw.time.str, def: 'initial' }, 
+        { attr: 'transitionProperty', alias: 'property', def: 'all' }, 
+        { attr: 'transitionTimingFunction', alias: 'timing', def: 'initial' } 
     ],
     
     trbl:

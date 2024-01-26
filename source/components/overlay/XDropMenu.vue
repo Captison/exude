@@ -1,5 +1,11 @@
 <template>
-  <x-box v-listen-outside-click="showOff" v-observe-resize="doResize" v-bind="baseProps" v-on="$hearers">
+  <x-box 
+    v-listen-outside-click="showOff" 
+    v-listen-outside-focus="showOff" 
+    v-observe-resize="doResize" 
+    v-bind="baseProps" 
+    v-on="$hearers"
+  >
     <!-- 
         @slot affected content
         
@@ -30,7 +36,7 @@
 <script>
 import { toggle } from '_source/mixins'
 import { toScale } from '_css/value'
-import { listenOutsideClick, observeResize } from '_source/directives'
+import { listenOutsideClick, listenOutsideFocus, observeResize } from '_source/directives'
 import XBox from '_components/layout/XBox'
 import XExapse from '_components/utility/XExapse'
 
@@ -50,7 +56,7 @@ export default
 
     components: { XBox, XExapse },
 
-    directives: { listenOutsideClick, observeResize },
+    directives: { listenOutsideClick, listenOutsideFocus, observeResize },
 
     props:
     {

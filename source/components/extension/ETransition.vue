@@ -1,6 +1,6 @@
 <script>
 import { extension, styler } from '_source/mixins'
-import { toRaw } from '_css/value'
+import cssm from '_css/mapper'
 
 
 /**
@@ -51,15 +51,8 @@ export default
         
         extensionCss()
         {
-            let css =
-            {
-                transitionDelay: toRaw.time.str(this.delay) || 'initial',
-                transitionDuration: toRaw.time.str(this.duration) || 'initial',                
-                transitionProperty: this.property || 'all',
-                transitionTimingFunction: this.timing || 'initial'              
-            };
-            
-            return css;
+            let { delay, duration, property, timing } = this;
+            return cssm.transition({ delay, duration, property, timing });
         }
     }
 }

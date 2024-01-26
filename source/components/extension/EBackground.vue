@@ -1,6 +1,7 @@
 <script>
 import { extension, styler } from '_source/mixins'
-import { inject, toRaw } from '_css/value'
+import cssm from '_css/mapper'
+import { inject } from '_css/value'
 
 
 /**
@@ -63,18 +64,8 @@ export default
         
         extensionCss()
         {
-            let css =
-            {
-                backgroundAttachment: this.attach,                
-                backgroundClip: this.clip,
-                backgroundImage: inject(this.image, this.$attrs),                
-                backgroundOrigin: this.origin,
-                backgroundPosition: toRaw.extent.str.spaced(this.pos),
-                backgroundRepeat: this.repeat,                
-                backgroundSize: toRaw.extent.str.spaced(this.size)
-            };
-            
-            return css;
+            let { $attrs, attach, clip, image, origin, pos, repeat, size } = this;
+            return cssm.background({ attach, clip, image: inject(image, $attrs), origin, pos, repeat, size });
         }
     }
 }

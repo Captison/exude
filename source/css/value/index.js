@@ -7,6 +7,7 @@
 */
 
 export { default as borderStyle } from './border-style'
+export { default as boxing } from './boxing'
 export { default as color } from './color'
 export { default as inject } from './inject'
 export { default as position } from './position'

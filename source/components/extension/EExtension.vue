@@ -52,13 +52,13 @@ export default
     
     computed:
     {
-        animationSpecs() { return enumer(this.animation, 'animation'); },
+        animationSpecs() { return enumer.list(this.animation, 'animation'); },
         
-        backgroundSpecs() { return enumer(this.background, 'background'); },
+        backgroundSpecs() { return enumer.list(this.background, 'background'); },
                 
-        stylesheetSpecs() { return enumer(this.stylesheet, 'stylesheet'); },
+        stylesheetSpecs() { return enumer.list(this.stylesheet, 'stylesheet'); },
         
-        transitionSpecs() { return enumer(this.transition, 'transition'); }
+        transitionSpecs() { return enumer.list(this.transition, 'transition'); }
     }
 }
 </script>
