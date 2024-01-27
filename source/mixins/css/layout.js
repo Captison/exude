@@ -1,3 +1,5 @@
+import cssm from '_css/mapper'
+
 
 /**
     Layout related CSS properties.
@@ -24,17 +26,8 @@ export default
     
     computed:
     {
-        alignCss() 
-        {
-            let align = {};
-            let [ texta, verta ] = (this.align || '').split(/:/);
-            
-            if (texta) align.textAlign = texta;
-            if (verta) align.verticalAlign = verta;
-            
-            return align; 
-        },
+        alignCss() { return cssm.alignment(this.align); },
                 
-        spaceCss() { return this.space && { whiteSpace: this.space }; }        
+        spaceCss() { return cssm.whiteSpace(this.space); }        
     }
 }

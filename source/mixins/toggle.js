@@ -1,4 +1,4 @@
-import { ns } from '_styles/loaders'
+import { ns } from '_lco'
 
 
 /**

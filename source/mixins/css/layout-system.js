@@ -1,4 +1,4 @@
-import { length } from '_styles/loaders'
+import cssm from '_css/mapper'
 
 
 /**
@@ -28,32 +28,8 @@ export default
 
     computed:
     {
-        gapCss() 
-        { 
-            if (this.gap)
-            {
-                let gap = {};
-                let [ col, row ] = this.gap.split(':');
-                
-                if (col) gap.columnGap = length(col);
-                if (row) gap.rowGap = length(row);
-                
-                return gap;
-            }
-        },
+        gapCss() { return cssm.gap(this.gap); },
         
-        placeCss() 
-        {
-            if (this.place)
-            {
-                let place = {};
-                let { content, items } = this.place.split(':');
-                
-                if (content) place.placeContent = content;
-                if (items) place.placeItems = items;
-                
-                return place;
-            }
-        }
+        placeCss() { return cssm.layoutPlacement(this.place); }
     }
 }

@@ -1,5 +1,5 @@
 import { pascalCase } from 'change-case';
-import { extend } from '_styles/loaders'
+import { extend } from '_css/helper'
 
 
 /**

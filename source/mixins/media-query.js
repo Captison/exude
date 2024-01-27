@@ -1,5 +1,5 @@
 import { mediaWatch } from '_lib/utils'
-import { mediaQuery } from '_styles/loaders'
+import { enumer } from '_lco/utils'
 
 
 /**
@@ -28,7 +28,7 @@ export default function(name, query = name)
         
         created()
         {
-            this[unset] = mediaWatch(mediaQuery(query), bool => this[name] = bool);
+            this[unset] = mediaWatch(enumer.media(query), bool => this[name] = bool);
         },
         
         beforeDestroy()

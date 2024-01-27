@@ -1,3 +1,5 @@
+import cssm from '_css/mapper'
+
 
 /**
     Clipping related CSS properties.
@@ -28,10 +30,10 @@ export default
     
     computed:
     {
-        overflowCss() { return this.overflow && { overflow: this.overflow }; },
+        overflowCss() { return cssm.overflow(this.overflow); },
 
-        overscrollCss() { return this.overscroll && { overscrollBehavior: this.overscroll }; },
+        overscrollCss() { return cssm.overscrollBehavior(this.overscroll); },
 
-        overWrapCss() { return this.overWrap && { overflowWrap: this.overWrap }; }
+        overWrapCss() { return cssm.overflowWrap(this.overWrap); }
     }
 }

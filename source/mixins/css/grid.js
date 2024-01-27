@@ -1,4 +1,4 @@
-import { length } from '_styles/loaders'
+import cssm from '_css/mapper'
 
 
 /**
@@ -34,24 +34,8 @@ export default
 
     computed:
     {        
-        autoCss() 
-        { 
-            let auto = {};
-            
-            if (this.autoCols) auto.gridAutoColumns = length.spaced(this.autoCols);
-            if (this.autoRows) auto.gridAutoRows = length.spaced(this.autoRows);
-            
-            return auto;
-        },
+        autoCss() { return cssm.gridAuto([ this.autoCols, this.autoRows ]); },
 
-        gridCss() 
-        {
-            let grid = {};
-            
-            if (this.cols) grid.gridTemplateColumns = length.spaced(this.cols);
-            if (this.rows) grid.gridTemplateRows = length.spaced(this.rows);
-            
-            return grid; 
-        }
+        gridCss() { return cssm.gridTemplate([ this.cols, this.rows ]); }
     }
 }

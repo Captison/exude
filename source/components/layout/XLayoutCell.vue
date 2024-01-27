@@ -10,7 +10,7 @@
 
 <script>
 import { styler } from '_source/mixins'
-import { length } from '_styles/loaders'
+import { toRaw } from '_css/value'
 import XFlex from '_components/layout/XFlex'
 
 
@@ -96,7 +96,7 @@ export default
         
         // Dynamic CSS 
         
-        contentMaxWidthCss() { return this.maxContentWidth && { maxWidth: length(this.maxContentWidth) }; },
+        contentMaxWidthCss() { return this.maxContentWidth && { maxWidth: toRaw.extent.str(this.maxContentWidth) }; },
 
         contentWidthCss() { return this.expanded && { width: '100%' }; },
 

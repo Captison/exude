@@ -5,9 +5,11 @@
 
 
 <script>
-import v from '_styles/vars'
+import lco from '_lco'
 import { css, styler, subCss } from '_source/mixins'
-import { paints, svgIcon, toPixels } from '_styles/loaders'
+import { svgIcon } from '_lco/utils'
+import cssm from '_css/mapper'
+import { toRaw } from '_css/value'
 
 
 /**
@@ -17,7 +19,7 @@ export default
 {
     name: 'XIcon',
 
-    mixins: [ styler, css.squareDims, css.margin, subCss('colors', String, paints) ],
+    mixins: [ styler, css.squareDims, css.margin, subCss('colors', String, cssm.paints) ],
 
     props:
     {
@@ -38,7 +40,7 @@ export default
         /**
             Icon size.
         */
-        size: { type: [ String, Number ], default: () => v.icon.defaultSize },
+        size: { type: [ String, Number ], default: () => lco.icon.defaultSize },
         /**
             Width of image stroke (scale units).
         */
@@ -62,7 +64,7 @@ export default
         
     computed:
     {
-        boxed() { return toPixels.spaced(this.viewBox); },
+        boxed() { return toRaw.extent.spaced(this.viewBox); },
         
         // Dynamic CSS
       

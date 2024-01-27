@@ -1,5 +1,11 @@
 <template>
-  <x-box v-listen-outside-click="showOff" v-observe-resize="doResize" v-bind="baseProps" v-on="$hearers">
+  <x-box 
+    v-listen-outside-click="showOff" 
+    v-listen-outside-focus="showOff" 
+    v-observe-resize="doResize" 
+    v-bind="baseProps" 
+    v-on="$hearers"
+  >
     <!-- 
         @slot affected content
         
@@ -29,8 +35,8 @@
 
 <script>
 import { toggle } from '_source/mixins'
-import { toSunits } from '_styles/loaders'
-import { listenOutsideClick, observeResize } from '_source/directives'
+import { toScale } from '_css/value'
+import { listenOutsideClick, listenOutsideFocus, observeResize } from '_source/directives'
 import XBox from '_components/layout/XBox'
 import XExapse from '_components/utility/XExapse'
 
@@ -50,7 +56,7 @@ export default
 
     components: { XBox, XExapse },
 
-    directives: { listenOutsideClick, observeResize },
+    directives: { listenOutsideClick, listenOutsideFocus, observeResize },
 
     props:
     {
@@ -89,13 +95,13 @@ export default
             
             if (this.vertOpen) // top or bottom
             {
-                return (this.side === 'top' ? 'b' : 't') + (toSunits(targetHeight) + this.gap) +
-                    ' l' + toSunits((t * targetWidth) - (c * this.menuWidth));
+                return (this.side === 'top' ? 'b' : 't') + (toScale(targetHeight) + this.gap) +
+                    ' l' + toScale((t * targetWidth) - (c * this.menuWidth));
             }
             else // left or right
             {
-                return (this.side === 'left' ? 'r' : 'l') + (toSunits(targetWidth) + this.gap) +
-                    ' t' + toSunits((t * targetHeight) - (c * this.menuHeight));
+                return (this.side === 'left' ? 'r' : 'l') + (toScale(targetWidth) + this.gap) +
+                    ' t' + toScale((t * targetHeight) - (c * this.menuHeight));
             }
         },
 

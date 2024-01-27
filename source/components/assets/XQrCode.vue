@@ -6,7 +6,7 @@
 
 <script>
 import QRCode from 'qrcode-svg-ts'
-import { color, toPixels } from '_styles/loaders'
+import { color, toRaw } from '_css/value'
 import XBox from '_components/layout/XBox'
 
 
@@ -48,7 +48,7 @@ export default
         options()
         {
             let { colors, content, padding, size } = this;
-            let pixels = toPixels(size);
+            let pixels = toRaw(size);
             let [ fore, back ] = (colors || '').split(/:/)
           
             let options =

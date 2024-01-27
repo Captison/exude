@@ -34,12 +34,13 @@ var base =
         {
             _assets: source('assets'),
             _components: paths.components,
+            _css: source('css'),
             _directives: source('directives'),
             _root: paths.root,
+            _lco: source('lco'),
             _lib: source('lib'),
             _mixins: paths.mixins,
             _source: paths.source,
-            _styles: source('styles')
         },
         extensions: [ '.js', '.svg', '.vue' ]
     },

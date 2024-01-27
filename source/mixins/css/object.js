@@ -1,4 +1,4 @@
-import { position } from '_styles/loaders'
+import cssm from '_css/mapper'
 
 
 /*
@@ -19,19 +19,6 @@ export default
 
     computed:
     {
-        objectCss() 
-        {
-            let object = {};
-
-            if (typeof this.object === 'string')
-            {
-                let [ fit, pos ] = this.object.split(/:/);
-                
-                if (fit) object.objectFit = fit;
-                if (pos) object.objectPosition = position(pos);
-            }
-                    
-            return object; 
-        }
+        objectCss() { return cssm.object(this.object); }
     }
 }

@@ -1,5 +1,6 @@
-import v from '_styles/vars'
-import { fontSize, fontWeight, length, shadow } from '_styles/loaders'
+import cssm from '_css/mapper'
+import { fontWeight } from '_css/rule'
+import { shadow, toRaw } from '_css/value'
 import subCss from '../sub-css'
 
 
@@ -13,15 +14,14 @@ import subCss from '../sub-css'
 */
 export default
 {
-    aliases: [ 'display', 'font', 'fontWeight', 'italic', 'letter', 'textShadow', 'textTransform' ],
+    aliases: [ 'display', 'font', 'fontFace', 'fontWeight', 'italic', 'letter', 'text', 'textShadow' ],
   
     mixins: 
     [ 
         subCss('bold', Boolean, fontWeight),
         subCss('italic', Boolean, v => v ? { fontStyle: 'italic' } : {}),
-        subCss('letter', [String, Number], v => ({ letterSpacing: length(v) })),
+        subCss('letter', [String, Number], v => ({ letterSpacing: toRaw.extent.str(v) })),
         subCss('textShadow', String, v => ({ textShadow: shadow(v) })),
-        subCss('textTransform', String, v => ({ textTransform: v })),
         subCss('weight', String, fontWeight)
     ],
 
@@ -32,13 +32,15 @@ export default
         */
         bold: Boolean, 
         /**
-            Font size.
+            CSS font values as `fontSize:lineHeight`.
+            
+            @enum from lco.font.named
         */
         font: String,
         /**
-            Font family name.
+            CSS font-family value.
         */
-        fontFace: { type: String, default: () => v.font.defaultFace },
+        fontFace: String,
         /**
             Make text italic?
 
@@ -53,19 +55,16 @@ export default
         */
         letter: [ String, Number ],
         /**
+            Colon-separated CSS text-transform and text-decoration values.
+        */
+        text: String,
+        /**
             Enumerated text shadow value(s).
 
             - use `hTextShadow` prop to specify hover box shadow
             - use `fTextShadow` prop to specify focus box shadow
         */
         textShadow: String,
-        /**
-            CSS text-transform value.
-
-            - use `hTextTransform` prop to specify hover text shadow
-            - use `fTextTransform` prop to specify focus text shadow
-        */
-        textTransform: String,
         /**
             Font weight value 1-9 (for 100-900).  This overrides `bold` prop.
 
@@ -77,15 +76,12 @@ export default
     
     computed:
     {
-        fontCss() 
-        { 
-            let font = fontSize(this.font) || {};
-            
-            if (this.fontFace) font.fontFamily = this.fontFace;
-                                    
-            return font;
-        },
+        fontCss() { return cssm.font(this.font); },
+
+        fontFaceCss() { return cssm.fontFamily(this.fontFace); },
         
-        fontWeightCss() { return { ...this.boldCss, ...this.weightCss }; }
+        fontWeightCss() { return { ...this.boldCss, ...this.weightCss }; },
+        
+        textCss() { return cssm.text(this.text); }
     }    
 }

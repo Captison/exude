@@ -1,6 +1,6 @@
 <script>
 import { extension, styler } from '_source/mixins'
-import { toMillis } from '_styles/loaders'
+import cssm from '_css/mapper'
 
 
 /**
@@ -51,15 +51,8 @@ export default
         
         extensionCss()
         {
-            let css =
-            {
-                transitionDelay: toMillis.str(this.delay) || 'initial',
-                transitionDuration: toMillis.str(this.duration) || 'initial',                
-                transitionProperty: this.property || 'all',
-                transitionTimingFunction: this.timing || 'initial'              
-            };
-            
-            return css;
+            let { delay, duration, property, timing } = this;
+            return cssm.transition({ delay, duration, property, timing });
         }
     }
 }

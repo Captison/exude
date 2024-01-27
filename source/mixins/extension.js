@@ -1,5 +1,5 @@
 import context from './context'
-import { selector } from '_styles/loaders'
+import { enumer } from '_lco/utils'
 
 
 /**
@@ -31,7 +31,7 @@ export default
     { 
         this.useSel = rules => 
         {
-            let sel = this.sel && selector(this.sel);
+            let sel = this.sel && enumer.selector(this.sel);
             return sel ? { [sel]: rules } : rules;
         } 
     },

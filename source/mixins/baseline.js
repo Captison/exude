@@ -1,6 +1,5 @@
 import { uid } from '_lib/utils'
-import v from '_styles/vars'
-import { ns } from '_styles/loaders'
+import lco, { ns } from '_lco'
 
 
 /**
@@ -20,7 +19,7 @@ export default
         
         $htmlId() 
         {
-            if (v.basis.htmlIdGen)
+            if (lco.basis.htmlIdGen)
                 return ns(this.$options.name.toLowerCase(), this.$attrs.id || uid(this._uid));
             
             return this.$attrs.id;

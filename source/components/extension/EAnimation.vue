@@ -1,6 +1,6 @@
 <script>
 import { extension, styler } from '_source/mixins'
-import { keyframes, toMillis } from '_styles/loaders'
+import cssm from '_css/mapper'
 
 
 /**
@@ -29,10 +29,6 @@ export default
             CSS animation-direction value.
         */
         dir: String,
-        /**
-            Ignore this animation spec?
-        */
-        disabled: Boolean,
         /**
             CSS animation-duration value.
 
@@ -77,19 +73,18 @@ export default
         
         extensionCss()
         {
-            let css =
-            {
-                animationDelay: toMillis.str(this.delay) || 'initial',
-                animationDirection: this.dir || 'initial',
-                animationDuration: toMillis.str(this.duration) || 'initial',                
-                animationFillMode: this.mode || 'initial',
-                animationName: keyframes(this.name) || 'initial',
-                animationIterationCount: this.repeat || (this.infinite && 'infinite') || 'initial',                
-                animationPlayState: this.state || 'initial',
-                animationTimingFunction: this.timing || 'initial'              
-            };
-            
-            return css;
+            let { delay, dir, duration, mode, name, repeat, state, timing } = this;
+            return cssm.animation(
+            { 
+                delay, 
+                dir, 
+                duration, 
+                mode, 
+                name, 
+                repeat: repeat || (this.infinite && 'infinite'), 
+                state, 
+                timing 
+            });            
         }
     }
 }

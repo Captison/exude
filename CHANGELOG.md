@@ -28,6 +28,17 @@ tasks:
 
 
 ---
+## v0.1.0
+
+- library configuration (LCO) management reworked
+- style loaders removed
+- style mixins and components updated for new LCO
+- `XLister` allows for different listing modes
+- extension components updated to use css mapper
+- `XDropMenu` outside focus detection fixed
+- new mechanism for creating directives
+
+
 ## v0.0.8
 
 - `XProgressBar` added

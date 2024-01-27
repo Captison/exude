@@ -1,3 +1,5 @@
+import cssm from '_css/mapper'
+
 
 /**
     Flex child CSS properties.
@@ -24,8 +26,8 @@ export default
     
     computed:
     {
-        flexCss() { return this.xelf && { flex: this.xelf }; },
+        flexCss() { return cssm.flex(this.xelf); },
 
-        orderCss() { return this.order && { flex: this.order }; }
+        orderCss() { return cssm.order(this.order); }
     }
 }

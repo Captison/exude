@@ -1,5 +1,5 @@
 import { uid } from '_lib/utils'
-import { extend } from '_styles/loaders'
+import { extend } from '_css/helper'
 import context from '../context'
 
 

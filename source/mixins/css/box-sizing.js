@@ -1,3 +1,5 @@
+import cssm from '_css/mapper'
+
 
 /**
     CSS box-sizing mixin.
@@ -20,6 +22,6 @@ export default
 
     computed:
     {
-        boxSizingCss() { return this.boxSizing && { boxSizing: this.boxSizing }; }
+        boxSizingCss() { return cssm.boxSizing(this.boxSizing); }
     }
 }

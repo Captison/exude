@@ -8,7 +8,7 @@
 <script>
 import XIcon from '_components/assets/XIcon'
 import XLink from '_components/action/XLink'
-import { toMillis } from '_styles/loaders'
+import { toRaw } from '_css/value'
 import { clipboard } from '_lib/browser-info'
 
 
@@ -81,7 +81,7 @@ export default
             if (this.copied)
             {
                 clearTimeout(this.tid);
-                this.tid = setTimeout(() => this.copied = false, toMillis(this.duration));
+                this.tid = setTimeout(() => this.copied = false, toRaw.time(this.duration));
             }
 
             this.$emit('copied', this.copied);

@@ -1,6 +1,6 @@
 <script>
 import { styler } from '_source/mixins'
-import { toPixels } from '_styles/loaders'
+import { toRaw } from '_css/value'
 import XFlex from '_components/layout/XFlex'
 
 
@@ -61,8 +61,8 @@ export default
             let cols = parseFloat(this.cols) || 2;
             let span = parseFloat(this.span) || 1;
             
-            let colGap = toPixels(this.colGap || 0);
-            let rowGap = toPixels(this.rowGap || 0);
+            let colGap = toRaw(this.colGap || 0);
+            let rowGap = toRaw(this.rowGap || 0);
 
             let style =
             {
