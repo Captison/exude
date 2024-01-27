@@ -21,6 +21,6 @@ function action(el, { value })
     let observer = dom.observeIntersections();
     
     return observer(el, value);
-};
+}
 
 export default dom.directive(action);

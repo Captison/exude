@@ -26,6 +26,6 @@ function action(el, { value })
     global.document.body.addEventListener('click', eventFn);
     
     return () => global.document.body.removeEventListener('click', eventFn);
-};
+}
 
 export default dom.directive(action);

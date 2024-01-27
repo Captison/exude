@@ -24,6 +24,6 @@ function action(el, { value, params })
     observer.observe(el, { childList: true, ...params });
     
     return () => observer.disconnect();
-};
+}
 
 export default dom.directive(action);

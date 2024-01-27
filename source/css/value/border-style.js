@@ -34,4 +34,4 @@ let map =
 export default function(value)
 {
     return map[value] || value;  
-};
+}

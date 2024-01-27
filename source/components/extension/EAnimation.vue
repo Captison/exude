@@ -81,7 +81,7 @@ export default
                 duration, 
                 mode, 
                 name, 
-                repeat: this.repeat || (this.infinite && 'infinite'), 
+                repeat: repeat || (this.infinite && 'infinite'), 
                 state, 
                 timing 
             });            

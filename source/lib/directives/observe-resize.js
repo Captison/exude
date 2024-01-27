@@ -25,6 +25,6 @@ function action(el, { value, params })
     observer.observe(el, { box: 'border-box', ...params });
     
     return () => observer.disconnect();
-};
+}
 
 export default dom.directive(action);

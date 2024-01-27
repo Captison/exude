@@ -2,7 +2,6 @@ import { dire } from '_css/helper'
 import { toRaw } from '_css/value'
 
 
-let reNum = /^-?(\d*\.)?\d+$/;
 let props =
 {
     t: 'borderTopLeftRadius',

@@ -1,5 +1,4 @@
 import cssm from '_css/mapper'
-import { trbl } from '_css/rule'
 
 
 /**

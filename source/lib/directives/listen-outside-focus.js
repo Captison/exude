@@ -26,6 +26,6 @@ function action(el, { value })
     global.document.body.addEventListener('focusin', eventFn);
     
     return () => global.document.body.removeEventListener('focusin', eventFn);
-};
+}
 
 export default dom.directive(action);

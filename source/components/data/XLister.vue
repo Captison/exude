@@ -123,7 +123,7 @@ export default
 
         filteredList() { return this.filterFn.list ? this.filterFn.list(this.array) : this.array; },    
 
-        filterFn() { return exists(this.filterSpec) ? filter(this.filterSpec) : v => true; },
+        filterFn() { return exists(this.filterSpec) ? filter(this.filterSpec) : () => true; },
         
         hideMode() { return this.excludes === 'hide'; },
         
