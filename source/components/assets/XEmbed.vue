@@ -78,7 +78,7 @@ export default
     {
         embedProps()
         {
-            let { el, source } = this;
+            let { source } = this;
           
             let props = 
             {
@@ -102,6 +102,8 @@ export default
                 case 'object': 
                     return { data: src };
             }
+            
+            return null;
         }
     },
     
