@@ -50,7 +50,7 @@ let img = "https://bafybeibhalqw6mkbglqnivj3ffe7m6diuuf3guvyjf3gur6no3oq5eluvi.i
     :trans="`ry${flip ? -180 : 0}`"
     hide-back
   >
-    <x-transition duration="0.8" />
+    <e-transition duration="0.8" />
     <x-image :src="img" width="100%" />
     <x-text align="center" pad="v2">
       Hadley de' Medici
@@ -66,7 +66,7 @@ let img = "https://bafybeibhalqw6mkbglqnivj3ffe7m6diuuf3guvyjf3gur6no3oq5eluvi.i
     :trans="`ry${flip ? 0 : 180}`"
     hide-back
   >
-    <x-transition duration="0.8" />
+    <e-transition duration="0.8" />
     <x-text font="small">
       <x-grid cols="1fr 1fr" gap="2" place-content="center" height="48" border="a.25!white_d.4" margin="h2 t2">
         <x-text align="right" bold>Hat:</x-text>
