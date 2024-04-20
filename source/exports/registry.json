@@ -9,6 +9,7 @@
     "XContext": { "path": "_components/utility/XContext", "released": true },
     "XCopyToClipboard": { "path": "_components/action/XCopyToClipboard", "released": true },
     "XDropMenu": { "path": "_components/overlay/XDropMenu", "released": true },
+    "XEmbed": { "path": "_components/assets/XEmbed", "released": true },
     "XExapse": { "path": "_components/utility/XExapse", "released": true },
     "XField": { "path": "_components/form/XField", "released": true },
     "XFieldList": { "path": "_components/form/XFieldList", "released": true },

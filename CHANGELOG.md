@@ -28,6 +28,11 @@ tasks:
 
 
 ---
+## v0.1.1
+
+- added `XEmbed` image component
+
+
 ## v0.1.0
 
 - library configuration (LCO) management reworked
